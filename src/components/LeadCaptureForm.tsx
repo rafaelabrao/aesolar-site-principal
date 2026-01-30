@@ -13,6 +13,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle } from "lucide-react";
 import { CityCombobox } from "@/components/CityCombobox";
 
+const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL as string | undefined;
+
 const establishmentTypes = [
   { value: "residencia", label: "Residência" },
   { value: "acougue", label: "Açougue" },
@@ -97,44 +99,97 @@ export function LeadCaptureForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://n8n.borealsolar.tech/webhook/proposta_site", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nome: formData.nome,
-          empresa: formData.empresa,
-          whatsapp: formData.whatsapp,
-          email: formData.email,
-          cidade: formData.cidade,
-          tipoEstabelecimento: formData.tipoEstabelecimento,
-          valorContaLuz: formData.consumoMensal,
-        }),
-      });
+  if (!N8N_WEBHOOK_URL) {
+    toast({
+      title: "Configuração ausente",
+      description: "A URL do webhook não está configurada. Defina VITE_N8N_WEBHOOK_URL no Vercel.",
+      variant: "destructive",
+    });
+    setIsSubmitting(false);
+    return;
+  }
 
-      const data = await response.json();
-      
-      setIsSubmitting(false);
-      setIsSuccess(true);
+  const whatsappDigits = formData.whatsapp.replace(/\D/g, "");
+  const valorContaLuz = Number((formData.consumoMensal || "").replace(/\D/g, "")) || 0;
 
-      toast({
-        title: "Proposta enviada com sucesso! 🎉",
-        description: "Redirecionando para sua proposta...",
-      });
+  const payload = {
+    // Campos atuais do seu formulário
+    nome: formData.nome,
+    empresa: formData.empresa,
+    whatsapp: formData.whatsapp,
+    whatsapp_digits: whatsappDigits,
+    email: formData.email,
+    cidade: formData.cidade,
+    tipoEstabelecimento: formData.tipoEstabelecimento,
+    valorContaLuz: valorContaLuz,
 
-      // Open the link returned by the webhook
-      if (data.url || data.link) {
-        window.open(data.url || data.link, "_blank");
-      }
-    } catch (error) {
-      setIsSubmitting(false);
-      toast({
-        title: "Erro ao enviar proposta",
-        description: "Por favor, tente novamente ou entre em contato pelo WhatsApp.",
-        variant: "destructive",
-      });
-    }
+    // Campos para compatibilidade com a página de proposta e o workflow do n8n
+    tipo_cliente: formData.empresa && formData.empresa.trim() ? "Empresa" : "Pessoal",
+    nome_cliente_final: formData.nome,
+    documento_cliente_final: "",
+    consumo_total: "",
+    desconto_base: 20,
+  };
+
+  const response = await fetch(N8N_WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  let data: any = null;
+  try {
+    data = await response.json();
+  } catch {
+    data = null;
+  }
+
+  if (!response.ok) {
+    toast({
+      title: "Erro ao enviar proposta",
+      description: "O servidor retornou um erro. Tente novamente em instantes.",
+      variant: "destructive",
+    });
+    setIsSubmitting(false);
+    return;
+  }
+
+  const urlFinal = Array.isArray(data) ? data?.[0]?.url_final : data?.url_final;
+
+  const url = data?.url || data?.link || urlFinal;
+  const path = data?.path;
+
+  setIsSubmitting(false);
+  setIsSuccess(true);
+
+  toast({
+    title: "Proposta enviada com sucesso!",
+    description: "Redirecionando para sua proposta...",
+  });
+
+  if (typeof url === "string" && url.startsWith("http")) {
+    window.location.href = url;
+    return;
+  }
+
+  if (typeof path === "string" && path.startsWith("/")) {
+    window.location.href = window.location.origin + path;
+    return;
+  }
+
+  toast({
+    title: "Resposta inesperada",
+    description: "Não encontrei o link da proposta na resposta do servidor.",
+    variant: "destructive",
+  });
+} catch (error) {
+  setIsSubmitting(false);
+  toast({
+    title: "Erro ao enviar proposta",
+    description: "Falha de conexão. Verifique sua internet e tente novamente.",
+    variant: "destructive",
+  });
+}
   };
 
   if (isSuccess) {

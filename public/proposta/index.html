@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - AESOLAR</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuração de Fontes e Cores da Marca -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        aesolar: {
+                            main: '#F15A29',
+                            dark: '#E8531A',
+                            text: '#55565A',
+                            light: '#F9FAFB'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Ícones (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #55565A; }
+        .hero-gradient {
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+        }
+        
+        /* Classe padrão para esconder assinatura na Web */
+        .print-only-section { display: none; }
+
+        /* --- CSS MÁGICO PARA IMPRESSÃO (ECO-FRIENDLY + QUEBRAS) --- */
+        @media print {
+            @page { margin: 1cm; size: A4; }
+            
+            /* 1. Limpeza Geral */
+            body { background-color: white !important; -webkit-print-color-adjust: exact; }
+            .hero-bg-print { background-image: none !important; background-color: white !important; }
+            .hero-gradient { display: none !important; }
+            
+            /* 2. Cores e Elementos */
+            h1, h2, h3, p, span, div { text-shadow: none !important; }
+            header, footer, button, .no-print, .animate-bounce-slow { display: none !important; }
+            
+            /* 3. CONTROLE DE QUEBRA DE PÁGINA (ADICIONADO) */
+            .break-page { 
+                page-break-before: always !important; 
+                break-before: page !important;
+                display: block !important; 
+                padding-top: 20px !important;
+            }
+            
+            /* 4. EXIBIR ASSINATURA (ADICIONADO) */
+            .print-only-section { display: block !important; }
+
+            /* 5. Ajustes Visuais Impressão */
+            .min-h-\[600px\] { min-height: auto !important; height: auto !important; padding-top: 20px; padding-bottom: 20px; }
+            .shadow-xl, .shadow-lg, .shadow-md, .shadow-2xl { box-shadow: none !important; border: 1px solid #ddd !important; }
+            
+            /* Cabeçalho de Impressão */
+            .print-header { display: block !important; border-bottom: 2px solid #F15A29; margin-bottom: 20px; padding-bottom: 10px; }
+        }
+        
+        .print-header { display: none; }
+        .counter { transition: all 1s ease-out; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- CABEÇALHO EXCLUSIVO PARA IMPRESSÃO -->
+    <div class="print-header">
+        <div class="flex justify-between items-center">
+            <img src="https://borealsolar.tech/assets/img/logos/logo_aesolar_v2.0_horizontal.png" class="h-12" alt="AESolar">
+            <div class="text-right text-xs">
+                <p>Proposta Gerada em: <span id="printDate"></span></p>
+                <p>AESOLAR - Energia Inteligente</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER FLUTUANTE (Web) -->
+    <header class="bg-white shadow-md fixed w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <img src="https://borealsolar.tech/assets/img/logos/logo_aesolar_v2.0_horizontal.png" alt="AESOLAR Logo" class="h-10 md:h-12">
+            <div class="hidden md:flex items-center gap-4 text-sm font-semibold text-gray-600">
+                <button onclick="window.print()" class="border border-gray-300 px-4 py-2 rounded-full hover:bg-gray-50 transition">
+                    <i class="fa-solid fa-print mr-2"></i> Imprimir PDF
+                </button>
+                <span><i class="fa-solid fa-phone text-aesolar-main mr-2"></i>(62) 3638-2770</span>
+                <a href="#aceite" class="bg-aesolar-main text-white px-6 py-2 rounded-full hover:bg-aesolar-dark transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    Aceitar Proposta
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PÁGINA 1: HERO (Visualização Otimizada) -->
+    <section class="hero-bg-print relative h-screen min-h-[600px] flex items-center justify-center bg-cover bg-center print:h-auto print:min-h-0 print:block print:pb-4" style="background-image: url('https://borealsolar.tech/assets/img/ufv/vereda_complexo1.jpg');">
+        <div class="absolute inset-0 hero-gradient"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center print:block print:px-0">
+            <div class="text-white animate-fade-in-up print:text-black">
+                <!-- Badge -->
+                <div class="inline-block bg-aesolar-main px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4 shadow-md print:bg-aesolar-main print:text-white print:mb-4">
+                    Proposta Exclusiva para <span id="heroClientName">Cliente</span>
+                </div>
+                
+                <!-- Título (Tamanho restaurado) -->
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 print:text-4xl print:mb-4">
+                    Reduza sua conta de energia em até <span id="heroDiscountValue" class="text-aesolar-main bg-white px-2 rounded print:text-aesolar-main print:px-0">...</span> sem investir nada.
+                </h1>
+                
+                <!-- Subtítulo (Texto completo e tamanho legível) -->
+                <p class="text-lg md:text-xl text-gray-200 mb-8 font-light print:text-black print:text-lg print:mb-8 print:leading-relaxed">
+                    Energia limpa, mais barata e garantida pela solidez do Grupo Boreal. Sua usina solar já está construída e pronta para gerar economia para você.
+                </p>
+                
+                <!-- Botões (Web apenas) -->
+                <div class="flex flex-col sm:flex-row gap-4 print:hidden">
+                    <a href="#economia" class="bg-aesolar-main hover:bg-aesolar-dark text-white text-center font-bold py-4 px-8 rounded-lg shadow-lg transition text-lg flex items-center justify-center gap-2">
+                        Ver minha economia <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                    <div class="flex items-center gap-3 text-white bg-white/10 backdrop-blur-sm p-4 rounded-lg">
+                        <i class="fa-solid fa-check-circle text-green-400 text-2xl"></i>
+                        <div class="leading-tight">
+                            <span class="block font-bold">Zero Investimento</span>
+                            <span class="text-xs opacity-80">Sem obras. Sem placas.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOTO DA USINA (Tamanho Aumentado e Legenda no Topo) -->
+                <div class="hidden print:block mt-8 w-full max-w-5xl mx-auto border-t border-gray-300 pt-6">
+                    <!-- Aumentei a altura para h-[400px] na impressão para dar destaque -->
+                    <div class="rounded-xl overflow-hidden border border-gray-200 h-[350px] print:h-[400px] relative shadow-sm">
+                        <!-- A Imagem -->
+                        <img src="https://borealsolar.tech/assets/img/ufv/vereda_complexo1.jpg" 
+                             class="w-full h-full object-cover" 
+                             alt="Usina Solar Vereda">
+                        
+                        <!-- A Legenda (FIXA NO TOPO) -->
+                        <div class="absolute top-0 left-0 right-0 bg-white/95 border-b border-gray-200 p-4 flex items-center gap-4">
+                            <div class="h-10 w-10 bg-white border border-black text-black rounded-full flex items-center justify-center text-lg shadow-sm">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-lg leading-tight uppercase tracking-wide text-black">Complexo Solar Vereda</p>
+                                <p class="text-sm mt-0 text-black">Garantia de origem: Energia injetada na rede da concessionária.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card Lateral (Web apenas) -->
+            <div class="hidden md:block bg-white/95 backdrop-blur text-gray-800 p-8 rounded-2xl shadow-2xl border-t-4 border-aesolar-main transform rotate-1 hover:rotate-0 transition duration-500 print:hidden">
+                <h3 class="text-xl font-bold mb-4 text-aesolar-text">Resumo da Oportunidade</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <div class="bg-green-100 text-green-600 p-2 rounded-full"><i class="fa-solid fa-bolt"></i></div>
+                        <div>
+                            <strong class="block text-gray-900">Energia Compartilhada</strong>
+                            <span class="text-sm text-gray-600">Aluguel de usina remota.</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-full"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <strong class="block text-gray-900">Grupo Boreal Solar</strong>
+                            <span class="text-sm text-gray-600">+10 anos de mercado.</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="bg-orange-100 text-aesolar-main p-2 rounded-full"><i class="fa-solid fa-piggy-bank"></i></div>
+                        <div>
+                            <strong class="block text-gray-900">Economia Garantida</strong>
+                            <span class="text-sm text-gray-600">Desconto direto na fatura.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PÁGINA 2: O CONCEITO (Textos Originais Restaurados) -->
+    <!-- Sem 'break-page' para continuar na mesma folha -->
+    <section class="py-20 bg-white print:py-8">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 print:mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 print:text-2xl">A evolução da energia chegou</h2>
+                <p class="text-gray-600 print:text-base">Esqueça obras no telhado e financiamentos caros. Com a AESOLAR, você recebe créditos de energia da nossa usina e tem desconto na sua conta de luz atual.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 print:gap-6">
+                <!-- Card 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl border border-gray-100 hover:shadow-lg transition text-center group print:p-4 print:border-gray-300">
+                    <div class="w-16 h-16 bg-aesolar-main/10 text-aesolar-main rounded-full flex items-center justify-center text-2xl mx-auto mb-6 group-hover:bg-aesolar-main group-hover:text-white transition print:w-12 print:h-12 print:text-xl print:mb-3 print:bg-white print:border print:border-aesolar-main"><i class="fa-solid fa-solar-panel"></i></div>
+                    <h3 class="text-xl font-bold mb-2 print:text-lg">1. Nós Geramos</h3>
+                    <p class="text-sm text-gray-600 print:text-sm">Nossas usinas, como o Complexo Vereda, captam a luz do sol e transformam em energia limpa.</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl border border-gray-100 hover:shadow-lg transition text-center group print:p-4 print:border-gray-300">
+                    <div class="w-16 h-16 bg-aesolar-main/10 text-aesolar-main rounded-full flex items-center justify-center text-2xl mx-auto mb-6 group-hover:bg-aesolar-main group-hover:text-white transition print:w-12 print:h-12 print:text-xl print:mb-3 print:bg-white print:border print:border-aesolar-main"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3 class="text-xl font-bold mb-2 print:text-lg">2. Nós Injetamos</h3>
+                    <p class="text-sm text-gray-600 print:text-sm">A energia é enviada para a rede da distribuidora local (Equatorial), que converte em créditos para você.</p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl border border-gray-100 hover:shadow-lg transition text-center group print:p-4 print:border-gray-300">
+                    <div class="w-16 h-16 bg-aesolar-main/10 text-aesolar-main rounded-full flex items-center justify-center text-2xl mx-auto mb-6 group-hover:bg-aesolar-main group-hover:text-white transition print:w-12 print:h-12 print:text-xl print:mb-3 print:bg-white print:border print:border-aesolar-main"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="text-xl font-bold mb-2 print:text-lg">3. Você Economiza</h3>
+			<p class="text-sm text-gray-600 print:text-sm">Você recebe sua conta com os créditos abatidos e paga um boleto com até <span id="card3DiscountValue" class="font-bold text-aesolar-main">20%</span> de desconto garantido.</p>
+                </div>
+            </div>
+            
+            <!-- Bloco "Solidez" (Web Apenas) -->
+            <div class="mt-16 bg-gray-900 rounded-2xl p-8 md:p-12 text-white flex flex-col md:flex-row items-center gap-8 shadow-2xl print:hidden">
+                <div class="md:w-2/3">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://borealsolar.tech/assets/img/logos/logo_aesolar_v2.0_horizontal.png" class="h-8 brightness-0 invert opacity-80 print:invert-0 print:opacity-100" alt="AESolar">
+                        <span class="text-gray-500">|</span>
+                        <span class="text-gray-400 font-semibold uppercase tracking-widest text-sm print:text-gray-600">Powered by Boreal Solar</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Solidez de quem conhece o mercado</h3>
+                    <p class="text-gray-400 print:text-gray-800"> A AESOLAR opera usinas de alta performance desenvolvidas pelo Grupo Boreal Solar, referência em engenharia fotovoltaica há mais de uma década. Ao aderir, você se beneficia da gestão profissional de créditos gerados por uma infraestrutura robusta, auditada e construída por quem lidera o mercado..</p>
+                </div>
+                <div class="md:w-1/3 w-full">
+                    <div class="bg-aesolar-main text-center p-6 rounded-lg print:bg-gray-100 print:border">
+                        <span class="block text-4xl font-bold mb-1">+10</span>
+                        <span class="text-sm uppercase tracking-wide opacity-90">Anos de Inovação</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- PÁGINA 3: O ORÇAMENTO (Adicionado 'break-page') -->
+    <section id="economia" class="break-page py-20 print:py-2 bg-gray-100 print:bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 print:mb-4">
+                <span class="text-aesolar-main font-bold uppercase tracking-wider text-sm">Estudo de Viabilidade</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Seus Números</h2>
+                <p class="text-gray-500 mt-2">Baseado no perfil de consumo de: <strong id="sectionClientName" class="text-gray-800">Cliente</strong></p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Coluna Esquerda: Dados do Cliente -->
+                <div class="lg:col-span-4 bg-white p-8 print:p-4 rounded-2xl shadow-sm border border-gray-200 print:border-gray-400">
+                    <h3 class="text-lg font-bold text-gray-800 mb-6 border-b pb-4">Dados da Unidade</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between">
+                            <span class="text-gray-500" id="labelRazao">Razão Social:</span>
+                            <span class="font-semibold text-right" id="dataRazao">...</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-gray-500" id="labelDoc">CNPJ:</span>
+                            <span class="font-semibold text-right" id="dataCnpj">...</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-gray-500">Cidade:</span>
+                            <span class="font-semibold text-right" id="dataCidade">...</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-gray-500">Consumo Total:</span>
+                            <span class="font-bold text-aesolar-main text-right"><span id="dataConsumo">0</span> kWh/mês</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Direita -->
+                <div class="lg:col-span-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-8 print:p-4 rounded-2xl border border-gray-200 opacity-70 grayscale hover:grayscale-0 transition duration-500 print:grayscale-0 print:opacity-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-gray-600">Cenário Atual</h4>
+                                <i class="fa-regular fa-calendar-xmark text-2xl text-gray-400"></i>
+                            </div>
+                            <div class="mb-2">
+                                <span class="text-sm text-gray-500 block">Custo Estimado Mensal</span>
+                                <span class="text-3xl font-bold text-gray-700">R$ <span id="valOldMonthly">0,00</span></span>
+                            </div>
+                            <div class="text-xs text-red-500 font-semibold mt-2">
+                                <i class="fa-solid fa-arrow-up"></i> Sujeito a bandeiras tarifárias
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl border-2 border-aesolar-main shadow-xl relative overflow-hidden print:shadow-none print:border-gray-400">
+                            <div class="absolute top-0 right-0 bg-aesolar-main text-white text-xs font-bold px-3 py-1 rounded-bl-lg print:border print:border-black print:text-black print:bg-white">RECOMENDADO</div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-aesolar-main">Cenário AESOLAR</h4>
+                                <i class="fa-solid fa-solar-panel text-2xl text-aesolar-main"></i>
+                            </div>
+                            <div class="mb-2">
+                                <span class="text-sm text-gray-500 block">Novo Custo Estimado</span>
+                                <span class="text-4xl font-bold text-gray-900">R$ <span id="valNewMonthly">0,00</span></span>
+                            </div>
+                            <div class="text-xs text-green-600 font-bold mt-2 bg-green-50 inline-block px-2 py-1 rounded print:bg-white print:border print:border-gray-300">
+                                <i class="fa-solid fa-arrow-down"></i> 20% de Economia Garantida
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 text-white p-8 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 print:bg-white print:text-black print:border print:border-black print:shadow-none">
+                        <div>
+                            <p class="text-gray-400 text-sm uppercase tracking-wide mb-1 print:text-black">Impacto Financeiro em 12 Meses</p>
+                            <h3 class="text-3xl md:text-5xl font-bold text-green-400 print:text-black">R$ <span id="valYearlySavings">0,00</span></h3>
+                            <p class="text-xs text-gray-500 mt-2 print:text-black">*Valor que permanece no seu caixa.</p>
+                        </div>
+                        <div class="h-16 w-px bg-gray-700 hidden md:block print:bg-black"></div>
+                        <div class="text-right print:hidden">
+                            <p class="text-gray-300 text-sm mb-2 print:text-black">Equivalente a:</p>
+                            <div class="flex items-center gap-3 justify-end text-sm">
+                                <i class="fa-solid fa-tree text-green-500 print:text-black"></i> <span id="treesSaved">0</span> árvores preservadas
+                            </div>
+                            <div class="flex items-center gap-3 justify-end text-sm mt-1">
+                                <i class="fa-solid fa-gas-pump text-gray-400 print:text-black"></i> Zero CO2 emitido
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NOVO: TABELA DE BANDEIRAS E DISCLAIMER -->
+                    <div class="mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-gray-400">
+                            <div class="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center justify-between print:bg-white print:border-b-black">
+                                <h3 class="font-bold text-gray-700 text-sm flex items-center gap-2 print:text-black">
+                                    <i class="fa-solid fa-chart-line text-aesolar-main print:text-black"></i>
+                                    Economia Adicional com Bandeiras
+                                </h3>
+                                <span class="text-xs text-gray-500 hidden sm:block print:hidden">Bandeira alta = Maior desconto</span>
+                            </div>
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-white text-gray-600 text-xs uppercase tracking-wider border-b border-gray-100 print:text-black print:border-gray-300">
+                                        <th class="py-2 px-4 font-semibold">Cenário</th>
+                                        <th class="py-2 px-4 text-center font-semibold">Adicional</th>
+                                        <th class="py-2 px-4 text-center font-semibold text-green-600 print:text-black">Economia Real</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBandeirasBody">
+                                    <!-- O Javascript vai preencher as linhas aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-center text-[10px] text-gray-400 mt-2 italic print:text-black">
+                            * O percentual de desconto é aplicado sobre a Energia e a Tarifa Compensada.
+                        </p>
+                    </div>
+                    <!-- FIM DO NOVO BLOCO -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PÁGINA 4: FECHAMENTO & CTA (Fluxo Ajustado) -->
+    <section id="aceite" class="break-page py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Pronto para começar a economizar?</h2>
+            
+            <!-- Box de Passos (Agora visível na impressão pois é a instrução principal) -->
+            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-8 mb-10 text-left print:bg-white print:border-gray-300">
+                <h4 class="font-bold text-aesolar-main mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check"></i> Próximos Passos</h4>
+                <ol class="space-y-4 relative border-l-2 border-orange-200 ml-3 pl-8">
+                    <li class="relative">
+                        <span class="absolute -left-[41px] bg-aesolar-main text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold print:border print:border-black print:text-black print:bg-white">1</span>
+                        <strong>Aceite e Documentação:</strong> Entre em contato com seu consultor, informe o aceite desta proposta e envie a documentação solicitada.
+                    </li>
+                    <li class="relative">
+                        <span class="absolute -left-[41px] bg-aesolar-main text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold print:border print:border-black print:text-black print:bg-white">2</span>
+                        <strong>Assinatura Digital:</strong> Após validação, enviaremos o termo de adesão para o seu e-mail para assinatura eletrônica.
+                    </li>
+                    <li class="relative">
+                        <span class="absolute -left-[41px] bg-aesolar-main text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold print:border print:border-black print:text-black print:bg-white">3</span>
+                        <strong>Início dos Créditos:</strong> Após assinatura e troca de titularidade, o prazo regulatório é de até 90 dias para receber os primeiros créditos na conta.
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Botão Removido conforme solicitado -->
+            
+            <p class="mt-6 text-sm text-gray-500">
+                Oferta válida por 7 dias. Sujeito à disponibilidade de potência na usina Vereda.
+            </p>
+
+            <!-- ÁREA DE ASSINATURA (SÓ APARECE NA IMPRESSÃO) -->
+            <div class="print-only-section mt-10 pt-10 px-6 text-left">
+                <div class="mb-8">
+                    <p class="text-sm font-bold mb-2">Termos do Aceite:</p>
+                    <p class="text-xs text-justify">
+                        Ao assinar este documento, o cliente manifesta interesse na adesão à associação de energia da AESOLAR. 
+                        A efetivação depende da análise de crédito e disponibilidade de potência na usina.
+                        Esta proposta tem validade de 7 dias a partir da data de emissão.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-12 mt-16">
+                    <div class="text-center">
+                        <div class="border-b border-black mb-2 h-10"></div>
+                        <p class="font-bold text-sm">AESOLAR</p>
+                        <p class="text-xs">Presidente</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="border-b border-black mb-2 h-10"></div>
+                        <p class="font-bold text-sm" id="signClientName">Cliente</p>
+                        <p class="text-xs">Responsável Legal</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800 print:hidden">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <img src="https://borealsolar.tech/assets/img/logos/logo_aesolar_v2.0_horizontal.png" class="h-8 brightness-0 invert opacity-50 mb-4 mx-auto md:mx-0" alt="AESolar">
+                <p class="text-gray-500 text-sm">Energia Inteligente e Compartilhada.</p>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="font-bold text-lg">Dúvidas?</p>
+                <p class="text-aesolar-main text-xl font-bold">(62) 3638-2770</p>
+                <p class="text-gray-400 text-sm">adm.gyn@borealsolar.com.br</p>
+                <p class="text-gray-500 text-sm mt-2">Av. Dep. Jamel Cecílio, Jardim Goiás, Goiânia - GO</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DE LÓGICA DINÂMICA -->
+    <script>
+        // 1. Função de Formatação CPF/CNPJ
+        function formatDocument(value) {
+            if (!value) return '';
+            const v = value.toString().replace(/\D/g, ''); 
+            if (v.length === 11) { // CPF
+                return v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+            } else if (v.length === 14) { // CNPJ
+                return v.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+            }
+            return value; 
+        }
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. CAPTURA DE DADOS ---
+            const tipoCliente = getQueryParam('tipo_cliente') || 'pj';
+            const nomeFinal = getQueryParam('nome_cliente_final') || 'Cliente Modelo';
+            const docFinal = getQueryParam('documento_cliente_final') || '00.000.000/0000-00';
+            const cidade = getQueryParam('cidade') || 'Goiânia - GO';
+            const consumoTotal = parseFloat(getQueryParam('consumo_total')) || 2500;
+            
+            // Variáveis de Cálculo
+            const tarifa = 1.15; 
+            const percentualDesconto = parseFloat(getQueryParam('desconto_base')) || 20; 
+            const fatorDesconto = percentualDesconto / 100;
+
+            // --- 2. PREENCHIMENTO DE CAMPOS DE TEXTO ---
+            if (tipoCliente === 'pf') {
+                document.getElementById('labelRazao').innerText = "Nome Completo:";
+                document.getElementById('labelDoc').innerText = "CPF:";
+            } else {
+                document.getElementById('labelRazao').innerText = "Razão Social:";
+                document.getElementById('labelDoc').innerText = "CNPJ:";
+            }
+
+            document.getElementById('heroClientName').innerText = nomeFinal;
+            document.getElementById('sectionClientName').innerText = nomeFinal;
+            document.getElementById('dataRazao').innerText = nomeFinal;
+            document.getElementById('dataCnpj').innerText = formatDocument(docFinal); // Formatado
+            document.getElementById('dataCidade').innerText = cidade;
+            document.getElementById('dataConsumo').innerText = consumoTotal.toLocaleString('pt-BR');
+
+            // --- 3. CÁLCULOS FINANCEIROS ---
+            const monthlyCostOld = consumoTotal * tarifa;
+            const monthlySavings = monthlyCostOld * fatorDesconto;
+            const monthlyCostNew = monthlyCostOld - monthlySavings;
+            const yearlySavings = monthlySavings * 12;
+            const trees = Math.floor(yearlySavings / 200);
+
+            const formatMoney = (val) => val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            document.getElementById('valOldMonthly').innerText = formatMoney(monthlyCostOld);
+            document.getElementById('valNewMonthly').innerText = formatMoney(monthlyCostNew);
+            document.getElementById('valYearlySavings').innerText = formatMoney(yearlySavings);
+            document.getElementById('treesSaved').innerText = trees;
+
+            // Atualiza Texto do Desconto no Banner (Importante pois agora é variável!)
+            // Procura o elemento que contém o texto "20% de Economia Garantida" e atualiza
+            const bannersDesconto = document.querySelectorAll('.text-green-600.font-bold, .text-aesolar-main.bg-white');
+            // Como é genérico, vamos atualizar especificamente se tivermos IDs ou classes únicas. 
+            // Para garantir, sugiro adicionar um ID no HTML do banner verde: id="lblDesconto"
+            // Se não tiver ID, deixamos quieto ou usamos este seletor mais agressivo:
+            
+            // --- CÁLCULO DA MANCHETE (ECONOMIA MÁXIMA - BANDEIRA VERMELHA 2) ---
+            const valorBandeiraV2 = 0.101;
+            const numeradorMax = (1.15 * fatorDesconto) + valorBandeiraV2;
+            const denominadorMax = 1.15 + valorBandeiraV2;
+            const maxEconomyPct = (numeradorMax / denominadorMax) * 100;
+            
+            // Arredonda para BAIXO sem decimais (Ex: 26.5% -> 26%)
+            const maxEconomyInt = Math.floor(maxEconomyPct);
+            
+            // Atualiza o H1
+            const heroSpan = document.getElementById('heroDiscountValue');
+            if(heroSpan) heroSpan.innerText = maxEconomyInt + '%';
+
+            // NOVO: Atualiza o Card 3 (Passo a Passo)
+            const card3Span = document.getElementById('card3DiscountValue');
+            if(card3Span) card3Span.innerText = maxEconomyInt + '%';
+
+            // Atualiza o card verde (Mantém a base)
+            const cardBadge = document.querySelector('.text-green-600.font-bold.bg-green-50');
+            if(cardBadge) cardBadge.innerHTML = `<i class="fa-solid fa-arrow-down"></i> ${percentualDesconto}% de Economia Garantida`;
+
+            // --- 4. CÁLCULO DAS BANDEIRAS E TABELA ---
+            const bandeiras = [
+                { nome: 'Bandeira Verde', valor: 0.000 },
+                { nome: 'Bandeira Amarela', valor: 0.025 },
+                { nome: 'Bandeira Vermelha 1', valor: 0.057 },
+                { nome: 'Bandeira Vermelha 2', valor: 0.101 }
+            ];
+
+            const tbodyBandeiras = document.getElementById('tableBandeirasBody');
+            if (tbodyBandeiras) {
+                tbodyBandeiras.innerHTML = ''; 
+
+                bandeiras.forEach(b => {
+                    const numerador = (1.15 * fatorDesconto) + b.valor;
+                    const denominador = 1.15 + b.valor;
+                    const economiaRealPct = (numerador / denominador) * 100;
+
+                    const row = `
+                        <tr class="border-b hover:bg-gray-50 text-sm print:hover:bg-transparent">
+                            <td class="py-3 px-4 font-bold text-gray-700 print:text-black">${b.nome}</td>
+                            <td class="py-3 px-4 text-center text-gray-600 print:text-black">R$ ${b.valor.toFixed(3)}</td>
+                            <td class="py-3 px-4 text-center font-bold text-green-600 print:text-green-600">${economiaRealPct.toFixed(2)}%</td>
+                        </tr>
+                    `;
+                    tbodyBandeiras.innerHTML += row;
+                });
+            }
+
+            // Assinatura e Data
+            const signField = document.getElementById('signClientName');
+            if(signField) signField.innerText = nomeFinal;
+            
+            const today = new Date();
+            document.getElementById('printDate').innerText = today.toLocaleDateString('pt-BR');
+        });
+    </script>
+</body>
+</html>
