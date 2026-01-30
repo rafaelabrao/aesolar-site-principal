@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle } from "lucide-react";
 
 const establishmentTypes = [
+  { value: "residencia", label: "Residência" },
   { value: "acougue", label: "Açougue" },
   { value: "mercado", label: "Mercado / Supermercado" },
   { value: "padaria", label: "Padaria" },
@@ -21,14 +22,6 @@ const establishmentTypes = [
   { value: "restaurante", label: "Restaurante / Lanchonete" },
   { value: "industria", label: "Indústria" },
   { value: "outro", label: "Outro" },
-];
-
-const consumoRanges = [
-  { value: "500-1000", label: "R$ 500 - R$ 1.000" },
-  { value: "1000-2000", label: "R$ 1.000 - R$ 2.000" },
-  { value: "2000-5000", label: "R$ 2.000 - R$ 5.000" },
-  { value: "5000-10000", label: "R$ 5.000 - R$ 10.000" },
-  { value: "10000+", label: "Acima de R$ 10.000" },
 ];
 
 interface FormData {
@@ -100,16 +93,44 @@ export function LeadCaptureForm() {
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch("https://n8n.borealsolar.tech/webhook/proposta_site", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: formData.nome,
+          empresa: formData.empresa,
+          whatsapp: formData.whatsapp,
+          email: formData.email,
+          tipoEstabelecimento: formData.tipoEstabelecimento,
+          valorContaLuz: formData.consumoMensal,
+        }),
+      });
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+      const data = await response.json();
+      
+      setIsSubmitting(false);
+      setIsSuccess(true);
 
-    toast({
-      title: "Proposta enviada com sucesso! 🎉",
-      description: "Em breve nossa equipe entrará em contato.",
-    });
+      toast({
+        title: "Proposta enviada com sucesso! 🎉",
+        description: "Redirecionando para sua proposta...",
+      });
+
+      // Open the link returned by the webhook
+      if (data.url || data.link) {
+        window.open(data.url || data.link, "_blank");
+      }
+    } catch (error) {
+      setIsSubmitting(false);
+      toast({
+        title: "Erro ao enviar proposta",
+        description: "Por favor, tente novamente ou entre em contato pelo WhatsApp.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isSuccess) {
@@ -202,22 +223,18 @@ export function LeadCaptureForm() {
         </div>
 
         <div className="space-y-2">
-          <Label>Valor Médio da Conta de Luz</Label>
-          <Select
+          <Label htmlFor="consumoMensal">Valor da Conta de Luz (R$)</Label>
+          <Input
+            id="consumoMensal"
+            type="text"
+            inputMode="numeric"
+            placeholder="Ex: 1500"
             value={formData.consumoMensal}
-            onValueChange={(value) => handleInputChange("consumoMensal", value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Selecione a faixa" />
-            </SelectTrigger>
-            <SelectContent>
-              {consumoRanges.map((range) => (
-                <SelectItem key={range.value} value={range.value}>
-                  {range.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, "");
+              handleInputChange("consumoMensal", value);
+            }}
+          />
         </div>
 
         <Button
@@ -240,6 +257,18 @@ export function LeadCaptureForm() {
         <p className="text-xs text-center text-muted-foreground mt-4">
           Ao enviar, você concorda em receber contato da AESOLAR sobre sua proposta de economia.
         </p>
+
+        <div className="text-center mt-4 pt-4 border-t border-border">
+          <p className="text-sm text-muted-foreground mb-1">Prefere falar conosco?</p>
+          <a
+            href="https://wa.me/556236382770?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary font-medium hover:underline"
+          >
+            (62) 3638-2770
+          </a>
+        </div>
       </form>
     </div>
   );
