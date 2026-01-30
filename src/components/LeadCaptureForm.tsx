@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle } from "lucide-react";
+import { CityCombobox } from "@/components/CityCombobox";
 
 const establishmentTypes = [
   { value: "residencia", label: "Residência" },
@@ -29,6 +30,7 @@ interface FormData {
   empresa: string;
   whatsapp: string;
   email: string;
+  cidade: string;
   tipoEstabelecimento: string;
   consumoMensal: string;
 }
@@ -42,6 +44,7 @@ export function LeadCaptureForm() {
     empresa: "",
     whatsapp: "",
     email: "",
+    cidade: "",
     tipoEstabelecimento: "",
     consumoMensal: "",
   });
@@ -104,6 +107,7 @@ export function LeadCaptureForm() {
           empresa: formData.empresa,
           whatsapp: formData.whatsapp,
           email: formData.email,
+          cidade: formData.cidade,
           tipoEstabelecimento: formData.tipoEstabelecimento,
           valorContaLuz: formData.consumoMensal,
         }),
@@ -200,6 +204,14 @@ export function LeadCaptureForm() {
             onChange={(e) => handleInputChange("email", e.target.value)}
             maxLength={255}
             required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>Cidade</Label>
+          <CityCombobox
+            value={formData.cidade}
+            onValueChange={(value) => handleInputChange("cidade", value)}
           />
         </div>
 

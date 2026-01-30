@@ -26,11 +26,13 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a 
-                  href="tel:+5562999999999" 
+                  href="https://wa.me/556236382770?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR." 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-3 text-primary-foreground/70 hover:text-primary transition-smooth"
                 >
                   <Phone className="w-4 h-4" />
-                  (62) 99999-9999
+                  (62) 3638-2770
                 </a>
               </li>
               <li>
