@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 
 export function WhatsAppButton() {
-  const whatsappNumber = "5562999999999";
+  const whatsappNumber = "556236382770";
   const message = encodeURIComponent(
     "Olá! Gostaria de saber mais sobre a energia solar por assinatura da AESOLAR."
   );
