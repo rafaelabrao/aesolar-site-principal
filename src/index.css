@@ -58,6 +58,17 @@
     --sidebar-accent-foreground: 16 87% 45%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 16 87% 55%;
+
+    @media (max-width: 768px) {
+  :root {
+    --hero-overlay: linear-gradient(
+      180deg,
+      hsla(220, 15%, 10%, 0.88) 0%,
+      hsla(220, 15%, 10%, 0.72) 45%,
+      hsla(220, 15%, 10%, 0.92) 100%
+    );
+  }
+}
   }
 
   .dark {
