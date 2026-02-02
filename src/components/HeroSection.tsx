@@ -15,7 +15,7 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center">
       {/* Background Image */}
       <div
-     className="absolute inset-0 bg-cover bg-no-repeat bg-[center_80%] md:bg-center"
+     className="absolute inset-0 bg-cover bg-no-repeat bg-[center_50%] md:bg-center"
       style={{ backgroundImage: `url(${heroBackground})` }}
     />
       
