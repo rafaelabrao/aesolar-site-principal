@@ -18,7 +18,8 @@ export function HeroSection() {
 <img
   src={heroBackground}
   alt=""
-  className="absolute inset-0 h-full w-full object-cover md:object-center object-[50%_85%]"
+  className="absolute inset-0 h-full w-full object-cover md:object-center"
+  style={{ objectPosition: "50% 85%" }}
 />
       
       {/* Overlay */}
