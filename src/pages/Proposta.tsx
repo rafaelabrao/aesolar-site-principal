@@ -281,8 +281,8 @@ export default function Proposta() {
                   </Button>
                 </div>
               </div>
-            ) : (
-              &lt;>
+            ):(
+              <>
                 {/* RESUMO */}
                 <div className="rounded-2xl bg-card p-6 shadow-soft">
                   <h2 className="text-lg font-bold text-foreground">Resumo da sua economia</h2>
