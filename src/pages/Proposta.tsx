@@ -370,12 +370,6 @@ export default function Proposta() {
                       </div>
                     ))}
                   </div>
-
-                  <div className="mt-4 rounded-xl bg-muted/30 p-4">
-                    <p className="text-sm text-muted-foreground">
-                      <span className="font-semibold text-foreground">nome + segmento + cidade + período + economia real</span>.
-                    </p>
-                  </div>
                 </div>
 
                 {/* FAQ */}
