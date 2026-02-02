@@ -83,35 +83,28 @@ export default function Proposta() {
     ? `Quero economizar R$ ${formatMoneyBR(monthlySavings)}/mês no WhatsApp`
     : "Quero receber minha proposta no WhatsApp";
 
-  // Depoimentos: modelos (substitua por reais/confirmados antes de publicar em produção)
+  // Depoimentos: 
   const testimonials = [
     {
-      title: "Coworking (cliente há 1 ano)",
-      name: "Carlos M. (dono de coworking)",
+      title: ,
+      name:"Coworking (cliente há 1 ano)",
       location: "Goiânia/GO",
       quote:
-        "Eu precisava reduzir custos sem mexer na estrutura do prédio. A proposta foi clara, a adesão foi simples e o atendimento no WhatsApp resolveu tudo rápido. Em 1 ano, a economia mês a mês fez diferença no caixa.",
-      disclaimer: "Depoimento modelo — substitua por um depoimento real/confirmado.",
+        "Assinei o plano de energia solar há um ano e já sinto a diferença no bolso e na consciência ambiental. Reduzimos significativamente os custos mensais e ainda conseguimos valorizar o espaço com uma energia limpa e sustentável. Foi uma decisão excelente para o meu coworking.",
     },
     {
-      title: "Condomínio (cliente desde 2022)",
-      name: "Fernanda S. (síndica)",
+      title: ,
+      name: "Condomínio (cliente desde 2022)",
       location: "Goiânia/GO",
       quote:
-        "Como síndica, eu precisava de previsibilidade e transparência. O suporte foi muito bom e o acompanhamento ajudou nas prestações de contas. Desde 2022, tivemos uma economia acumulada relevante no condomínio.",
-      metric:
-        "Ajuste o número com o real: [R$ 130.000+] economizados desde 2022 (CONFIRMAR).",
-      disclaimer: "Depoimento modelo — substitua por um depoimento real/confirmado.",
+        "Desde 2022, nosso condomínio é cliente e já economizamos mais de R$130 mil na conta de luz. O atendimento é ágil, transparente e nos transmite total segurança. Hoje, os moradores reconhecem o quanto essa escolha trouxe economia e sustentabilidade para o condomínio.",
     },
     {
-      title: "Restaurante (cliente desde 2024)",
-      name: "Rafael A. (dono de restaurante)",
+      title: ,
+      name: "Restaurante (cliente desde 2024)",
       location: "Goiânia/GO",
       quote:
-        "Conta de luz sempre foi um vilão no meu negócio. Gostei porque não precisei instalar nada e consegui reduzir custo fixo. Desde 2024, a economia recorrente ajudou bastante na margem do mês.",
-      metric:
-        "Ajuste o número com o real: [R$ 130.000+] economizados desde 2024 (CONFIRMAR).",
-      disclaimer: "Depoimento modelo — substitua por um depoimento real/confirmado.",
+        "Sou cliente da AESOLAR desde 2024 e, nesse período, já economizei mais de R$100 mil em energia. Essa redução de custo fez toda a diferença na operação do restaurante. Além da economia, o suporte técnico da equipe é excelente — energia solar por assinatura é um investimento que realmente compensa.",
     },
   ];
 
@@ -232,7 +225,6 @@ export default function Proposta() {
               </Button>
 
               <p className="text-xs text-muted-foreground text-center mt-3">
-                Próximo passo: clique e eu te explico em 2 minutos.
               </p>
             </div>
 
@@ -361,7 +353,7 @@ export default function Proposta() {
 
                 {/* PROVA SOCIAL (MODELOS) */}
                 <div className="rounded-2xl bg-card p-6 shadow-soft">
-                  <h2 className="text-lg font-bold text-foreground mb-4">Relatos de clientes (modelos)</h2>
+                  <h2 className="text-lg font-bold text-foreground mb-4">Relatos de clientes</h2>
 
                   <div className="grid md:grid-cols-3 gap-4">
                     {testimonials.map((t) => (
@@ -385,7 +377,6 @@ export default function Proposta() {
 
                   <div className="mt-4 rounded-xl bg-muted/30 p-4">
                     <p className="text-sm text-muted-foreground">
-                      Dica: quando você tiver os depoimentos reais, substitua os textos acima por{" "}
                       <span className="font-semibold text-foreground">nome + segmento + cidade + período + economia real</span>.
                     </p>
                   </div>
