@@ -86,25 +86,22 @@ export default function Proposta() {
   // Depoimentos com números/tempo devem ser reais/confirmados antes de produção.
   const testimonials = [
     {
-      segment: "Coworking",
-      name: "Cliente (Coworking)",
+      name:"Coworking (cliente há 1 ano)",
       location: "Goiânia/GO",
       quote:
-        "Reduzimos custos sem precisar instalar nada no prédio. O atendimento foi rápido e a economia começou a aparecer mês a mês. Processo simples e bem explicado.",
+        "Assinei o plano de energia solar há um ano e já sinto a diferença no bolso e na consciência ambiental. Reduzimos significativamente os custos mensais e ainda conseguimos valorizar o espaço com uma energia limpa e sustentável. Foi uma decisão excelente para o meu coworking.",
     },
     {
-      segment: "Condomínio",
-      name: "Síndica (Condomínio)",
+      name: "Condomínio (cliente desde 2022)",
       location: "Goiânia/GO",
       quote:
-        "O que mais me ajudou foi a previsibilidade e a transparência para prestação de contas. O suporte foi ágil e a solução fez sentido para o condomínio.",
+        "Desde 2022, nosso condomínio é cliente e já economizamos mais de R$130 mil na conta de luz. O atendimento é ágil, transparente e nos transmite total segurança. Hoje, os moradores reconhecem o quanto essa escolha trouxe economia e sustentabilidade para o condomínio.",
     },
     {
-      segment: "Restaurante",
-      name: "Cliente (Restaurante)",
+      name: "Restaurante (cliente desde 2024)",
       location: "Goiânia/GO",
       quote:
-        "Conta de energia pesa muito no restaurante. Gostei porque não precisei de obra e consegui reduzir custo fixo. Atendimento humano e objetivo.",
+        "Sou cliente da AESOLAR desde 2024 e, nesse período, já economizei mais de R$100 mil em energia. Essa redução de custo fez toda a diferença na operação do restaurante. Além da economia, o suporte técnico da equipe é excelente — energia solar por assinatura é um investimento que realmente compensa.",
     },
   ];
 
@@ -376,7 +373,6 @@ export default function Proposta() {
                   <div className="grid md:grid-cols-3 gap-4">
                     {testimonials.map((t) => (
                       <div key={t.segment} className="rounded-xl border border-border p-4">
-                        <p className="text-xs text-muted-foreground">{t.segment}</p>
                         <p className="text-sm font-semibold text-foreground mt-1">{t.name}</p>
                         <p className="text-xs text-muted-foreground">{t.location}</p>
                         <p className="text-sm text-muted-foreground mt-3">“{t.quote}”</p>
