@@ -29,16 +29,23 @@ export function CityCombobox({ value, onValueChange }: CityComboboxProps) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between font-normal"
-        >
+  variant="outline"
+  role="combobox"
+  aria-expanded={open}
+  className={cn(
+    "w-full justify-between font-normal",
+    "h-10 px-3",
+    "bg-background text-foreground",
+    "border border-input",
+    "hover:bg-background hover:text-foreground hover:border-input",
+    "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background"
+  )}
+>
           {value || "Selecione sua cidade"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start">
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
         <Command>
           <CommandInput placeholder="Buscar cidade..." />
           <CommandList>
