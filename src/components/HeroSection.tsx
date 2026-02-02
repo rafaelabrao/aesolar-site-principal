@@ -18,7 +18,7 @@ export function HeroSection() {
   className="absolute inset-0 bg-cover bg-no-repeat md:hidden"
   style={{
     backgroundImage: `url(${heroBackground})`,
-    backgroundPosition: "center 60%",
+    backgroundPosition: "center 10%",
   }}
 />
 
