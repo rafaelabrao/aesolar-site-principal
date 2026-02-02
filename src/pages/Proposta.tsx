@@ -253,8 +253,7 @@ export default function Proposta() {
               </Button>
 
               <p className="text-xs text-muted-foreground text-center mt-3">
-                Próximo passo: clique e eu te explico em 2 minutos.
-              </p>
+                </p>
             </div>
 
             <div className="mt-6 rounded-xl border border-border p-4">
