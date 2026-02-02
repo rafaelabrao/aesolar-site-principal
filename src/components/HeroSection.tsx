@@ -12,18 +12,17 @@ const benefits = [
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section className="relative min-h-[100svh] flex items-center">
 
-{/* Background Image */}
-<img
-  src={heroBackground}
-  alt=""
-  className="absolute inset-0 h-full w-full object-cover md:object-center"
-  style={{ objectPosition: "50% 60%" }}
-/>
-      
-      {/* Overlay */}
-      <div className="absolute inset-0 hero-overlay" />
+      {/* Background Image (fixo no mobile) */}
+    <img
+      src={heroBackground}
+      alt=""
+     className="absolute inset-x-0 top-0 w-full h-[100svh] object-cover object-bottom md:inset-0 md:h-full md:object-center"
+    />
+
+    {/* Overlay (fixo no mobile) */}
+    <div className="absolute inset-x-0 top-0 w-full h-[100svh] hero-overlay md:inset-0 md:h-full" />
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
