@@ -40,7 +40,6 @@ interface FormData {
 export function LeadCaptureForm() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     nome: "",
     empresa: "",
@@ -144,44 +143,32 @@ export function LeadCaptureForm() {
     data = null;
   }
 
-  if (!response.ok) {
-    toast({
-      title: "Erro ao enviar proposta",
-      description: "O servidor retornou um erro. Tente novamente em instantes.",
-      variant: "destructive",
-    });
-    setIsSubmitting(false);
-    return;
-  }
-
-  const urlFinal = Array.isArray(data) ? data?.[0]?.url_final : data?.url_final;
-
-  const url = data?.url || data?.link || urlFinal;
-  const path = data?.path;
-
-  setIsSubmitting(false);
-  setIsSuccess(true);
-
+if (!response.ok) {
   toast({
-    title: "Proposta enviada com sucesso!",
-    description: "Redirecionando para sua proposta...",
-  });
-
-  if (typeof url === "string" && url.startsWith("http")) {
-    window.location.href = url;
-    return;
-  }
-
-  if (typeof path === "string" && path.startsWith("/")) {
-    window.location.href = window.location.origin + path;
-    return;
-  }
-
-  toast({
-    title: "Resposta inesperada",
-    description: "Não encontrei o link da proposta na resposta do servidor.",
+    title: "Erro ao enviar proposta",
+    description: "O servidor retornou um erro. Tente novamente em instantes.",
     variant: "destructive",
   });
+  setIsSubmitting(false);
+  return;
+}
+
+const urlFinal = Array.isArray(data) ? data?.[0]?.url_final : data?.url_final;
+
+setIsSubmitting(false);
+
+if (typeof urlFinal === "string" && urlFinal.startsWith("http")) {
+  window.location.assign(urlFinal);
+  return;
+}
+
+toast({
+  title: "Resposta inesperada",
+  description: "Não encontrei o link da proposta (url_final) na resposta do servidor.",
+  variant: "destructive",
+});
+return;
+
 } catch (error) {
   setIsSubmitting(false);
   toast({
@@ -192,21 +179,6 @@ export function LeadCaptureForm() {
 }
   };
 
-  if (isSuccess) {
-    return (
-      <div className="rounded-2xl bg-card p-8 shadow-soft animate-fade-in">
-        <div className="flex flex-col items-center text-center space-y-4">
-          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-            <CheckCircle className="w-8 h-8 text-primary" />
-          </div>
-          <h3 className="text-2xl font-bold text-foreground">Proposta Enviada!</h3>
-          <p className="text-muted-foreground">
-            Recebemos suas informações. Nossa equipe entrará em contato em até 24 horas para apresentar sua proposta personalizada de economia.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="rounded-2xl bg-card p-6 md:p-8 shadow-soft animate-slide-up">
