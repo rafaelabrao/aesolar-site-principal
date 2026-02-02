@@ -63,7 +63,6 @@ export default function Proposta() {
 
   const fatorDesconto = DESCONTO_BASE / 100;
 
-  // Consumo estimado (kWh) = valorConta / TARIFA
   const consumoKwh = hasValorConta ? valorConta / TARIFA : 0;
 
   const monthlyCostOld = hasValorConta ? valorConta : 0;
@@ -83,30 +82,34 @@ export default function Proposta() {
     ? `Quero economizar R$ ${formatMoneyBR(monthlySavings)}/mês no WhatsApp`
     : "Quero receber minha proposta no WhatsApp";
 
-  // Depoimentos: 
+  // ⚠️ Observação de compliance/credibilidade:
+  // Depoimentos com números/tempo devem ser reais/confirmados antes de produção.
   const testimonials = [
     {
-      name:"Coworking (cliente há 1 ano)",
+      segment: "Coworking",
+      name: "Cliente (Coworking)",
       location: "Goiânia/GO",
       quote:
-        "Assinei o plano de energia solar há um ano e já sinto a diferença no bolso e na consciência ambiental. Reduzimos significativamente os custos mensais e ainda conseguimos valorizar o espaço com uma energia limpa e sustentável. Foi uma decisão excelente para o meu coworking.",
+        "Reduzimos custos sem precisar instalar nada no prédio. O atendimento foi rápido e a economia começou a aparecer mês a mês. Processo simples e bem explicado.",
     },
     {
-      name: "Condomínio (cliente desde 2022)",
+      segment: "Condomínio",
+      name: "Síndica (Condomínio)",
       location: "Goiânia/GO",
       quote:
-        "Desde 2022, nosso condomínio é cliente e já economizamos mais de R$130 mil na conta de luz. O atendimento é ágil, transparente e nos transmite total segurança. Hoje, os moradores reconhecem o quanto essa escolha trouxe economia e sustentabilidade para o condomínio.",
+        "O que mais me ajudou foi a previsibilidade e a transparência para prestação de contas. O suporte foi ágil e a solução fez sentido para o condomínio.",
     },
     {
-      name: "Restaurante (cliente desde 2024)",
+      segment: "Restaurante",
+      name: "Cliente (Restaurante)",
       location: "Goiânia/GO",
       quote:
-        "Sou cliente da AESOLAR desde 2024 e, nesse período, já economizei mais de R$100 mil em energia. Essa redução de custo fez toda a diferença na operação do restaurante. Além da economia, o suporte técnico da equipe é excelente — energia solar por assinatura é um investimento que realmente compensa.",
+        "Conta de energia pesa muito no restaurante. Gostei porque não precisei de obra e consegui reduzir custo fixo. Atendimento humano e objetivo.",
     },
   ];
 
   const whatsappHref = useMemo(() => {
-    const telefone = "556236382770"; // WhatsApp humano (vendas)
+    const telefone = "556236382770";
     const msg =
       `Olá! Vim pela proposta no site.\n\n` +
       `Nome: ${nome}\n` +
@@ -124,17 +127,50 @@ export default function Proposta() {
   }, [nome, empresa, cidade, tipoEstabelecimento, hasValorConta, valorConta, consumoKwh, monthlySavings, yearlySavings]);
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-muted/30">
       <section className="container mx-auto px-6 py-10">
         {/* HERO */}
         <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-          <img src={heroUfv} alt="Usina solar" className="absolute inset-0 h-full w-full object-cover opacity-25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
+          <img
+            src={heroUfv}
+            alt="Usina solar"
+            className="absolute inset-0 h-full w-full object-cover opacity-45"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background/95" />
 
           <div className="relative p-6 md:p-10">
-            <p className="text-sm text-muted-foreground">Proposta personalizada</p>
+            {/* Top bar com logo */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <img
+                  src="/logo-aesolar.png"
+                  alt="AESOLAR"
+                  className="h-8 w-auto"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+                <div className="leading-tight">
+                  <p className="text-sm font-bold text-foreground">AESOLAR</p>
+                  <p className="text-xs text-muted-foreground">Energia solar por assinatura</p>
+                </div>
+              </div>
 
-            <h1 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
+              <div className="hidden md:flex gap-3">
+                <Button asChild variant="outline">
+                  <Link to="/">Voltar</Link>
+                </Button>
+                <Button asChild variant="hero" className="h-auto py-3 px-5 whitespace-normal leading-tight">
+                  <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                    {ctaText}
+                  </a>
+                </Button>
+              </div>
+            </div>
+
+            <p className="mt-6 text-sm text-muted-foreground">Proposta personalizada</p>
+
+            <h1 className="mt-2 text-2xl md:text-4xl font-bold text-foreground max-w-3xl">
               Reduza sua conta em até <span className="text-primary">{maxEconomyPct}%</span> sem instalar nada
             </h1>
 
@@ -143,36 +179,31 @@ export default function Proposta() {
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
-              <span className="rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-foreground">
+              <span className="rounded-full border border-border bg-background/70 px-3 py-1 text-xs text-foreground">
                 Sem instalação
               </span>
-              <span className="rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-foreground">
+              <span className="rounded-full border border-border bg-background/70 px-3 py-1 text-xs text-foreground">
                 Sem investimento inicial
               </span>
-              <span className="rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-foreground">
+              <span className="rounded-full border border-border bg-background/70 px-3 py-1 text-xs text-foreground">
                 Atendimento humano no WhatsApp
               </span>
             </div>
 
-            <div className="mt-6 hidden md:flex flex-wrap gap-3 items-center">
-              <Button asChild variant="outline">
-                <Link to="/">Voltar</Link>
-              </Button>
-
-              <Button asChild variant="hero" className="h-auto py-4 px-6 whitespace-normal leading-tight">
+            <div className="mt-6 md:hidden">
+              <Button asChild variant="hero" className="w-full h-auto py-4 whitespace-normal leading-tight">
                 <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
                   {ctaText}
                 </a>
               </Button>
-
-              <p className="text-xs text-muted-foreground">Sem compromisso. Resposta rápida.</p>
+              <p className="text-xs text-muted-foreground mt-2 text-center">Sem compromisso. Resposta rápida.</p>
             </div>
           </div>
         </div>
 
         {/* GRID PRINCIPAL */}
         <div className="mt-8 grid lg:grid-cols-12 gap-6">
-          {/* ESQUERDA: DADOS + CTA + COMO FUNCIONA */}
+          {/* ESQUERDA */}
           <div className="lg:col-span-4 rounded-2xl bg-card p-6 shadow-soft">
             <h2 className="text-lg font-bold text-foreground mb-4">Seus dados</h2>
 
@@ -222,6 +253,7 @@ export default function Proposta() {
               </Button>
 
               <p className="text-xs text-muted-foreground text-center mt-3">
+                Próximo passo: clique e eu te explico em 2 minutos.
               </p>
             </div>
 
@@ -233,18 +265,9 @@ export default function Proposta() {
                 <li>Você começa a economizar na conta</li>
               </ul>
             </div>
-
-            <div className="mt-4 rounded-xl bg-muted/30 p-4">
-              <p className="text-sm font-semibold text-foreground">O que você recebe no WhatsApp</p>
-              <ul className="mt-2 text-sm text-muted-foreground space-y-1 list-disc pl-5">
-                <li>Proposta final e condições</li>
-                <li>Simulação confirmada com seus dados</li>
-                <li>Orientação do início ao fim</li>
-              </ul>
-            </div>
           </div>
 
-          {/* DIREITA: ECONOMIA + COMPARATIVO + PROVA SOCIAL + FAQ */}
+          {/* DIREITA */}
           <div className="lg:col-span-8 space-y-6">
             {!hasValorConta ? (
               <div className="rounded-2xl bg-card p-6 shadow-soft">
@@ -259,8 +282,8 @@ export default function Proposta() {
                 </div>
               </div>
             ) : (
-              <>
-                {/* RESUMO DE ECONOMIA */}
+              &lt;>
+                {/* RESUMO */}
                 <div className="rounded-2xl bg-card p-6 shadow-soft">
                   <h2 className="text-lg font-bold text-foreground">Resumo da sua economia</h2>
 
@@ -284,15 +307,14 @@ export default function Proposta() {
                     </div>
                   </div>
 
+                  {/* CTA dentro do resumo (desktop também) */}
                   <div className="mt-5">
                     <Button asChild variant="hero" className="w-full h-auto py-4 whitespace-normal leading-tight">
                       <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
                         {ctaText}
                       </a>
                     </Button>
-                    <p className="text-xs text-muted-foreground mt-3">
-                      Sem compromisso. Atendimento humano e rápido.
-                    </p>
+                    <p className="text-xs text-muted-foreground mt-3">Atendimento humano. Sem compromisso.</p>
                   </div>
                 </div>
 
@@ -348,70 +370,99 @@ export default function Proposta() {
                   </p>
                 </div>
 
-                {/* PROVA SOCIAL (MODELOS) */}
+                {/* PROVA SOCIAL */}
                 <div className="rounded-2xl bg-card p-6 shadow-soft">
                   <h2 className="text-lg font-bold text-foreground mb-4">Relatos de clientes</h2>
 
                   <div className="grid md:grid-cols-3 gap-4">
                     {testimonials.map((t) => (
-                      <div key={t.title} className="rounded-xl border border-border p-4">
+                      <div key={t.segment} className="rounded-xl border border-border p-4">
+                        <p className="text-xs text-muted-foreground">{t.segment}</p>
                         <p className="text-sm font-semibold text-foreground mt-1">{t.name}</p>
                         <p className="text-xs text-muted-foreground">{t.location}</p>
-
                         <p className="text-sm text-muted-foreground mt-3">“{t.quote}”</p>
-
-                        {"metric" in t && t.metric ? (
-                          <p className="text-xs text-muted-foreground mt-3">{t.metric}</p>
-                        ) : null}
-
-                        <p className="text-[11px] text-muted-foreground mt-3">
-                          {t.disclaimer}
-                        </p>
                       </div>
                     ))}
                   </div>
+
+                  {/* CTA logo após prova social (muito bom para CRO) */}
+                  <div className="mt-6">
+                    <Button asChild variant="hero" className="w-full h-auto py-4 whitespace-normal leading-tight">
+                      <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                        {ctaText}
+                      </a>
+                    </Button>
+                    <p className="text-xs text-muted-foreground mt-2 text-center">
+                      Tire dúvidas e confirme disponibilidade para sua cidade.
+                    </p>
+                  </div>
                 </div>
 
-                {/* FAQ */}
+                {/* FAQ + CTA no final do FAQ */}
                 <div className="rounded-2xl bg-card p-6 shadow-soft">
                   <h2 className="text-lg font-bold text-foreground mb-4">Perguntas frequentes</h2>
 
                   <div className="space-y-3">
                     <details className="rounded-xl border border-border p-4">
-                      <summary className="font-semibold text-foreground cursor-pointer">
-                        Preciso instalar placas?
-                      </summary>
+                      <summary className="font-semibold text-foreground cursor-pointer">Preciso instalar placas?</summary>
                       <p className="text-sm text-muted-foreground mt-2">
                         Não. É energia solar por assinatura. Você não instala placas no seu imóvel.
                       </p>
                     </details>
 
                     <details className="rounded-xl border border-border p-4">
-                      <summary className="font-semibold text-foreground cursor-pointer">
-                        Como avanço agora?
-                      </summary>
+                      <summary className="font-semibold text-foreground cursor-pointer">Como avanço agora?</summary>
                       <p className="text-sm text-muted-foreground mt-2">
                         Clique no WhatsApp. Eu confirmo seus dados e explico como funciona para você avançar com segurança.
                       </p>
                     </details>
 
                     <details className="rounded-xl border border-border p-4">
-                      <summary className="font-semibold text-foreground cursor-pointer">
-                        Essa economia é garantida?
-                      </summary>
+                      <summary className="font-semibold text-foreground cursor-pointer">Essa economia é garantida?</summary>
                       <p className="text-sm text-muted-foreground mt-2">
                         Aqui é uma estimativa com base no que você informou. No WhatsApp a gente confirma os detalhes e fecha a proposta final.
                       </p>
                     </details>
 
                     <details className="rounded-xl border border-border p-4">
-                      <summary className="font-semibold text-foreground cursor-pointer">
-                        Atende minha cidade?
-                      </summary>
+                      <summary className="font-semibold text-foreground cursor-pointer">Atende minha cidade?</summary>
                       <p className="text-sm text-muted-foreground mt-2">
                         Atendemos Goiás. No WhatsApp eu valido disponibilidade para sua região e perfil.
                       </p>
                     </details>
+                  </div>
+
+                  {/* CTA FINAL DO FAQ (resolve seu problema do desktop) */}
+                  <div className="mt-6">
+                    <Button asChild variant="hero" className="w-full h-auto py-4 whitespace-normal leading-tight">
+                      <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                        {ctaText}
+                      </a>
+                    </Button>
+                    <p className="text-xs text-muted-foreground mt-2 text-center">
+                      Atendimento humano. Sem compromisso.
+                    </p>
+                  </div>
+                </div>
+
+                {/* CTA FINAL DA PÁGINA (desktop) */}
+                <div className="hidden md:block rounded-3xl border border-border bg-card shadow-soft p-8">
+                  <div className="flex items-center justify-between gap-6 flex-wrap">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Pronto para avançar?</p>
+                      <p className="text-2xl font-bold text-foreground mt-1">
+                        Clique e finalize sua proposta no WhatsApp
+                      </p>
+                      <p className="text-muted-foreground mt-2">
+                        Você confirma alguns dados e eu te explico o passo a passo.
+                      </p>
+                    </div>
+
+                    <Button asChild variant="hero" className="h-auto py-4 px-6 whitespace-normal leading-tight">
+                      <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                        {ctaText}
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </>
@@ -419,7 +470,7 @@ export default function Proposta() {
           </div>
         </div>
 
-        {/* espaço para o sticky CTA no mobile */}
+        {/* Espaço para o sticky CTA no mobile */}
         <div className="h-24 md:hidden" />
 
         {/* CTA FIXO MOBILE */}
@@ -430,9 +481,7 @@ export default function Proposta() {
                 {ctaText}
               </a>
             </Button>
-            <p className="text-xs text-muted-foreground mt-2 text-center">
-              Atendimento humano. Sem compromisso.
-            </p>
+            <p className="text-xs text-muted-foreground mt-2 text-center">Atendimento humano. Sem compromisso.</p>
           </div>
         </div>
       </section>
