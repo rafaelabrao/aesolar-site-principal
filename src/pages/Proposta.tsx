@@ -86,21 +86,18 @@ export default function Proposta() {
   // Depoimentos: 
   const testimonials = [
     {
-      title: ,
       name:"Coworking (cliente há 1 ano)",
       location: "Goiânia/GO",
       quote:
         "Assinei o plano de energia solar há um ano e já sinto a diferença no bolso e na consciência ambiental. Reduzimos significativamente os custos mensais e ainda conseguimos valorizar o espaço com uma energia limpa e sustentável. Foi uma decisão excelente para o meu coworking.",
     },
     {
-      title: ,
       name: "Condomínio (cliente desde 2022)",
       location: "Goiânia/GO",
       quote:
         "Desde 2022, nosso condomínio é cliente e já economizamos mais de R$130 mil na conta de luz. O atendimento é ágil, transparente e nos transmite total segurança. Hoje, os moradores reconhecem o quanto essa escolha trouxe economia e sustentabilidade para o condomínio.",
     },
     {
-      title: ,
       name: "Restaurante (cliente desde 2024)",
       location: "Goiânia/GO",
       quote:
