@@ -42,7 +42,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-        VITE_N8N_WEBHOOK_URL: ${{ secrets.VITE_N8N_WEBHOOK_URL }}
+          VITE_N8N_WEBHOOK_URL: ${{ secrets.VITE_N8N_WEBHOOK_URL }}
 
       # Faz upload do artefato dist para o Pages
       - name: Upload artifact
