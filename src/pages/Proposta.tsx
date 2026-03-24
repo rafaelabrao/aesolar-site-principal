@@ -106,7 +106,7 @@ export default function Proposta() {
   ];
 
   const whatsappHref = useMemo(() => {
-    const telefone = "556236382770";
+    const telefone = "5562993420248";
     const msg =
       `Olá! Vim pela proposta no site.\n\n` +
       `Nome: ${nome}\n` +
