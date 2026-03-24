@@ -372,7 +372,7 @@ export default function Proposta() {
 
                   <div className="grid md:grid-cols-3 gap-4">
                     {testimonials.map((t) => (
-                      <div key={t.segment} className="rounded-xl border border-border p-4">
+                      <div key={`${t.name}-${t.location}`} className="rounded-xl border border-border p-4">
                         <p className="text-sm font-semibold text-foreground mt-1">{t.name}</p>
                         <p className="text-xs text-muted-foreground">{t.location}</p>
                         <p className="text-sm text-muted-foreground mt-3">“{t.quote}”</p>
