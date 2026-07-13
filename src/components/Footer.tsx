@@ -26,15 +26,20 @@ export function Footer() {
             <h4 className="text-primary-foreground font-semibold mb-4">Contato</h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="https://wa.me/5562993420248?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-primary-foreground/70 hover:text-primary transition-smooth"
-                >
-                  <Phone className="w-4 h-4" />
-                  (62) 99342-0248
-                </a>
+                <div className="flex flex-col gap-1 text-primary-foreground/70">
+                  <a
+                    href="https://wa.me/5562993420248?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 hover:text-primary transition-smooth"
+                  >
+                    <Phone className="w-4 h-4" />
+                    (62) 99342-0248 (WhatsApp)
+                  </a>
+                  <span className="text-xs pl-7 text-primary-foreground/50">
+                    Fixo oficial: (62) 3638-2770
+                  </span>
+                </div>
               </li>
               <li>
                 <a
@@ -47,7 +52,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-3 text-primary-foreground/70">
                 <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>Goiânia, Goiás - Brasil</span>
+                <span>Av. Deputado Jamel Cecílio, 3455, Sala 806, Jd. Goiás - Goiânia/GO</span>
               </li>
             </ul>
           </div>
@@ -95,8 +100,9 @@ export function Footer() {
         {/* Bottom */}
         <div className="pt-8 border-t border-primary-foreground/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-primary-foreground/50">
-              © {currentYear} AESOLAR. Todos os direitos reservados.
+            <p className="text-sm text-primary-foreground/50 text-center md:text-left">
+              © {currentYear} AESOLAR. Todos os direitos reservados. <br />
+              <span className="text-xs opacity-80">ASSOCIACAO DE ENERGIA SOLAR COMPARTILHADA - AESOLAR | CNPJ: 46.520.853/0001-55</span>
             </p>
             <div className="flex gap-6">
               <a
