@@ -300,12 +300,12 @@ return;
         <div className="text-center mt-4 pt-4 border-t border-border">
           <p className="text-sm text-muted-foreground mb-1">Prefere falar conosco?</p>
           <a
-            href="https://wa.me/5562993420248?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR."
+            href="https://wa.me/5562992727645?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR."
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary font-medium hover:underline"
           >
-            (62) 99342-0248
+            (62) 99272-7645
           </a>
         </div>
       </form>
