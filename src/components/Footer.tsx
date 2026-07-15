@@ -28,13 +28,13 @@ export function Footer() {
               <li>
                 <div className="flex flex-col gap-1 text-primary-foreground/70">
                   <a
-                    href="https://wa.me/5562993420248?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR."
+                    href="https://wa.me/5562992727645?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20energia%20solar%20por%20assinatura%20da%20AESOLAR."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 hover:text-primary transition-smooth"
                   >
                     <Phone className="w-4 h-4" />
-                    (62) 99342-0248 (WhatsApp)
+                    (62) 99272-7645 (WhatsApp)
                   </a>
                   <span className="text-xs pl-7 text-primary-foreground/50">
                     Fixo oficial: (62) 3638-2770
