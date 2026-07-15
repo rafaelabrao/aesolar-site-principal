@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 
 export function WhatsAppButton() {
-  const whatsappNumber = "5562993420248";
+  const whatsappNumber = "5562992727645";
   const message = encodeURIComponent(
     "Olá! Gostaria de saber mais sobre a energia solar por assinatura da AESOLAR."
   );
@@ -18,7 +18,7 @@ export function WhatsAppButton() {
       <MessageCircle className="w-7 h-7 text-primary-foreground fill-primary-foreground" />
       
       {/* Tooltip */}
-      <span className="absolute right-full mr-3 px-3 py-2 rounded-lg bg-card text-foreground text-sm font-medium shadow-soft opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+      <span className="absolute right-full mr-3 px-3 py-2 rounded-lg bg-card text-foreground text-sm font-medium shadow-soft opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
         Fale conosco!
       </span>
     </a>
