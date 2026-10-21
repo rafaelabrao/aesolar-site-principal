@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Segredos e ambientes locais (o repositório é público)
+.env
+*.env
+.env.*
+secrets/
+*.pem
+*.key
+.venv/
+__pycache__/

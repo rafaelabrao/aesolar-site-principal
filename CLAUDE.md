@@ -47,6 +47,45 @@ npm run build    # compilar para dist/
 npm test         # testes (vitest)
 ```
 
+## Site novo (em construção, branch `site-novo`)
+
+Desde 21/10/2026 o site novo está sendo feito na branch local `site-novo`, no modelo do site do Top
+Office: HTML pronto por página, gerado de um arquivo único de dados. Proposta e decisões pendentes:
+`entregas-intensivo/A2-PROPOSTA-SITE-NOVO.md` (fora do git, só neste Mac). Enquanto não for aprovado,
+o site no ar continua sendo o Vite da `main`.
+
+```bash
+python3 gerador/gera_site.py              # gera site/ (só Python padrão, 3.9+)
+python3 gerador/gera_site.py --producao   # o que precisa passar antes de publicar
+python3 gerador/teste_gerador.py          # testes (precisa do node)
+python3 -m http.server 8090 --directory site   # ver em http://localhost:8090
+.venv/bin/python gerador/prepara_assets.py     # só se mudar foto, logo ou fonte (Pillow e fontTools no .venv)
+```
+
+- `gerador/dados.json` é a fonte única (WhatsApp, mínimo, prazos, parâmetros do simulador). Nunca editar
+  o HTML de `site/` à mão.
+- O gerador para se achar frase proibida pela marca, percentual sem "até", link quebrado, WhatsApp fora
+  do padrão, cor fora dos tokens de `gerador/estilo.css` ou depoimento sem termo. Marcas `PENDENTE Dn`
+  são decisões do Rafael (proposta §9); `--producao` não passa com nenhuma.
+- A conta do simulador existe em `gerador/simulador.py` e em `site/assets/simulador.js`: mudou uma,
+  mude a outra (o teste compara as duas).
+- Fotos de usina: só do banco da Academia (`22_ACADEMIA_AESOLAR/03_INSUMOS/fotos_usinas`, sem GPS).
+  Os originais de `Fotos/` têm a coordenada da usina. `src/assets/hero-background*.jpg` são banco de
+  imagem: não usar.
+- O DNS de `aesolar.com.br` está na Locaweb, junto com o e-mail. Por isso a recomendação é continuar no
+  GitHub Pages (sem mexer em DNS).
+
+Armadilhas já pagas no site novo:
+
+- Ícone de `<symbol>` reaproveitado com `<use>` herda `fill` e `stroke` do `<svg>` que o usa, não do
+  sprite: sem `fill: none; stroke: currentColor` em `.ic`, sai borrão preto.
+- Regra de cor para parágrafo de seção escura (`.topo p`) vaza para o cartão branco do simulador dentro
+  dela. Cor de texto em fundo escuro vai no contêiner, e o parágrafo herda.
+- Captura de página inteira do Playwright desenha a barra fixa no meio da página: esconder a barra na
+  captura e conferir a barra numa captura da tela.
+- fontTools: recortar a Inter depois do `instancer` dá `KeyError`; salvar e recarregar a fonte entre os
+  dois passos.
+
 ## Como trabalhar aqui
 
 Explique o porquê de cada mudança em linguagem direta e mostre o resultado

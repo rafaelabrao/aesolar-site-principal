@@ -1,0 +1,80 @@
+{
+  "_leia": "Fonte única do site. Telefone, mínimo, prazos, parâmetros do simulador e textos da marca moram SÓ aqui. Mudou algo: editar aqui e rodar python3 gerador/gera_site.py. Nunca editar à mão o HTML de site/.",
+
+  "site": "https://aesolar.com.br",
+  "previa": true,
+  "_previa": "true = todas as páginas com 'não indexar' e robots.txt fechado. Liberar para o Google = false, só com ordem do Rafael e sem nenhuma marca PENDENTE (o gerador confere).",
+  "previa_paginas": ["/condominios/"],
+  "_previa_paginas": "Páginas prontas mas ainda não liberadas: 'não indexar', fora do sitemap e fora dos menus.",
+
+  "empresa": {
+    "marca": "AESOLAR",
+    "assinatura": "AESOLAR — Powered by Boreal Solar",
+    "razao_social": "Associação de Energia Solar Compartilhada – AESOLAR",
+    "cnpj": "46.520.853/0001-55",
+    "rua": "Av. Deputado Jamel Cecílio, 3455, sala 806",
+    "bairro": "Jardim Goiás",
+    "cidade": "Goiânia",
+    "uf": "GO",
+    "email": "contato@aesolar.com.br",
+    "whatsapp": "5562992727645",
+    "whatsapp_exibir": "(62) 99272-7645",
+    "_whatsapp": "O mesmo do site atual depois da troca de 10/2026 (commits adda573 e anteriores). O número antigo (…0248) não pode aparecer em lugar nenhum.",
+    "instagram": "https://www.instagram.com/aesolar.go/",
+    "gtm": "GTM-NBMNDLNH",
+    "dominio_medicao": "aesolar.com.br"
+  },
+
+  "oferta": {
+    "desconto_max_pct": 30,
+    "minimo_conta": 800,
+    "prioridade_conta": 5000,
+    "proposta_horas": 24,
+    "creditos_dias_normal": 60,
+    "creditos_dias_contrato": 90,
+    "validade_proposta_dias": 7,
+    "economia_gerada": "mais de R$ 650 mil",
+    "_fonte": "Fonte única comercial (OneDrive, 15 - AESOLAR_MARKETING_IA/00_ADMINISTRATIVO/01_fonte_unica_da_verdade_comercial.md), §1 e §4; 'mais de R$ 650 mil' é o número institucional liberado (CLAUDE.md do aesolar-marketing)."
+  },
+
+  "historia": [
+    {"ano": "2022", "texto": "A AESOLAR é constituída e os primeiros associados começam a receber créditos de energia."},
+    {"ano": "2023", "texto": "O Complexo Vereda, a cerca de 30 km de Goiânia, entra em operação."},
+    {"ano": "Hoje", "texto": "Usinas em diversas regiões de Goiás e mais de R$ 650 mil de economia gerada para os clientes."}
+  ],
+  "_historia": "Datas da Academia, módulo 1 (cartão CNPJ: 16/05/2022; primeiras faturas: ago/2022; Vereda I: 2023). Não citar potência, número de usinas, de clientes nem de municípios.",
+
+  "simulador": {
+    "tarifa_kwh": 1.15,
+    "tarifa_fonte": "parâmetro tarifa_proposta do app, o mesmo da proposta",
+    "tarifa_data": "2026-10-21",
+    "disponibilidade_kwh": 100,
+    "fora_do_desconto_pct": 5,
+    "tributos_que_ficam_pct": 5,
+    "desconto_min_pct": 20,
+    "desconto_max_pct": 30,
+    "exemplos": [2000, 5000, 10000, 20000],
+    "exemplo_pagina": 5000,
+    "validado_em": null,
+    "_validado_em": "Data (AAAA-MM-DD) em que a estimativa foi conferida com faturas reais tarjadas e ficou abaixo do real em todas. Vazio = provisório: o gerador avisa e não libera o site (decisão D4 da proposta A2). 'fora_do_desconto_pct' e 'tributos_que_ficam_pct' ainda são estimativa sem fonte."
+  },
+
+  "integracao": {
+    "modo": "simulado",
+    "_modo": "'simulado' = o formulário só mostra o que mandaria (nada sai do navegador). 'app' = manda para o endpoint. Só trocar depois que o app aceitar a versão 2 do contrato (proposta A2, seção 4.3) e o domínio estiver no CORS do app.",
+    "endpoint": "https://app.aesolar.com.br/api/public/leads",
+    "politica_versao": "2026-10-21"
+  },
+
+  "segmentos": [
+    {"id": "condominio", "nome": "Condomínios", "pagina": "/condominios/", "icone": "predio",
+     "texto": "A conta das áreas comuns (elevador, bombas, portaria, iluminação) é a maior despesa fixa de muito condomínio. A proposta sai em reais, pronta para o síndico levar à assembleia."},
+    {"id": "comercio", "nome": "Comércio e serviços", "pagina": null, "icone": "loja",
+     "texto": "Lojas, clínicas, escritórios, escolas e restaurantes com conta alta todo mês, sem espaço ou vontade de fazer obra no telhado."},
+    {"id": "varias_unidades", "nome": "Empresas com várias unidades", "pagina": null, "icone": "rede",
+     "texto": "Redes, franquias e empresas com filiais em Goiás: uma proposta só para todas as unidades da Equatorial."}
+  ],
+
+  "depoimentos": [],
+  "_depoimentos": "Só de cliente real, com termo de autorização assinado e fatura tarjada (21_AESOLAR_PRO/juridico/termo_autorizacao_case_cliente.md). Cada um precisa de \"termo_assinado\": true e \"fatura_tarjada\": true, ou o gerador para. Sem termo, sem depoimento."
+}
