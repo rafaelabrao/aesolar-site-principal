@@ -52,7 +52,7 @@
   // ---------- barra fixa do WhatsApp no celular: só aparece quando nenhum outro botão de WhatsApp grande está na
   // tela (topo com o simulador, contato, rodapé). Assim ela nunca tapa o botão do simulador, que leva o valor. ----------
   var barra = doc.querySelector('[data-barra]');
-  var vigiados = $$('.topo, .pg-topo, #contato, .rod');
+  var vigiados = $$('.topo, .pg-topo, #contato, .rod, [data-sem-barra]');
   if (barra && 'IntersectionObserver' in window) {
     var naTela = new Set();
     var io = new IntersectionObserver(function (itens) {
@@ -104,28 +104,30 @@
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var f = form.elements;
-      var nome = f.nome.value.trim(), zap = digitos(f.whatsapp.value), cidade = f.cidade.value.trim();
-      var valor = valorConta(f.valor.value), email = f.email.value.trim();
+      // o formulário curto (capas novas) não tem cidade, e-mail nem "várias unidades": o app só exige nome,
+      // WhatsApp e valor da conta (proposta A2, §4.3)
+      var nome = f.nome.value.trim(), zap = digitos(f.whatsapp.value), cidade = f.cidade ? f.cidade.value.trim() : '';
+      var valor = valorConta(f.valor.value), email = f.email ? f.email.value.trim() : '';
       var ok = [
         erro('nome', nome.length < 2 ? 'Diga seu nome.' : ''),
         erro('whatsapp', (zap.length < 10 || zap.length > 13) ? 'WhatsApp com DDD, só números.' : ''),
-        erro('cidade', cidade.length < 2 ? 'Diga a cidade.' : ''),
+        f.cidade ? erro('cidade', cidade.length < 2 ? 'Diga a cidade.' : '') : true,
         erro('valor', valor <= 0 ? 'Diga o valor médio da conta.' : ''),
-        erro('email', email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'Confira o e-mail.' : '')
+        f.email ? erro('email', email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'Confira o e-mail.' : '') : true
       ].every(Boolean);
       if (!ok) { var primeiro = form.querySelector('[aria-invalid="true"]'); if (primeiro) primeiro.focus(); return; }
 
-      var varias = f.varias.checked, simulacao = null;
+      var varias = f.varias ? f.varias.checked : false, simulacao = null;
       try { simulacao = JSON.parse(sessionStorage.getItem('aes_simulacao') || 'null'); } catch (e) {}
       var dados = {
-        nome: nome, whatsapp: zap, cidade: cidade, valor_conta: valor, email: email || null, website: f.website.value,
+        nome: nome, whatsapp: zap, cidade: cidade || null, valor_conta: valor, email: email || null, website: f.website.value,
         campanha: origem.utm_campaign || null, origem: 'site', segmento: form.getAttribute('data-segmento'),
         varias_unidades: varias, pagina_entrada: origem.pagina_entrada || null, pagina_envio: location.pathname,
         simulacao: simulacao, politica_versao: POLITICA
       };
       ETIQUETAS.forEach(function (k) { dados[k] = origem[k] || null; });
       var reais = 'R$ ' + valor.toLocaleString('pt-BR');
-      var texto = SAUDA + ' Sou ' + nome + ', de ' + cidade + '. Minha conta de luz é de uns ' + reais + ' por mês' +
+      var texto = SAUDA + ' Sou ' + nome + (cidade ? ', de ' + cidade : '') + '. Minha conta de luz é de uns ' + reais + ' por mês' +
         (varias ? ', somando mais de uma unidade' : '') + '. Quero o cálculo exato.';
       dl.push({ event: 'form_submit', segmento: dados.segmento, faixa: faixa(valor) });
 

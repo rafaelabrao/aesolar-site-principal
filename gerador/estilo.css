@@ -90,6 +90,8 @@ strong { font-weight: 700; }
 .pend b { font-weight: 800; letter-spacing: 0.02em; }
 .pend-bloco { display: block; padding: var(--e-3) var(--e-4); margin: var(--e-4) 0; }
 main > .pend-bloco { max-width: calc(var(--largura) - 2 * var(--margem)); margin: var(--e-4) max(var(--margem), calc((100% - var(--largura)) / 2 + var(--margem))); }
+/* ?limpo no endereço: esconde as marcas da prévia, só para julgar o visual (o gerador não publica com elas) */
+.limpo .pend, .limpo .faixa-previa { display: none !important; }
 
 /* ---------- cabeçalho ---------- */
 .cab { background: var(--slate-900); color: var(--branco); position: relative; z-index: 30; }

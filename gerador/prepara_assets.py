@@ -47,6 +47,54 @@ FOTOS_SITE = {
 }
 LARGURAS = (640, 800, 1024, 1600)
 
+# Fotos dos protótipos da capa (sessão A3). Cada uma: (pasta, arquivo, proporção, foco, larguras).
+# O foco (x, y, de 0 a 1) é o ponto da foto que fica no centro do recorte.
+# As de banco (Unsplash, Pexels) são PROVISÓRIAS: estão marcadas em dados.json ("imagens_banco") e o
+# gerador não publica com elas. Os originais ficam em entregas-intensivo/A3-imagens-banco/, só neste Mac.
+BANCO = os.path.join(os.path.dirname(AQUI), 'entregas-intensivo', 'A3-imagens-banco')
+VEREDA = os.path.join(FOTOS, 'banco_complexo_vereda')
+FOTOS_CAPAS = {
+    # a usina ao entardecer: em pé no celular (9:16), deitada no computador (16:10)
+    'vereda-entardecer-retrato': (VEREDA, 'vereda_14_20231208.jpg', 9 / 16, (0.47, 0.5), (480, 640, 810)),
+    'vereda-entardecer-larga': (VEREDA, 'vereda_14_20231208.jpg', 16 / 10, (0.5, 0.45), (1024, 1440, 1920)),
+    'vereda-ceu': (VEREDA, 'vereda_09_20230209.jpg', 16 / 9, (0.5, 0.5), (640, 1024, 1600, 1920)),
+    'vereda-aerea-larga': (FOTOS, 'complexo_vereda_01.jpg', 16 / 8, (0.5, 0.55), (640, 1024, 1600)),
+    # banco (provisórias)
+    'goiania-entardecer': (BANCO, 'unsplash-ly_AdLTS-TA.jpg', 16 / 9, (0.5, 0.6), (640, 1024, 1600, 1920)),
+    'goiania-predios': (BANCO, 'unsplash-moYYoXwZkWI.jpg', 4 / 5, (0.5, 0.62), (480, 640, 800)),
+    'goiania-noite': (BANCO, 'unsplash-BCYkQdAz_AU.jpg', 16 / 9, (0.5, 0.72), (640, 1024, 1600, 1920)),
+    'comercio-cafe': (BANCO, 'pexels-3906984.jpg', 4 / 5, (0.3, 0.5), (480, 640, 800)),
+    'comercio-mercado': (BANCO, 'pexels-15491784.jpg', 4 / 5, (0.5, 0.5), (480, 640, 800)),
+}
+
+
+def recorta_foco(im, proporcao, foco):
+    """Como recorta(), mas com o centro do recorte no ponto de foco, sem sair da foto."""
+    w, h = im.size
+    fx, fy = foco
+    if w / h > proporcao:
+        nw = round(h * proporcao)
+        x = min(max(0, round(w * fx - nw / 2)), w - nw)
+        return im.crop((x, 0, x + nw, h))
+    nh = round(w / proporcao)
+    y = min(max(0, round(h * fy - nh / 2)), h - nh)
+    return im.crop((0, y, w, y + nh))
+
+
+def fotos_capas():
+    for nome, (pasta, arq, proporcao, foco, larguras) in FOTOS_CAPAS.items():
+        src = os.path.join(pasta, arq)
+        if not os.path.isfile(src):
+            sys.exit(f'Não achei {src}')
+        im = recorta_foco(Image.open(src).convert('RGB'), proporcao, foco)
+        for w in larguras:
+            if w > im.width:
+                sys.exit(f'{nome}: a foto recortada tem {im.width} px, menos que os {w} pedidos.')
+            r = im.resize((w, round(w / proporcao)), Image.LANCZOS)
+            a = grava(r, os.path.join(IMG, f'{nome}-{w}.avif'), quality=52, speed=4)
+            b = grava(r, os.path.join(IMG, f'{nome}-{w}.webp'), quality=72, method=6)
+            print(f'{nome}-{w}: {r.width}x{r.height}  avif {a // 1024} KB  webp {b // 1024} KB')
+
 
 def recorta(im, proporcao):
     if not proporcao:
@@ -157,6 +205,10 @@ if __name__ == '__main__':
     for pasta, nome in ((LOGOS, 'logos'), (FOTOS, 'fotos das usinas')):
         if not os.path.isdir(pasta):
             sys.exit(f'Não achei a pasta de {nome}: {pasta}')
+    if sys.argv[1:] == ['capas']:
+        # só as fotos dos protótipos da capa: não regrava as da v1
+        fotos_capas()
+        sys.exit(0)
     if not os.path.isfile(INTER):
         sys.exit(f'Não achei a fonte Inter em {INTER}')
     fotos()

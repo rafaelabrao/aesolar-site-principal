@@ -174,7 +174,7 @@ def foto(nome, alt, sizes=SIZES_LARGA, lazy=True, cls='foto'):
 MENU = [('/como-funciona/', 'Como funciona'), ('/usinas/', 'Usinas'), ('/perguntas-frequentes/', 'Perguntas')]
 
 
-def cabecalho(d, caminho, tipo):
+def cabecalho(d, caminho, tipo, sim_href='/#simulador'):
     logo = ('<a class="cab-logo" href="/" aria-label="AESOLAR, página inicial">'
             '<img src="/assets/img/logo-escuro.webp" width="134" height="40" alt="AESOLAR — Powered by Boreal Solar"></a>')
     if tipo == 'enxuto':
@@ -186,7 +186,7 @@ def cabecalho(d, caminho, tipo):
                     for s in d.b['segmentos'] if d.link_ok(s['pagina']))
     return (f'<header class="cab"><div class="wrap cab-in">{logo}'
             f'<nav class="cab-nav" aria-label="Principal"><ul>{itens}</ul></nav>'
-            f'<a class="btn btn-fantasma btn-p cab-sim" href="/#simulador">{icone("calculadora")}<span>Simular</span></a>'
+            f'<a class="btn btn-fantasma btn-p cab-sim" href="{sim_href}">{icone("calculadora")}<span>Simular</span></a>'
             f'<details class="cab-menu"><summary aria-label="Abrir o menu">{icone("menu", "ic ic-abre")}'
             f'{icone("fecha", "ic ic-fecha")}</summary>'
             f'<nav class="cab-gaveta" aria-label="Menu"><ul>{itens}{extra}'

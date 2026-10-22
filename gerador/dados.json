@@ -75,6 +75,15 @@
      "texto": "Redes, franquias e empresas com filiais em Goiás: uma proposta só para todas as unidades da Equatorial."}
   ],
 
+  "imagens_banco": {
+    "goiania-entardecer": {"origem": "Unsplash", "autor": "Natã Alves Motta", "link": "https://unsplash.com/photos/ly_AdLTS-TA", "licenca": "Unsplash License", "provisoria": true},
+    "goiania-predios": {"origem": "Unsplash", "autor": "Natã Alves Motta", "link": "https://unsplash.com/photos/moYYoXwZkWI", "licenca": "Unsplash License", "provisoria": true},
+    "goiania-noite": {"origem": "Unsplash", "autor": "Lukas Souza", "link": "https://unsplash.com/photos/BCYkQdAz_AU", "licenca": "Unsplash License", "provisoria": true},
+    "comercio-cafe": {"origem": "Pexels", "autor": "Andrea Piacquadio", "link": "https://www.pexels.com/photo/3906984/", "licenca": "Pexels License", "provisoria": true},
+    "comercio-mercado": {"origem": "Pexels", "autor": "Wallace Chuck", "link": "https://www.pexels.com/photo/15491784/", "licenca": "Pexels License", "provisoria": true}
+  },
+  "_imagens_banco": "Fotos de banco de imagem (ou de IA) usadas nos protótipos da capa (sessão A3). Licenças com uso comercial livre e sem crédito obrigatório. 'provisoria': true = a prévia mostra a etiqueta 'imagem provisória' e o --producao recusa publicar. Regra da marca: nunca podem aparecer como a usina da AESOLAR nem como cliente; o gerador recusa texto alternativo ou legenda que diga isso. Toda foto que não está aqui é foto real da AESOLAR/Boreal.",
+
   "depoimentos": [],
   "_depoimentos": "Só de cliente real, com termo de autorização assinado e fatura tarjada (21_AESOLAR_PRO/juridico/termo_autorizacao_case_cliente.md). Cada um precisa de \"termo_assinado\": true e \"fatura_tarjada\": true, ou o gerador para. Sem termo, sem depoimento."
 }

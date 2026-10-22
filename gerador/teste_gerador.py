@@ -17,8 +17,11 @@ sys.dont_write_bytecode = True
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 
+import blocos as b  # noqa: E402
+import capas  # noqa: E402
 import gera_site as g  # noqa: E402
 import pagina_capa  # noqa: E402
+import pagina_capa_v2, pagina_capa_v3  # noqa: E402,E401
 from blocos import Erro  # noqa: E402
 from simulador import estima  # noqa: E402
 
@@ -142,11 +145,64 @@ class TravasDaMarca(unittest.TestCase):
         self.assertNotIn('content="noindex', capa(liberado))
 
 
+def pagina(d, modulo):
+    with open(os.path.join(AQUI, 'estilo.css'), encoding='utf-8') as f:
+        css = g.css_minimo(f.read())
+    return g.monta(d, modulo, css, {'site.js': 'x', 'simulador.js': 'x', 'capas.js': 'x'})
+
+
+class CapasNovas(unittest.TestCase):
+    """Protótipos v2 e v3 da capa (sessão A3): passam nas travas, e foto de banco só entra marcada e sem fingir."""
+
+    def setUp(self):
+        self.d = dados()
+        self.v2 = pagina(self.d, pagina_capa_v2)
+        self.v3 = pagina(self.d, pagina_capa_v3)
+
+    def test_as_duas_passam_nas_travas(self):
+        self.assertGreater(g.confere_pagina(self.d, pagina_capa_v2, self.v2), 0)
+        self.assertGreater(g.confere_pagina(self.d, pagina_capa_v3, self.v3), 0)
+
+    def test_v2_so_tem_foto_real_e_v3_marca_as_de_banco(self):
+        self.assertEqual(g.provisorias(self.v2), [])
+        self.assertEqual(set(g.provisorias(self.v3)), set(self.d.b['imagens_banco']))
+        self.assertIn('Imagem provisória', self.v3)
+
+    def test_exemplo_escrito_bate_com_o_simulador(self):
+        r = estima(self.d.sim['exemplo_pagina'], self.d.sim_params)
+        for html_ in (self.v2, self.v3):
+            self.assertIn(f'data-calc="min">{b.reais(r["min"])}<', html_)
+            self.assertIn(f'data-calc="max">{b.reais(r["max"])}<', html_)
+
+    def test_foto_de_banco_como_usina_ou_cliente_para(self):
+        for alt in ('Nossa usina em Goiás', 'Cliente satisfeita da AESOLAR', 'Complexo Vereda'):
+            with self.subTest(alt=alt), self.assertRaises(Erro):
+                g.confere_pagina(self.d, pagina_capa_v3, self.v3.replace('alt="Prédios residenciais em Goiânia"', f'alt="{alt}"'))
+        with self.assertRaises(Erro):
+            capas.foto(self.d, 'comercio-cafe', 'Cliente no balcão')
+
+    def test_foto_de_banco_sem_marca_para(self):
+        img = '<img src="/assets/img/goiania-predios-480.webp" width="480" height="600" alt="Prédios">'
+        with self.assertRaises(Erro):
+            g.confere_pagina(self.d, pagina_capa_v2, self.v2.replace('</main>', img + '</main>'))
+
+    def test_marca_de_provisoria_fora_do_registro_para(self):
+        with self.assertRaises(Erro):
+            g.confere_pagina(self.d, pagina_capa_v3, self.v3.replace('data-provisoria="goiania-predios"', 'data-provisoria="foto-qualquer"', 1))
+
+    def test_prototipos_nao_indexados_e_fora_do_sitemap(self):
+        self.assertIn('content="noindex', pagina(dados(previa=False), pagina_capa_v2))
+        mapa = g.mapa_do_site(dados(previa=False))
+        self.assertNotIn('/prototipos/', mapa)
+        self.assertIn('<loc>https://aesolar.com.br/</loc>', mapa)
+
+
 class Producao(unittest.TestCase):
     def test_producao_recusa_previa_pendencias_e_simulador_provisorio(self):
         r = subprocess.run([sys.executable, os.path.join(AQUI, 'gera_site.py'), '--producao'], capture_output=True, text=True)
         self.assertEqual(r.returncode, 1)
-        for trecho in ('"previa" ainda é true', 'marca(s) PENDENTE', 'não foi validado', 'modo "simulado"'):
+        for trecho in ('"previa" ainda é true', 'marca(s) PENDENTE', 'não foi validado', 'modo "simulado"',
+                       'Imagem provisória de banco em /prototipos/capa-v3/', 'Protótipo da capa ainda no site'):
             self.assertIn(trecho, r.stdout)
 
 

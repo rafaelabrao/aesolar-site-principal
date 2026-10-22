@@ -29,12 +29,14 @@ SITE = os.path.join(RAIZ, 'site')  # a pasta que vai ao ar
 sys.path.insert(0, AQUI)
 
 import blocos as b  # noqa: E402
+import capas  # noqa: E402
 from blocos import Erro  # noqa: E402
 import pagina_capa, pagina_assinatura, pagina_como_funciona, pagina_usinas, pagina_perguntas  # noqa: E402,E401
 import pagina_representante, pagina_privacidade, pagina_termos, pagina_condominios, pagina_404  # noqa: E402,E401
+import pagina_capa_v2, pagina_capa_v3  # noqa: E402,E401  protótipos da capa (sessão A3)
 
 PAGINAS = [pagina_capa, pagina_assinatura, pagina_como_funciona, pagina_usinas, pagina_perguntas, pagina_representante,
-           pagina_privacidade, pagina_termos, pagina_condominios, pagina_404]
+           pagina_privacidade, pagina_termos, pagina_condominios, pagina_404, pagina_capa_v2, pagina_capa_v3]
 
 # Regras da marca (fonte única comercial §4 e CLAUDE.md do aesolar-marketing). Se uma aparecer, a página não é gravada.
 PROIBIDO = [
@@ -113,6 +115,24 @@ def versao(arquivo):
         return hashlib.sha256(f.read()).hexdigest()[:10]
 
 
+_CSS_EXTRA = {}
+
+
+def css_extra(nome):
+    """Estilo que só algumas páginas usam (os protótipos da capa): conferido como o principal e embutido só nelas."""
+    if nome not in _CSS_EXTRA:
+        with open(os.path.join(AQUI, nome), encoding='utf-8') as f:
+            bruto = f.read()
+        confere_css(bruto, nome)
+        _CSS_EXTRA[nome] = css_minimo(bruto)
+    return _CSS_EXTRA[nome]
+
+
+# Página aberta com ?limpo no endereço esconde as marcas PENDENTE e a faixa da prévia: só para julgar o visual.
+CABECA_JS = ('<script>(function(h){h.classList.add("js");'
+             'if(/[?&]limpo(&|=|$)/.test(location.search))h.classList.add("limpo")})(document.documentElement)</script>')
+
+
 GTM = """<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 (function(){var c=null;try{c=localStorage.getItem('aes_cookies');}catch(e){}
@@ -137,6 +157,12 @@ def monta(d, m, css, v):
     if m.SIMULADOR:
         sim = (f'<script type="application/json" id="sim-params">{json.dumps(d.sim_params, ensure_ascii=False)}</script>'
                f'<script src="/assets/simulador.js?v={v["simulador.js"]}" defer></script>')
+    for js in getattr(m, 'JS_EXTRA', []):
+        sim += f'<script src="/assets/{js}?v={v.get(js) or versao("/assets/" + js)}" defer></script>'
+    if getattr(m, 'CSS_EXTRA', None):
+        css = css + css_extra(m.CSS_EXTRA)
+    classe = f' class="{m.CLASSE_BODY}"' if getattr(m, 'CLASSE_BODY', None) else ''
+    sprite_extra = m.SPRITE_EXTRA() if getattr(m, 'SPRITE_EXTRA', None) else ''
     barra_msg = getattr(m, 'MSG', None)
     barra = (b.barra_wa(d, caminho) if not barra_msg else
              f'<div class="barra" data-barra>{b.wa(d, barra_msg, b.caminho_curto(caminho) + ":barra", "Quero ser representante", "btn btn-pri btn-larga")}</div>')
@@ -163,15 +189,16 @@ def monta(d, m, css, v):
         '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
         '<link rel="preload" href="/assets/fontes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
         + (b.preload_foto(m.FOTO_TOPO) + '\n' if getattr(m, 'FOTO_TOPO', None) else '')
+        + (m.PRELOAD + '\n' if getattr(m, 'PRELOAD', None) else '')
         + f'<style>{css}</style>\n{b.json_ld(nos)}\n'
-        f'<script>document.documentElement.classList.add("js")</script>\n'
+        f'{CABECA_JS}\n'
         f'<script src="/assets/site.js?v={v["site.js"]}" defer></script>\n{sim}\n{medicao}\n</head>\n'
-        f'<body data-segmento="{m.SEGMENTO}" data-integracao="{d.b["integracao"]["modo"]}" '
+        f'<body{classe} data-segmento="{m.SEGMENTO}" data-integracao="{d.b["integracao"]["modo"]}" '
         f'data-endpoint="{d.b["integracao"]["endpoint"]}" data-politica="{d.b["integracao"]["politica_versao"]}" '
         f'data-wa-numero="{d.emp["whatsapp"]}">\n'
         f'<a class="pular" href="#conteudo">Pular para o conteúdo</a>\n{faixa}{b.AVISO_COOKIES}\n'
-        f'{b.cabecalho(d, caminho, m.CABECALHO)}\n<main id="conteudo">\n{corpo}\n</main>\n'
-        f'{b.rodape(d, caminho)}\n{barra}\n{b.sprite()}\n</body>\n</html>\n'
+        f'{b.cabecalho(d, caminho, m.CABECALHO, getattr(m, "SIM_HREF", "/#simulador"))}\n<main id="conteudo">\n{corpo}\n</main>\n'
+        f'{b.rodape(d, caminho)}\n{barra}\n{b.sprite()}{sprite_extra}\n</body>\n</html>\n'
     )
 
 
@@ -271,21 +298,42 @@ def confere_pagina(d, m, pagina):
         raise Erro(f'{c}: página com migalhas sem BreadcrumbList nos dados para o Google.')
     if 'class="faq"' in pagina and 'FAQPage' not in tipos:
         raise Erro(f'{c}: página com perguntas sem FAQPage nos dados para o Google.')
+    confere_imagens_banco(d, c, pagina)
     return len(re.findall(r'data-pendente="', pagina))
 
 
-def confere_css(css):
+def confere_css(css, nome='estilo.css'):
     """Cor só dentro de :root (os tokens). Fora dele, só var(--...)."""
     fora = re.sub(r'(?s):root\s*\{.*?\}', '', re.sub(r'(?s)/\*.*?\*/', '', css))
     achou = re.search(r'#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(', fora)
     if achou:
         linha = fora[:achou.start()].count('\n') + 1
-        raise Erro(f'gerador/estilo.css: cor solta fora de :root ("{achou.group(0)}", perto da linha {linha}). '
+        raise Erro(f'gerador/{nome}: cor solta fora de :root ("{achou.group(0)}", perto da linha {linha}). '
                    f'Crie um token em :root e use var(--nome).')
 
 
+def provisorias(pagina):
+    """As fotos de banco (ou de IA) que a página usa: as marcadas com data-provisoria."""
+    return sorted(set(re.findall(r'data-provisoria="([^"]+)"', pagina)))
+
+
+def confere_imagens_banco(d, c, pagina):
+    """Foto de banco só entra marcada como provisória, e nunca como a usina da AESOLAR ou como cliente."""
+    reg = d.b.get('imagens_banco', {})
+    for nome in provisorias(pagina):
+        if nome not in reg:
+            raise Erro(f'{c}: foto "{nome}" marcada como provisória, mas fora de "imagens_banco" em dados.json.')
+    for nome, alt in re.findall(r'(?s)<picture[^>]*data-provisoria="([^"]+)"[^>]*>.*?<img[^>]*\balt="([^"]*)"', pagina):
+        if capas.NAO_PODE_DIZER.search(html.unescape(alt)):
+            raise Erro(f'{c}: foto de banco "{nome}" descrita como usina ou cliente: "{alt}".')
+    marcadas = set(provisorias(pagina))
+    for nome in set(re.findall(r'/assets/img/([a-z0-9-]+?)-\d+\.(?:avif|webp)', pagina)):
+        if nome in reg and nome not in marcadas:
+            raise Erro(f'{c}: a foto de banco "{nome}" aparece sem a marca de provisória (use capas.foto).')
+
+
 def mapa_do_site(d):
-    urls = [m.CAMINHO for m in PAGINAS if not d.em_previa(m.CAMINHO)]
+    urls = [m.CAMINHO for m in PAGINAS if not d.em_previa(m.CAMINHO) and not getattr(m, 'SEMPRE_NOINDEX', False)]
     linhas = '\n'.join(f'  <url><loc>{d.site}{u}</loc></url>' for u in urls)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<!-- Gerado por gerador/gera_site.py: não editar à mão. -->\n'
             f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{linhas}\n</urlset>\n')
@@ -314,12 +362,16 @@ def main(argv):
     css = css_minimo(bruto_css)
     v = {'site.js': versao('/assets/site.js'), 'simulador.js': versao('/assets/simulador.js')}
 
-    saidas, pendencias = [], {}
+    v['capas.js'] = versao('/assets/capas.js')
+
+    saidas, pendencias, banco = [], {}, {}
     for m in PAGINAS:
         pagina = monta(d, m, css, v)
         n = confere_pagina(d, m, pagina)
         if n:
             pendencias[m.CAMINHO] = sorted(set(re.findall(r'data-pendente="([^"]+)"', pagina)), key=lambda x: (len(x), x))
+        if provisorias(pagina):
+            banco[m.CAMINHO] = provisorias(pagina)
         saidas.append((m.CAMINHO, arquivo_de(m.CAMINHO), pagina))
     saidas.append(('/sitemap.xml', os.path.join(SITE, 'sitemap.xml'), mapa_do_site(d)))
     saidas.append(('/robots.txt', os.path.join(SITE, 'robots.txt'), robots(d)))
@@ -347,6 +399,13 @@ def main(argv):
         print(f'\nMarcas PENDENTE ({total}):')
         for cam, cods in pendencias.items():
             print(f'  {cam:<40} {", ".join(cods)}')
+    if banco:
+        print('\nImagens provisórias de banco (trocar antes de publicar):')
+        for cam, nomes in banco.items():
+            print(f'  {cam:<40} {", ".join(nomes)}')
+    prototipos = [m.CAMINHO for m in PAGINAS if getattr(m, 'PROTOTIPO', False)]
+    if prototipos:
+        print('Protótipos (não indexados, fora do sitemap): ' + ', '.join(prototipos))
     for a in d.avisos:
         print('AVISO: ' + a)
 
@@ -358,6 +417,10 @@ def main(argv):
             erros.append('"previa" ainda é true em dados.json.')
         if pendencias:
             erros.append(f'Ainda há {total} marca(s) PENDENTE.')
+        if banco:
+            erros.append('Imagem provisória de banco em ' + ', '.join(banco) + ' (dados.json, imagens_banco).')
+        if prototipos:
+            erros.append('Protótipo da capa ainda no site: ' + ', '.join(prototipos) + '. Escolhida a capa, tire os outros.')
         if d.sim['validado_em'] is None:
             erros.append('O simulador não foi validado com faturas reais ("validado_em").')
         if d.b['integracao']['modo'] != 'app':

@@ -74,6 +74,14 @@ python3 -m http.server 8090 --directory site   # ver em http://localhost:8090
   imagem: não usar.
 - O DNS de `aesolar.com.br` está na Locaweb, junto com o e-mail. Por isso a recomendação é continuar no
   GitHub Pages (sem mexer em DNS).
+- Protótipos da capa (sessão A3, 21/10/2026): `/prototipos/capa-v2/` (a usina em tela cheia, só foto real) e
+  `/prototipos/capa-v3/` (a conta em reais, com fotos de banco provisórias). Peças em `gerador/capas.py`, estilo em
+  `gerador/estilo_capas.css` (embutido só neles), comportamento em `site/assets/capas.js`. Análise e recomendação:
+  `entregas-intensivo/A3-REDESENHO-CAPA.md`. Escolhida a capa (D19), apagar o protótipo que sair: o `--producao`
+  não publica com protótipo nem com foto de `imagens_banco` (dados.json).
+- `?limpo` no endereço esconde as marcas PENDENTE e a faixa da prévia, só para julgar o visual.
+- `.venv/bin/python gerador/prepara_assets.py capas` gera só as fotos dos protótipos (os originais de banco ficam em
+  `entregas-intensivo/A3-imagens-banco/`).
 
 Armadilhas já pagas no site novo:
 
@@ -85,6 +93,14 @@ Armadilhas já pagas no site novo:
   captura e conferir a barra numa captura da tela.
 - fontTools: recortar a Inter depois do `instancer` dá `KeyError`; salvar e recarregar a fonte entre os
   dois passos.
+- Seção que "aparece ao rolar" (`.revela`) sai em branco na captura de página inteira se o script rolar rápido
+  demais: rolar de 400 em 400 px, com 160 ms de pausa, antes de capturar.
+- O gerador roda no Python 3.9 do Mac: f-string dentro de f-string com o mesmo tipo de aspas é erro de sintaxe.
+- Regra de elemento dentro de classe (`.pv p`) ganha de classe sozinha (`.pv-num`): escrever `.pv .pv-num`.
+- Unsplash: o endereço `/download` responde 401 para navegador; baixar pelo `images.unsplash.com/photo-...?w=2400`.
+- Lighthouse neste Mac: `CHROME_PATH` apontando para o Chromium do Playwright
+  (`~/Library/Caches/ms-playwright/chromium-*/chrome-mac-arm64/Google Chrome for Testing.app/...`). Medir o SEO
+  numa cópia sem o "não indexar" e com o `robots.txt` aberto; senão dá 69.
 
 ## Como trabalhar aqui
 
