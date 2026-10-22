@@ -251,6 +251,14 @@ a.sf:hover { border-color: var(--laranja); }
 .barra-est { margin: 0 0 var(--e-2); text-align: center; font-size: var(--t-sm); color: var(--slate-700); }
 .barra-est b { color: var(--slate-900); font-variant-numeric: tabular-nums; }
 
+/* D23, aprovado pelo Rafael em 22/10/2026: o símbolo "A" grande e quase transparente como elemento gráfico.
+   É o SVG vetorizado (sessão A3), em revisão: a imagem fica atrás do conteúdo e não recebe toque. */
+.h3t, .sec-num { position: relative; overflow: hidden; }
+.h3t::after, .sec-num::after { content: ""; position: absolute; z-index: 0; pointer-events: none; background: url("/assets/img/aesolar-simbolo.svg") no-repeat center / contain; }
+.h3t::after { width: 13rem; height: 15rem; right: -6rem; top: 7rem; opacity: 0.09; }
+.sec-num::after { width: 17rem; height: 19rem; right: -5rem; top: 50%; transform: translateY(-50%); opacity: 0.16; }
+.sec-num .wrap { position: relative; z-index: 1; }
+
 /* aparece ao rolar: só depois que o capas.js liga (sem ele, nada fica escondido) */
 .revela-pronto .revela { opacity: 0; transform: translateY(1.5rem); transition: opacity 0.7s ease, transform 0.7s ease; }
 .revela-pronto .revela.visto { opacity: 1; transform: none; }
@@ -306,6 +314,11 @@ a.sf:hover { border-color: var(--laranja); }
   .conversa { grid-template-columns: 0.85fr 1.15fr; gap: var(--e-14); }
   .provas3, .sfs { grid-template-columns: repeat(3, 1fr); }
   .mapa { grid-template-columns: 1fr 1fr; gap: var(--e-14); }
+}
+
+@media (min-width: 900px) {
+  .h3t::after { width: 34rem; height: 38rem; right: -6rem; top: 1.5rem; opacity: 0.1; }
+  .sec-num::after { width: 24rem; height: 27rem; right: 1rem; opacity: 0.14; }
 }
 
 @media (prefers-reduced-motion: reduce) {

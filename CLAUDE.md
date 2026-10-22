@@ -98,6 +98,8 @@ Armadilhas já pagas no site novo:
 - O gerador roda no Python 3.9 do Mac: f-string dentro de f-string com o mesmo tipo de aspas é erro de sintaxe.
 - Regra de elemento dentro de classe (`.pv p`) ganha de classe sozinha (`.pv-num`): escrever `.pv .pv-num`.
 - Unsplash: o endereço `/download` responde 401 para navegador; baixar pelo `images.unsplash.com/photo-...?w=2400`.
+- potracer (vetorizar PNG): o `Bitmap` trata o valor baixo como tinta; passar a máscara invertida (`~mascara`), senão
+  ele pinta o fundo e deixa a figura vazada. Logo em SVG e o script: `entregas-intensivo/A3-logo-svg/` (em revisão).
 - Lighthouse neste Mac: `CHROME_PATH` apontando para o Chromium do Playwright
   (`~/Library/Caches/ms-playwright/chromium-*/chrome-mac-arm64/Google Chrome for Testing.app/...`). Medir o SEO
   numa cópia sem o "não indexar" e com o `robots.txt` aberto; senão dá 69.
