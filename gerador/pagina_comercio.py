@@ -37,7 +37,7 @@ def corpo(d):
     itens = FAQ_COM + perguntas.escolhe(d, FAQ)
     return (
         capas.topo_seg(
-            d, CAMINHO, 'Comércio e serviços · Goiás',
+            d, CAMINHO, 'Energia solar para comércio e serviços',
             'Quanto o seu negócio <em>economiza</em> na conta de luz?',
             f'Loja, clínica, escritório, escola ou restaurante: a energia da nossa usina em Goiás vira crédito na sua conta '
             f'da Equatorial. Até {b.pct(of["desconto_max_pct"])} de economia na parte da energia, sem placa no telhado e '

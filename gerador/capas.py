@@ -423,13 +423,15 @@ def para_quem_v2(d):
 # ---------- v3: a conta em reais ----------
 
 def topo_v3(d, caminho):
+    # O olho repete a busca do anúncio ("energia solar por assinatura"): o Google Ads mede se a primeira tela fala dela
+    # (D25, 27/10/2026). Nas páginas de segmento, o olho faz o mesmo papel (D26).
     return (
         f'<section class="h3t" data-sem-barra aria-labelledby="t-topo">'
         f'<div class="wrap h3t-in"><div class="h3t-txt">'
-        f'<p class="olho">{icone("calculadora")}<span>Simulador em reais, sem pedir contato</span></p>'
+        f'<p class="olho">{icone("local")}<span>Energia solar por assinatura · Goiás</span></p>'
         f'<h1 id="t-topo">Quanto a sua empresa <em>economiza</em> na conta de luz?</h1>'
-        f'<p class="h3t-sub">Digite a conta. A economia aparece na hora, em reais, com a conta de hoje e a com a AESOLAR '
-        f'lado a lado.</p></div>'
+        f'<p class="h3t-sub">Digite a conta. A economia aparece na hora, em reais, sem deixar contato, com a conta de '
+        f'hoje e a com a AESOLAR lado a lado.</p></div>'
         f'<ul class="selos"><li>{icone("sol")}<span>A usina é nossa, em Goiás</span></li>'
         f'<li>{icone("local")}<span>Empresa goiana, escritório em Goiânia</span></li>'
         f'<li>{icone("recibo")}<span>Mais de R$ <span data-economia-mil>{d.of["economia_gerada_piso"] // 1000}</span> mil de '

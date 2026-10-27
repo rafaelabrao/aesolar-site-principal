@@ -41,7 +41,7 @@ def corpo(d):
     itens = FAQ_CONDO + perguntas.escolhe(d, FAQ)
     return (
         capas.topo_seg(
-            d, CAMINHO, 'Condomínios · Goiás',
+            d, CAMINHO, 'Energia solar para condomínios · Goiás',
             'Quanto o seu condomínio <em>economiza</em> na conta de luz?',
             f'Elevador, bombas, portaria e iluminação pesam todo mês. Com a energia da nossa usina em Goiás, a conta das '
             f'áreas comuns fica até {b.pct(of["desconto_max_pct"])} mais barata na parte da energia, sem obra no prédio.',

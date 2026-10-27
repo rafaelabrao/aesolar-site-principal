@@ -43,7 +43,7 @@ def corpo(d):
     itens = faq_vu(d) + perguntas.escolhe(d, FAQ)
     return (
         capas.topo_seg(
-            d, CAMINHO, 'Redes e filiais · Goiás',
+            d, CAMINHO, 'Energia solar para redes e filiais · Goiás',
             'Todas as unidades.<br><em>Uma cobrança só.</em>',
             f'Energia solar por assinatura para rede, franquia ou empresa com filiais em Goiás: a energia da nossa usina vira crédito na conta de cada unidade '
             f'na Equatorial, e a AESOLAR cobra tudo numa fatura só. Até {b.pct(of["desconto_max_pct"])} de economia na '
