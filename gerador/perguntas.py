@@ -43,8 +43,10 @@ def todas(d):
               'associação. A AESOLAR é essa associação, com CNPJ e sede em Goiânia, operada pela Boreal Solar, dona das '
               'usinas. Sua empresa entra como associada.</p>'},
         {'id': 'usina-gera-menos', 'grupo': 'conta', 'p': 'E se a usina gerar menos num mês?',
-         'r': '<p>Você paga à AESOLAR pela energia que virou crédito na sua conta. Num mês de menos geração, a conta da '
-              'Equatorial sobe um pouco e a da AESOLAR vem menor.</p>'},
+         # a sobra de créditos é prática da AESOLAR para todo cliente (Rafael, 27/10/2026)
+         'r': '<p>A gente sempre deixa uma sobra de créditos na sua conta da Equatorial para esses imprevistos: num mês de '
+              'menos sol, é essa sobra que entra primeiro. E você só paga à AESOLAR pela energia que virou crédito na sua '
+              'conta.</p>'},
         {'id': 'falta-luz', 'grupo': 'como', 'p': 'Se faltar luz, com quem eu falo?',
          'r': '<p>Com a Equatorial, como hoje. A rede, a ligação e a manutenção continuam com ela. A AESOLAR cuida da energia '
               'da usina e dos créditos na sua conta.</p>'},
