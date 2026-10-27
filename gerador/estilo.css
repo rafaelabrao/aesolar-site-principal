@@ -94,7 +94,10 @@ main > .pend-bloco { max-width: calc(var(--largura) - 2 * var(--margem)); margin
 .limpo .pend, .limpo .faixa-previa { display: none !important; }
 
 /* ---------- cabeçalho ---------- */
-.cab { background: var(--slate-900); color: var(--branco); position: relative; z-index: 30; }
+/* o cabeçalho acompanha a página (site.js): no celular some ao descer e volta ao subir */
+html { scroll-padding-top: 5rem; }
+.cab { background: var(--slate-900); color: var(--branco); position: sticky; top: 0; z-index: 30; transition: transform 0.25s ease, background-color 0.25s ease; }
+.cab.esconde { transform: translateY(-100%); }
 .cab-in { display: flex; align-items: center; gap: var(--e-4); min-height: 4rem; }
 .cab-logo { margin-right: auto; display: block; }
 .cab-logo img { height: 2.25rem; width: auto; }
@@ -329,6 +332,7 @@ main > .pend-bloco { max-width: calc(var(--largura) - 2 * var(--margem)); margin
   .cab-nav, .cab-sim { display: flex; }
   .cab-menu { display: none; }
   .cab-in { gap: var(--e-8); min-height: 4.5rem; }
+  .cab.esconde { transform: none; }
   .sec { padding: var(--e-22) 0; }
   .topo { padding: var(--e-10) 0 var(--e-22); }
   .topo-in { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: var(--e-14); align-items: center; }

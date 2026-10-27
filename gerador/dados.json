@@ -33,21 +33,28 @@
     "creditos_dias_normal": 60,
     "creditos_dias_contrato": 90,
     "validade_proposta_dias": 7,
-    "economia_gerada": "mais de R$ 650 mil",
-    "_fonte": "Fonte única comercial (OneDrive, 15 - AESOLAR_MARKETING_IA/00_ADMINISTRATIVO/01_fonte_unica_da_verdade_comercial.md), §1 e §4; 'mais de R$ 650 mil' é o número institucional liberado (CLAUDE.md do aesolar-marketing)."
+    "economia_gerada_piso": 700000,
+    "economia_gerada_data": "2026-10-27",
+    "_economia_gerada": "Economia entregue (total) do app, arredondada PARA BAIXO de 50 em 50 mil, para o 'mais de' ser sempre verdadeiro. O número exato não entra aqui (repositório público). Cresce cerca de R$ 50 mil por mês (Rafael, 27/10/2026): o gerador avisa depois de 45 dias sem atualizar.",
+    "economia_url": null,
+    "_economia_url": "Endereço público do app que devolve só o piso, em JSON: {\"economia_piso\": 750000}. Com ele, a página busca o número ao abrir, depois de mostrar o piso acima (não atrasa a página). Vazio = não busca nada.",
+    "contrato_meses": 12,
+    "aviso_saida_dias": 90,
+    "_contrato": "Rafael, 27/10/2026: contrato de 12 meses; avisando com 90 dias, sai ao fim dos 12 meses sem multa (pode avisar no 9º mês). Saída antes dos 12 meses tem multa de 1 mensalidade: fica no contrato, não no site (decisão dele). Depois dos 12 meses renova sozinho por prazo indeterminado, sem multa de saída (minuta do contrato de fev/2026, cláusula 3.3, e Rafael). A minuta diz multa de 3 mensalidades (5.1.1), não 1: conferir qual versão o app usa.",
+    "_fonte": "Fonte única comercial (OneDrive, 15 - AESOLAR_MARKETING_IA/00_ADMINISTRATIVO/01_fonte_unica_da_verdade_comercial.md), §1 e §4; a economia gerada sai do app (economia_gerada_piso) (CLAUDE.md do aesolar-marketing)."
   },
 
   "historia": [
     {"ano": "2022", "texto": "A AESOLAR é constituída e os primeiros associados começam a receber créditos de energia."},
     {"ano": "2023", "texto": "O Complexo Vereda, a cerca de 30 km de Goiânia, entra em operação."},
-    {"ano": "Hoje", "texto": "Usinas em diversas regiões de Goiás e mais de R$ 650 mil de economia gerada para os clientes."}
+    {"ano": "Hoje", "texto": "Usinas em diversas regiões de Goiás e {economia_gerada} de economia gerada para os clientes."}
   ],
   "_historia": "Datas da Academia, módulo 1 (cartão CNPJ: 16/05/2022; primeiras faturas: ago/2022; Vereda I: 2023). Não citar potência, número de usinas, de clientes nem de municípios.",
 
   "simulador": {
-    "tarifa_kwh": 1.15,
+    "tarifa_kwh": 1.22,
     "tarifa_fonte": "parâmetro tarifa_proposta do app, o mesmo da proposta",
-    "tarifa_data": "2026-10-21",
+    "tarifa_data": "2026-10-27",
     "disponibilidade_kwh": 100,
     "fora_do_desconto_pct": 5,
     "tributos_que_ficam_pct": 5,
@@ -55,7 +62,8 @@
     "desconto_max_pct": 30,
     "exemplos": [2000, 5000, 10000, 20000],
     "exemplo_pagina": 5000,
-    "validado_em": null,
+    "validado_em": "2026-10-27",
+    "_validacao": "Conferido em 27/10/2026 com 3 faturas reais tarjadas (condomínio set/2026, bar com 4 unidades set/2026, distribuidora jun/2026): o mínimo do simulador ficou abaixo do real nas três (R$ 5.400 x 8.527; R$ 1.920 x 2.781; R$ 1.740 x 2.454). Aprovado pelo Rafael.",
     "_validado_em": "Data (AAAA-MM-DD) em que a estimativa foi conferida com faturas reais tarjadas e ficou abaixo do real em todas. Vazio = provisório: o gerador avisa e não libera o site (decisão D4 da proposta A2). 'fora_do_desconto_pct' e 'tributos_que_ficam_pct' ainda são estimativa sem fonte."
   },
 
@@ -76,14 +84,18 @@
   ],
 
   "imagens_banco": {
-    "goiania-entardecer": {"origem": "Unsplash", "autor": "Natã Alves Motta", "link": "https://unsplash.com/photos/ly_AdLTS-TA", "licenca": "Unsplash License", "provisoria": true},
-    "goiania-predios": {"origem": "Unsplash", "autor": "Natã Alves Motta", "link": "https://unsplash.com/photos/moYYoXwZkWI", "licenca": "Unsplash License", "provisoria": true},
-    "goiania-noite": {"origem": "Unsplash", "autor": "Lukas Souza", "link": "https://unsplash.com/photos/BCYkQdAz_AU", "licenca": "Unsplash License", "provisoria": true},
-    "comercio-cafe": {"origem": "Pexels", "autor": "Andrea Piacquadio", "link": "https://www.pexels.com/photo/3906984/", "licenca": "Pexels License", "provisoria": true},
-    "comercio-mercado": {"origem": "Pexels", "autor": "Wallace Chuck", "link": "https://www.pexels.com/photo/15491784/", "licenca": "Pexels License", "provisoria": true}
+    "ia-condominio": {"origem": "Gemini (IA)", "autor": "Gerada por IA no Gemini, em 22/10/2026 (prompt 2 da A3, §5.2)", "arquivo": "entregas-intensivo/A4-imagens-gemini/condominio-2.jpeg", "link": "", "licenca": "Gerada por IA, sem pessoa real", "provisoria": false, "aprovada": "Rafael, 27/10/2026"},
+    "ia-comercio": {"origem": "Gemini (IA)", "autor": "Gerada por IA no Gemini, em 22/10/2026 (prompt 3 da A3, §5.2)", "arquivo": "entregas-intensivo/A4-imagens-gemini/comercio.jpeg", "link": "", "licenca": "Gerada por IA, sem pessoa real", "provisoria": false, "aprovada": "Rafael, 27/10/2026"},
+    "ia-varias-unidades": {"origem": "Gemini (IA)", "autor": "Gerada por IA no Gemini, em 22/10/2026 (prompt 4 da A3, §5.2)", "arquivo": "entregas-intensivo/A4-imagens-gemini/varias-unidades-1.jpeg", "link": "", "licenca": "Gerada por IA, sem pessoa real", "provisoria": false, "aprovada": "Rafael, 27/10/2026"},
+    "ia-fatura": {"origem": "Gemini (IA)", "autor": "Gerada por IA no Gemini, em 22/10/2026 (prompt 1 da A3, §5.2)", "arquivo": "entregas-intensivo/A4-imagens-gemini/fatura-1.jpeg", "link": "", "licenca": "Gerada por IA, sem pessoa real", "provisoria": false, "aprovada": "Rafael, 27/10/2026"}
   },
   "_imagens_banco": "Fotos de banco de imagem (ou de IA) usadas nos protótipos da capa (sessão A3). Licenças com uso comercial livre e sem crédito obrigatório. 'provisoria': true = a prévia mostra a etiqueta 'imagem provisória' e o --producao recusa publicar. Regra da marca: nunca podem aparecer como a usina da AESOLAR nem como cliente; o gerador recusa texto alternativo ou legenda que diga isso. Toda foto que não está aqui é foto real da AESOLAR/Boreal.",
 
+  "casos": [
+    {"id": "condominio-goiania", "quem": "Condomínio em Goiânia", "mes": "2026-09", "sem_aesolar": 30077.18, "com_aesolar": 21550.37, "detalhe": "R$ 1.216,00 da Equatorial + R$ 20.334,37 da AESOLAR", "economia": 8526.81, "desde_inicio": 75362.63, "imagem": "caso-fatura", "termo_assinado": true, "fatura_tarjada": true},
+    {"id": "bar-goiania", "quem": "Bar e choperia em Goiânia, 4 unidades", "mes": "2026-09", "sem_aesolar": 10783.26, "com_aesolar": 8002.29, "economia": 2780.97, "termo_assinado": true, "fatura_tarjada": true}
+  ],
+  "_casos": "Conta real de cliente, sempre anônima (sem nome; a cidade pode, decisão do Rafael em 27/10/2026), com termo de autorização assinado e fatura tarjada. Comparação sempre no mesmo mês. Fonte: exportação de faturas do app, set/2026 (o bar soma as 4 unidades) e a fatura AESOLAR do condomínio, tarjada em entregas-intensivo/A4-caso/.",
   "depoimentos": [],
   "_depoimentos": "Só de cliente real, com termo de autorização assinado e fatura tarjada (21_AESOLAR_PRO/juridico/termo_autorizacao_case_cliente.md). Cada um precisa de \"termo_assinado\": true e \"fatura_tarjada\": true, ou o gerador para. Sem termo, sem depoimento."
 }

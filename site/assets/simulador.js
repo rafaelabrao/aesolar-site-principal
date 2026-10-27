@@ -19,8 +19,8 @@
       fora: conta - abatidoR,
       min: Math.floor(ecoMin / 10) * 10,
       max: Math.floor(ecoMax / 10) * 10,
-      ano_min: Math.floor(ecoMin * 12 / 100) * 100,
-      ano_max: Math.floor(ecoMax * 12 / 100) * 100,
+      ano_min: Math.floor(ecoMin / 10) * 10 * 12,
+      ano_max: Math.floor(ecoMax / 10) * 10 * 12,
       equatorial_depois: conta - abatidoR,
       aesolar_min: abatidoR - Math.floor(ecoMin / 10) * 10
     };

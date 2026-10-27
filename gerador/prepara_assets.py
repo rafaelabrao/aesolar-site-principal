@@ -52,6 +52,10 @@ LARGURAS = (640, 800, 1024, 1600)
 # As de banco (Unsplash, Pexels) são PROVISÓRIAS: estão marcadas em dados.json ("imagens_banco") e o
 # gerador não publica com elas. Os originais ficam em entregas-intensivo/A3-imagens-banco/, só neste Mac.
 BANCO = os.path.join(os.path.dirname(AQUI), 'entregas-intensivo', 'A3-imagens-banco')
+# As geradas por IA (Gemini, 22/10/2026, prompts da A3 §5.2) também são provisórias e ficam fora do git.
+GEMINI = os.path.join(os.path.dirname(AQUI), 'entregas-intensivo', 'A4-imagens-gemini')
+# A fatura real do caso (cliente anônimo, com termo assinado), tarjada; e a foto de Goiânia à noite, do Rafael.
+CASO = os.path.join(os.path.dirname(AQUI), 'entregas-intensivo', 'A4-caso')
 VEREDA = os.path.join(FOTOS, 'banco_complexo_vereda')
 FOTOS_CAPAS = {
     # a usina ao entardecer: em pé no celular (9:16), deitada no computador (16:10)
@@ -60,11 +64,16 @@ FOTOS_CAPAS = {
     'vereda-ceu': (VEREDA, 'vereda_09_20230209.jpg', 16 / 9, (0.5, 0.5), (640, 1024, 1600, 1920)),
     'vereda-aerea-larga': (FOTOS, 'complexo_vereda_01.jpg', 16 / 8, (0.5, 0.55), (640, 1024, 1600)),
     # banco (provisórias)
-    'goiania-entardecer': (BANCO, 'unsplash-ly_AdLTS-TA.jpg', 16 / 9, (0.5, 0.6), (640, 1024, 1600, 1920)),
-    'goiania-predios': (BANCO, 'unsplash-moYYoXwZkWI.jpg', 4 / 5, (0.5, 0.62), (480, 640, 800)),
-    'goiania-noite': (BANCO, 'unsplash-BCYkQdAz_AU.jpg', 16 / 9, (0.5, 0.72), (640, 1024, 1600, 1920)),
-    'comercio-cafe': (BANCO, 'pexels-3906984.jpg', 4 / 5, (0.3, 0.5), (480, 640, 800)),
-    'comercio-mercado': (BANCO, 'pexels-15491784.jpg', 4 / 5, (0.5, 0.5), (480, 640, 800)),
+    # foto do Rafael (real; a localização do celular sai ao regravar)
+    'goiania-noite': (CASO, 'goiania-noite-rafael.jpeg', 16 / 9, (0.5, 0.66), (640, 1024, 1600, 1920)),
+    # IA (provisórias): cenas sem rosto, nunca como usina nem como cliente
+    'ia-condominio': (GEMINI, 'condominio-2.jpeg', 4 / 3, (0.5, 0.5), (480, 640, 800)),
+    'ia-comercio': (GEMINI, 'comercio.jpeg', 4 / 3, (0.5, 0.5), (480, 640, 800)),
+    'ia-varias-unidades': (GEMINI, 'varias-unidades-1.jpeg', 4 / 3, (0.5, 0.5), (480, 640, 800)),
+    # em pé, para caber no fim alto do celular; no computador o recorte mostra o celular e a conta
+    'ia-fatura': (GEMINI, 'fatura-1.jpeg', 4 / 5, (0.5, 0.5), (640, 1024, 1600)),
+    # foto real (não é banco): a fatura inteira, sem recorte
+    'caso-fatura': (CASO, 'fatura-flamboyant-set2026-tarjada.png', 1306 / 1205, (0.5, 0.5), (480, 800, 1200)),
 }
 
 

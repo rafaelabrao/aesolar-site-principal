@@ -49,6 +49,21 @@
     a.addEventListener('click', function () { dl.push({ event: 'whatsapp_click', local: a.getAttribute('data-where') || '' }); });
   });
 
+  // ---------- o cabeçalho acompanha a página: no computador fica sempre; no celular some ao descer (a barra do
+  // WhatsApp já fica fixa embaixo) e volta ao subir. "rolou" deixa o fundo sólido quando ele estava sobre a foto. ----------
+  var cab = doc.querySelector('.cab');
+  if (cab) {
+    var ultimoY = window.scrollY;
+    var acompanha = function () {
+      var y = window.scrollY;
+      cab.classList.toggle('rolou', y > 24);
+      if (!cab.querySelector('.cab-menu[open]')) cab.classList.toggle('esconde', y > ultimoY && y > 320);
+      ultimoY = y;
+    };
+    window.addEventListener('scroll', acompanha, { passive: true });
+    acompanha();
+  }
+
   // ---------- barra fixa do WhatsApp no celular: só aparece quando nenhum outro botão de WhatsApp grande está na
   // tela (topo com o simulador, contato, rodapé). Assim ela nunca tapa o botão do simulador, que leva o valor. ----------
   var barra = doc.querySelector('[data-barra]');

@@ -21,7 +21,7 @@ import blocos as b  # noqa: E402
 import capas  # noqa: E402
 import gera_site as g  # noqa: E402
 import pagina_capa  # noqa: E402
-import pagina_capa_v2, pagina_capa_v3  # noqa: E402,E401
+import pagina_capa as pagina_capa_v2, pagina_assinatura as pagina_capa_v3  # noqa: E402,E401  as duas capas
 from blocos import Erro  # noqa: E402
 from simulador import estima  # noqa: E402
 
@@ -59,9 +59,10 @@ class Simulador(unittest.TestCase):
             self.assertEqual(estima(conta, self.p), r_js, f'conta de R$ {conta}')
 
     def test_exemplo_da_proposta(self):
+        # tarifa de R$ 1,22 (reajuste da Equatorial, 27/10/2026); com R$ 1,15 era (600, 4400, 880, 1320, ...)
         r = estima(5000, self.p)
         self.assertEqual((r['fora'], r['abatido'], r['min'], r['max'], r['ano_min'], r['ano_max']),
-                         (600, 4400, 880, 1320, 10500, 15800))
+                         (610, 4390, 870, 1310, 10440, 15720))
 
     def test_abaixo_do_minimo_nao_calcula(self):
         self.assertIsNone(estima(self.d.of['minimo_conta'] - 1, self.p))
@@ -155,7 +156,9 @@ class CapasNovas(unittest.TestCase):
     """Protótipos v2 e v3 da capa (sessão A3): passam nas travas, e foto de banco só entra marcada e sem fingir."""
 
     def setUp(self):
-        self.d = dados()
+        # as fotos de IA já foram aprovadas; aqui voltam a provisórias para testar a trava
+        reg = {k: dict(v, provisoria=True) for k, v in BRUTO['imagens_banco'].items()}
+        self.d = dados(imagens_banco=reg)
         self.v2 = pagina(self.d, pagina_capa_v2)
         self.v3 = pagina(self.d, pagina_capa_v3)
 
@@ -177,22 +180,31 @@ class CapasNovas(unittest.TestCase):
     def test_foto_de_banco_como_usina_ou_cliente_para(self):
         for alt in ('Nossa usina em Goiás', 'Cliente satisfeita da AESOLAR', 'Complexo Vereda'):
             with self.subTest(alt=alt), self.assertRaises(Erro):
-                g.confere_pagina(self.d, pagina_capa_v3, self.v3.replace('alt="Prédios residenciais em Goiânia"', f'alt="{alt}"'))
+                g.confere_pagina(self.d, pagina_capa_v3, self.v3.replace('alt="Padaria e mercearia de bairro com as luzes acesas"', f'alt="{alt}"'))
         with self.assertRaises(Erro):
-            capas.foto(self.d, 'comercio-cafe', 'Cliente no balcão')
+            capas.foto(self.d, 'ia-comercio', 'Cliente no balcão')
 
     def test_foto_de_banco_sem_marca_para(self):
-        img = '<img src="/assets/img/goiania-predios-480.webp" width="480" height="600" alt="Prédios">'
+        img = '<img src="/assets/img/ia-condominio-480.webp" width="480" height="600" alt="Prédios">'
         with self.assertRaises(Erro):
             g.confere_pagina(self.d, pagina_capa_v2, self.v2.replace('</main>', img + '</main>'))
 
     def test_marca_de_provisoria_fora_do_registro_para(self):
         with self.assertRaises(Erro):
-            g.confere_pagina(self.d, pagina_capa_v3, self.v3.replace('data-provisoria="goiania-predios"', 'data-provisoria="foto-qualquer"', 1))
+            g.confere_pagina(self.d, pagina_capa_v3, self.v3.replace('data-provisoria="ia-condominio"', 'data-provisoria="foto-qualquer"', 1))
 
-    def test_prototipos_nao_indexados_e_fora_do_sitemap(self):
-        self.assertIn('content="noindex', pagina(dados(previa=False), pagina_capa_v2))
+    def test_foto_aprovada_sai_sem_marca_mas_com_a_regra_do_texto(self):
+        d = dados()
+        v3 = pagina(d, pagina_capa_v3)
+        self.assertEqual(g.provisorias(v3), [])
+        self.assertNotIn('Imagem provisória', v3)
+        self.assertGreater(g.confere_pagina(d, pagina_capa_v3, v3), 0)
+        with self.assertRaises(Erro):
+            capas.foto(d, 'ia-comercio', 'Cliente no balcão')
+
+    def test_capas_no_sitemap_e_sem_prototipo(self):
         mapa = g.mapa_do_site(dados(previa=False))
+        self.assertIn('energia-solar-por-assinatura-goias', mapa)
         self.assertNotIn('/prototipos/', mapa)
         self.assertIn('<loc>https://aesolar.com.br/</loc>', mapa)
 
@@ -201,8 +213,7 @@ class Producao(unittest.TestCase):
     def test_producao_recusa_previa_pendencias_e_simulador_provisorio(self):
         r = subprocess.run([sys.executable, os.path.join(AQUI, 'gera_site.py'), '--producao'], capture_output=True, text=True)
         self.assertEqual(r.returncode, 1)
-        for trecho in ('"previa" ainda é true', 'marca(s) PENDENTE', 'não foi validado', 'modo "simulado"',
-                       'Imagem provisória de banco em /prototipos/capa-v3/', 'Protótipo da capa ainda no site'):
+        for trecho in ('"previa" ainda é true', 'marca(s) PENDENTE', 'modo "simulado"'):
             self.assertIn(trecho, r.stdout)
 
 

@@ -61,6 +61,9 @@
     var exemplo = Number(box.getAttribute('data-exemplo'));
     var textoExemplo = estado.textContent;
     var msgPadrao = cta ? cta.getAttribute('data-wa') : '';
+    // depois de simular, o botão leva o número da pessoa ("Quero economizar R$ 880 por mês")
+    var ctaTexto = cta ? cta.querySelector('span') : null;
+    var ctaPadrao = ctaTexto ? ctaTexto.textContent : '';
     var MAXIMO = 1000000;
     var contou = false, espera = null;
     // o simulador e os blocos que repetem as duas contas em outra parte da página (data-calc-espelho)
@@ -98,6 +101,7 @@
         res.hidden = false;
         desenha(S.estima(exemplo, params), true);
         if (cta) { cta.setAttribute('data-wa', msgPadrao); if (window.AesolarWa) window.AesolarWa(cta); }
+        if (ctaTexto) ctaTexto.textContent = ctaPadrao;
         return;
       }
       var r = conta <= MAXIMO ? S.estima(conta, params) : null;
@@ -112,6 +116,7 @@
       desenha(r, false);
       var msg = SAUDACAO + ' Simulei uma conta de ' + S.reais(r.conta).replace(' ', ' ') + ' por mês e quero o cálculo exato.';
       if (cta) { cta.setAttribute('data-wa', msg); if (window.AesolarWa) window.AesolarWa(cta); }
+      if (ctaTexto) ctaTexto.textContent = 'Quero economizar ' + S.reais(r.min) + ' por mês';
       // depois que a pessoa para de digitar: guarda para o formulário, leva o número para a barra e mede (uma vez)
       espera = setTimeout(function () {
         try { sessionStorage.setItem('aes_simulacao', JSON.stringify({ conta: r.conta, economia_min: r.min, economia_max: r.max })); } catch (e) {}
@@ -134,6 +139,25 @@
     });
     atualiza();
   });
+
+  // ---------- a economia gerada, do app (piso de 50 em 50 mil) ----------
+  // A página já abre com o número do dia da geração, que é verdadeiro; a busca só troca por um maior, depois de carregar.
+  var fonte = doc.querySelector('[data-economia-url]');
+  if (fonte && window.fetch) {
+    fetch(fonte.getAttribute('data-economia-url'), { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var piso = j && Number(j.economia_piso);
+        if (!piso || piso % 50000 || piso >= 1000000) return;  // fora do formato "R$ N mil": fica o da página
+        var mil = piso / 1000;
+        $$('[data-economia-mil]').forEach(function (el) {
+          if (mil <= Number(el.getAttribute('data-conta') || el.textContent)) return;
+          el.textContent = String(mil);
+          if (el.hasAttribute('data-conta')) el.setAttribute('data-conta', mil);
+        });
+      })
+      .catch(function () {});
+  }
 
   // ---------- números que contam quando aparecem, e seções que surgem ao rolar ----------
   if (!('IntersectionObserver' in window)) return;

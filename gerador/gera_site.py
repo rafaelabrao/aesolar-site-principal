@@ -33,10 +33,9 @@ import capas  # noqa: E402
 from blocos import Erro  # noqa: E402
 import pagina_capa, pagina_assinatura, pagina_como_funciona, pagina_usinas, pagina_perguntas  # noqa: E402,E401
 import pagina_representante, pagina_privacidade, pagina_termos, pagina_condominios, pagina_404  # noqa: E402,E401
-import pagina_capa_v2, pagina_capa_v3  # noqa: E402,E401  protótipos da capa (sessão A3)
 
 PAGINAS = [pagina_capa, pagina_assinatura, pagina_como_funciona, pagina_usinas, pagina_perguntas, pagina_representante,
-           pagina_privacidade, pagina_termos, pagina_condominios, pagina_404, pagina_capa_v2, pagina_capa_v3]
+           pagina_privacidade, pagina_termos, pagina_condominios, pagina_404]
 
 # Regras da marca (fonte única comercial §4 e CLAUDE.md do aesolar-marketing). Se uma aparecer, a página não é gravada.
 PROIBIDO = [
@@ -44,8 +43,8 @@ PROIBIDO = [
     (r'energia\s+(?:gr[áa]tis|gratuita|de\s+gra[çc]a)', 'nunca "energia grátis"'),
     (r'zer(?:e|ar|a)\s+(?:a\s+|sua\s+)?conta', 'nunca "zere sua conta"'),
     (r'pare\s+de\s+pagar', 'nunca "pare de pagar a Equatorial": o cliente continua pagando a distribuidora'),
-    (r'economia\s+imediata', 'nunca "economia imediata": os créditos levam normalmente até 60 dias'),
-    (r'desde\s+a\s+primeira\s+fatura', 'nunca "desde a primeira fatura": os créditos levam normalmente até 60 dias'),
+    (r'economia\s+imediata', 'nunca "economia imediata": os créditos levam em torno de 60 dias'),
+    (r'desde\s+a\s+primeira\s+fatura', 'nunca "desde a primeira fatura": os créditos levam em torno de 60 dias'),
     (r'serve\s+para\s+qualquer\s+empresa', 'nunca "serve para qualquer empresa"'),
     (r'(?:economia|desconto)s?\s+garantid', 'nunca economia ou desconto garantido'),
     (r'\bcentenas\s+de\b|\bmilhares\s+de\b', 'não citar quantidade de clientes'),
@@ -85,9 +84,26 @@ class Dados:
         # o que o simulador do navegador recebe: os parâmetros e o mínimo da oferta, de um lugar só
         self.sim_params = {k: v for k, v in s.items() if not k.startswith('_') and k not in ('exemplos', 'tarifa_fonte')}
         self.sim_params['minimo_conta'] = self.of['minimo_conta']
-        for x in bruto['depoimentos']:
+        for x in bruto['depoimentos'] + bruto.get('casos', []):
             if not (x.get('termo_assinado') is True and x.get('fatura_tarjada') is True):
                 raise Erro(f'Depoimento sem termo assinado e fatura tarjada: "{x.get("quem", "?")}". Sem termo, sem depoimento.')
+        for x in bruto.get('casos', []):
+            if abs(x['sem_aesolar'] - x['com_aesolar'] - x['economia']) > 0.02:
+                raise Erro(f'dados.json: no caso "{x["id"]}", sem_aesolar - com_aesolar não dá a economia.')
+        # Economia gerada: piso de 50 em 50 mil, para o "mais de" ser verdade todo dia; o texto sai daqui, de um lugar só.
+        piso = self.of['economia_gerada_piso']
+        if not (isinstance(piso, int) and piso > 0 and piso % 50000 == 0):
+            raise Erro('dados.json: "economia_gerada_piso" tem de ser múltiplo de 50 mil (arredondado para baixo).')
+        if piso >= 1000000:
+            raise Erro('dados.json: a economia gerada chegou a R$ 1 milhão. O formato "R$ N mil" não serve mais: ajustar '
+                       'capas.numeros, os selos e capas.js para "milhão" antes de atualizar.')
+        self.of['economia_gerada'] = f'mais de R$ {piso // 1000} mil'
+        dias = (hoje - date.fromisoformat(self.of['economia_gerada_data'])).days
+        if dias > 45:
+            self.avisos.append(f'Economia gerada atualizada há {dias} dias: cresce cerca de R$ 50 mil por mês. Conferir no app '
+                               f'(economia entregue) e atualizar "economia_gerada_piso".')
+        for h in bruto['historia']:
+            h['texto'] = h['texto'].replace('{economia_gerada}', self.of['economia_gerada'])
         self.caminhos = {m.CAMINHO for m in PAGINAS}
         for s_ in bruto['segmentos']:
             if s_['pagina'] and s_['pagina'] not in self.caminhos:
@@ -328,7 +344,7 @@ def confere_imagens_banco(d, c, pagina):
             raise Erro(f'{c}: foto de banco "{nome}" descrita como usina ou cliente: "{alt}".')
     marcadas = set(provisorias(pagina))
     for nome in set(re.findall(r'/assets/img/([a-z0-9-]+?)-\d+\.(?:avif|webp)', pagina)):
-        if nome in reg and nome not in marcadas:
+        if nome in reg and reg[nome].get('provisoria', True) and nome not in marcadas:
             raise Erro(f'{c}: a foto de banco "{nome}" aparece sem a marca de provisória (use capas.foto).')
 
 
@@ -400,7 +416,7 @@ def main(argv):
         for cam, cods in pendencias.items():
             print(f'  {cam:<40} {", ".join(cods)}')
     if banco:
-        print('\nImagens provisórias de banco (trocar antes de publicar):')
+        print('\nImagens provisórias, de banco ou de IA (aprovar ou trocar antes de publicar):')
         for cam, nomes in banco.items():
             print(f'  {cam:<40} {", ".join(nomes)}')
     prototipos = [m.CAMINHO for m in PAGINAS if getattr(m, 'PROTOTIPO', False)]
@@ -418,7 +434,7 @@ def main(argv):
         if pendencias:
             erros.append(f'Ainda há {total} marca(s) PENDENTE.')
         if banco:
-            erros.append('Imagem provisória de banco em ' + ', '.join(banco) + ' (dados.json, imagens_banco).')
+            erros.append('Imagem provisória (banco ou IA) em ' + ', '.join(banco) + ' (dados.json, imagens_banco).')
         if prototipos:
             erros.append('Protótipo da capa ainda no site: ' + ', '.join(prototipos) + '. Escolhida a capa, tire os outros.')
         if d.sim['validado_em'] is None:

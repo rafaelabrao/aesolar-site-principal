@@ -24,17 +24,17 @@ def todas(d):
               f'cálculo exato em até {of["proposta_horas"]} horas.</p>'},
         {'id': 'quando-comeca', 'grupo': 'como', 'p': 'Quanto tempo leva para começar?',
          'r': f'<p>Depois do contrato assinado, a Equatorial precisa cadastrar sua unidade na usina. Os créditos aparecem '
-              f'normalmente em até {of["creditos_dias_normal"]} dias; o contrato prevê até {of["creditos_dias_contrato"]}. '
+              f'em torno de {of["creditos_dias_normal"]} dias; o contrato prevê até {of["creditos_dias_contrato"]}. '
               f'Até lá, sua conta continua como está.</p>'},
         {'id': 'quem-pode', 'grupo': 'quem', 'p': 'Quem pode contratar?',
          'r': f'<p>Empresas e condomínios de Goiás atendidos pela Equatorial Goiás, inclusive no Entorno do DF (DDD 61), '
-              f'com conta a partir de {mn} por mês. O Distrito Federal não é atendido. Residência não é o nosso foco.</p>'},
+              f'com conta a partir de {mn} por mês. O Distrito Federal tem outra distribuidora e não é atendido.</p>'},
         {'id': 'varias-unidades', 'grupo': 'quem', 'p': 'Minha empresa tem várias unidades. Dá para incluir todas?',
          'r': '<p>Dá. A proposta pode reunir todas as unidades da Equatorial em Goiás em nome da mesma empresa, cada uma com o '
               'seu cálculo. ' + pendente('D14', 'anunciar a cobrança única para todas as unidades?') + '</p>'},
         {'id': 'alta-tensao', 'grupo': 'quem', 'p': 'Minha empresa é atendida em alta tensão. Serve?',
-         'r': '<p>O simulador vale para baixa tensão (Grupo B), que é o caso da maioria das empresas. Em alta tensão (Grupo A) '
-              'a conta é diferente: mande a fatura e a gente diz se compensa.</p>'},
+         'r': '<p>Hoje atendemos baixa tensão (Grupo B), que é o caso da maioria das empresas e condomínios. Alta tensão '
+              '(Grupo A) ainda não faz parte da assinatura.</p>'},
         {'id': 'e-legal', 'grupo': 'contrato', 'p': 'Isso é permitido? É seguro?',
          'r': '<p>Sim. A geração compartilhada está prevista na Lei 14.300/2022 e nas regras da ANEEL. A energia da usina entra '
               'na rede da Equatorial e é a própria Equatorial que lança os créditos na sua conta.</p>'},
@@ -44,8 +44,7 @@ def todas(d):
               'usinas. Sua empresa entra como associada.</p>'},
         {'id': 'usina-gera-menos', 'grupo': 'conta', 'p': 'E se a usina gerar menos num mês?',
          'r': '<p>Você paga à AESOLAR pela energia que virou crédito na sua conta. Num mês de menos geração, a conta da '
-              'Equatorial sobe um pouco e a da AESOLAR vem menor. ' + pendente('D2', 'confirmar com o contrato.') + '</p>',
-         'pendente': True},
+              'Equatorial sobe um pouco e a da AESOLAR vem menor.</p>'},
         {'id': 'falta-luz', 'grupo': 'como', 'p': 'Se faltar luz, com quem eu falo?',
          'r': '<p>Com a Equatorial, como hoje. A rede, a ligação e a manutenção continuam com ela. A AESOLAR cuida da energia '
               'da usina e dos créditos na sua conta.</p>'},
@@ -54,8 +53,11 @@ def todas(d):
                                'é "a gente confere todo mês e avisa o erro". Senão, a pergunta sai.') + '</p>',
          'pendente': True},
         {'id': 'contrato-prazo', 'grupo': 'contrato', 'p': 'Quanto tempo dura o contrato? Como faço para sair?',
-         'r': '<p>' + pendente('D2', 'prazo, aviso prévio e multa, como estão no contrato, depois da revisão jurídica.') + '</p>',
-         'pendente': True},
+         'r': f'<p>O contrato é de {of["contrato_meses"]} meses: o tempo de a economia aparecer em várias contas seguidas. '
+              f'Para sair ao fim desse prazo, sem custo, basta avisar com {of["aviso_saida_dias"]} dias de antecedência: '
+              f'quem avisa no {of["contrato_meses"] - of["aviso_saida_dias"] // 30}º mês sai no {of["contrato_meses"]}º. '
+              f'Se você ficar, o contrato continua sem prazo e você sai quando quiser, sem multa. Todas as condições estão '
+              f'no contrato, que você lê antes de assinar.</p>'},
         {'id': 'mercado-livre', 'grupo': 'contrato', 'p': 'Vale esperar o mercado livre de energia?',
          'r': '<p>A lei prevê abrir o mercado livre para empresas em baixa tensão a partir do fim de 2027, com regras que '
               'ainda estão sendo definidas. Até lá, a assinatura já reduz sua conta. Quando o mercado abrir, a gente avalia '

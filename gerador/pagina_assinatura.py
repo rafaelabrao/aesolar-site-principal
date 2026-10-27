@@ -1,45 +1,41 @@
-"""/energia-solar-por-assinatura-goias/: o destino do anúncio de Pesquisa do Google (plano de anúncios de 16/10).
-Cabeçalho enxuto: quem vem do anúncio não precisa de menu; os sitelinks levam às outras páginas."""
+"""/energia-solar-por-assinatura-goias/: o destino do anúncio de Pesquisa do Google, para quem busca economia
+(decisão D19, 26/10/2026). O simulador é o topo: a pessoa digita a conta e vê a economia em reais antes de qualquer
+outra coisa. Cabeçalho enxuto: quem vem do anúncio não precisa de menu; os sitelinks levam às outras páginas."""
 import blocos as b
+import capas
 import perguntas
 
 CAMINHO = '/energia-solar-por-assinatura-goias/'
 TITULO = 'Energia solar por assinatura em Goiás | AESOLAR'
-DESCRICAO = ('Para empresas e condomínios de Goiás: até 30% de economia na parte da energia, com usina própria no estado. '
-             'Cálculo em reais em até 24 horas.')
+DESCRICAO = ('Para empresas e condomínios de Goiás: simule em reais quanto a sua conta de luz cai com a energia da nossa '
+             'usina, sem obra. Cálculo exato em até 24 horas.')
 CABECALHO = 'enxuto'
 SEGMENTO = 'geral'
 SIMULADOR = True
+CLASSE_BODY = 'capa-v3'
+SIM_HREF = '#simulador'
+CSS_EXTRA = 'estilo_capas.css'
+JS_EXTRA = ['capas.js']
+SPRITE_EXTRA = capas.sprite_extra
 MIGALHAS = [('Início', '/'), ('Energia solar por assinatura em Goiás', None)]
-FAQ = ['precisa-instalar', 'continuo-pagando', 'quanto-economizo', 'quando-comeca', 'quem-pode', 'e-legal',
-       'quanto-custa']
-
-
-def o_que_e(d):
-    return (
-        '<div class="duas-col"><div><p class="olho">O que é</p>'
-        '<h2 id="t-oque">Você assina a energia de uma usina solar, sem comprar nada</h2>'
-        '<p>Sua empresa reserva uma parte da energia de uma usina solar em Goiás. A usina gera, a energia entra na rede da '
-        'Equatorial e volta como crédito na sua conta de luz. Você paga essa energia à AESOLAR, com desconto, e paga à '
-        'Equatorial só o que sobra.</p>'
-        '<p>Sem comprar placa, sem obra e sem investimento. O nome técnico é <strong>geração compartilhada</strong>, e ela está '
-        'prevista na Lei 14.300/2022.</p></div>'
-        f'<div>{b.duas_contas(d)}</div></div>')
+FAQ = ['precisa-instalar', 'continuo-pagando', 'quanto-economizo', 'quando-comeca', 'quem-pode', 'contrato-prazo',
+       'mercado-livre']
 
 
 def corpo(d):
     return (
-        b.topo(d, CAMINHO, 'Para empresas e condomínios de Goiás',
-               'Energia solar por assinatura para empresas de Goiás',
-               f'Até {b.pct(d.of["desconto_max_pct"])} de economia na parte da energia, com usina própria no estado. Mande '
-               f'a fatura e receba o cálculo em reais em até {d.of["proposta_horas"]} horas.')
-        + b.secao(o_que_e(d), '', 'o-que-e', 't-oque')
-        + b.secao(b.passos(d, CAMINHO), 'sec-clara', 'como-funciona', 't-passos')
-        + b.secao(b.usina(d), 'sec-escura', 'usina', 't-usina')
-        + b.secao(b.letra_miuda(d), '', 'letra-miuda', 't-miuda')
-        + b.secao(b.para_quem(d), 'sec-clara', 'para-quem', 't-quem')
-        + b.secao(b.perguntas_bloco(d, perguntas.escolhe(d, FAQ)), '', 'perguntas', 't-faq')
-        + b.secao(b.contato(d, CAMINHO, SEGMENTO), 'sec-escura', 'contato', 't-contato')
+        capas.topo_v3(d, CAMINHO)
+        + b.secao(f'<div class="revela">{capas.caso(d)}</div>', '', 'caso', 't-caso')
+        + b.secao(f'<div class="revela">{capas.conversa_v3(d, CAMINHO)}</div>', 'sec-clara', 'como-funciona', 't-passos')
+        + b.secao(f'<div class="revela">{capas.provas_v3(d)}</div>', '', 'provas', 't-provas')
+        + b.secao(f'<div class="revela">{capas.mapa(d)}</div>', 'sec-escura sec-mapa', 'onde', 't-mapa')
+        + b.secao(f'<div class="revela">{capas.para_quem_v3(d)}</div>', 'sec-clara', 'para-quem', 't-quem')
+        + b.secao(f'<div class="revela">{capas.vantagens(d)}</div>', '', 'vantagens', 't-vant')
+        + b.secao(b.perguntas_bloco(d, perguntas.escolhe(d, FAQ)), 'sec-clara', 'perguntas', 't-faq')
+        + capas.final(d, CAMINHO, 'ia-fatura', 'Mãos fotografando uma conta de luz com o celular, no balcão de um comércio',
+                      'Sua economia em reais, com a sua conta de verdade.',
+                      f'Mande a foto da fatura pelo WhatsApp. Em até {d.of["proposta_horas"]} horas, o cálculo completo, '
+                      f'sem compromisso.')
     )
 
 

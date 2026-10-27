@@ -74,14 +74,23 @@ python3 -m http.server 8090 --directory site   # ver em http://localhost:8090
   imagem: não usar.
 - O DNS de `aesolar.com.br` está na Locaweb, junto com o e-mail. Por isso a recomendação é continuar no
   GitHub Pages (sem mexer em DNS).
-- Protótipos da capa (sessão A3, 21/10/2026): `/prototipos/capa-v2/` (a usina em tela cheia, só foto real) e
-  `/prototipos/capa-v3/` (a conta em reais, com fotos de banco provisórias). Peças em `gerador/capas.py`, estilo em
-  `gerador/estilo_capas.css` (embutido só neles), comportamento em `site/assets/capas.js`. Análise e recomendação:
-  `entregas-intensivo/A3-REDESENHO-CAPA.md`. Escolhida a capa (D19), apagar o protótipo que sair: o `--producao`
-  não publica com protótipo nem com foto de `imagens_banco` (dados.json).
+- As duas capas (D19, 26/10/2026): `/` (pagina_capa.py, "a usina é nossa", para quem já conhece a AESOLAR) e
+  `/energia-solar-por-assinatura-goias/` (pagina_assinatura.py, o simulador no topo, destino do anúncio do Google, com
+  cabeçalho enxuto). Peças em `gerador/capas.py`, estilo em `gerador/estilo_capas.css`, comportamento em
+  `site/assets/capas.js`. As peças antigas de `blocos.py` que sobraram servem às páginas internas.
+- Foto de banco ou de IA aprovada fica em `imagens_banco` com `"provisoria": false`: sai sem etiqueta, mas continua
+  proibido descrevê-la como usina, cliente ou equipe.
 - `?limpo` no endereço esconde as marcas PENDENTE e a faixa da prévia, só para julgar o visual.
+- Economia gerada: `oferta.economia_gerada_piso` em `dados.json`, sempre o valor do app (Painel geral → Economia
+  entregue) arredondado PARA BAIXO de 50 em 50 mil; nunca o número exato (o repositório é público). Cresce cerca de
+  R$ 50 mil por mês; o gerador avisa depois de 45 dias sem atualizar. `oferta.economia_url` liga a atualização
+  automática pelo app (prompt em `entregas-intensivo/A4-PROMPT-APP-ECONOMIA.md`).
+- Caso real (`casos` em `dados.json`): sempre anônimo, sem nome e sem cidade, com termo assinado e fatura tarjada. A
+  fatura do site vem de `entregas-intensivo/A4-caso/` (cópia da Academia).
+- A multa de saída antecipada fica no contrato, não no site (decisão do Rafael, 27/10/2026).
 - `.venv/bin/python gerador/prepara_assets.py capas` gera só as fotos dos protótipos (os originais de banco ficam em
-  `entregas-intensivo/A3-imagens-banco/`).
+  `entregas-intensivo/A3-imagens-banco/`); as do Gemini, em
+  `entregas-intensivo/A4-imagens-gemini/`, com um LEIA-ME de qual foto vai onde).
 
 Armadilhas já pagas no site novo:
 

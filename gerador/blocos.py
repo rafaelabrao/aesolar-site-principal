@@ -176,7 +176,7 @@ MENU = [('/como-funciona/', 'Como funciona'), ('/usinas/', 'Usinas'), ('/pergunt
 
 def cabecalho(d, caminho, tipo, sim_href='/#simulador'):
     logo = ('<a class="cab-logo" href="/" aria-label="AESOLAR, página inicial">'
-            '<img src="/assets/img/logo-escuro.webp" width="134" height="40" alt="AESOLAR — Powered by Boreal Solar"></a>')
+            '<img src="/assets/img/logo-escuro.svg" width="134" height="40" alt="AESOLAR — Powered by Boreal Solar"></a>')
     if tipo == 'enxuto':
         return (f'<header class="cab cab-enxuto"><div class="wrap cab-in">{logo}'
                 f'{wa(d, MSG_FATURA, caminho_curto(caminho) + ":cabecalho", "WhatsApp", "cab-wa")}</div></header>')
@@ -211,7 +211,7 @@ def rodape(d, caminho):
     lis = ''.join(f'<li><a href="{u}">{t}</a></li>' for u, t in links)
     return (
         f'<footer class="rod"><div class="wrap rod-in">'
-        f'<div class="rod-marca"><img src="/assets/img/logo-escuro.webp" width="134" height="40" loading="lazy" '
+        f'<div class="rod-marca"><img src="/assets/img/logo-escuro.svg" width="134" height="40" loading="lazy" '
         f'alt="AESOLAR — Powered by Boreal Solar"><p>Energia solar por assinatura para empresas e condomínios de Goiás, '
         f'com usinas próprias no estado.</p></div>'
         f'<nav class="rod-links" aria-label="Rodapé"><ul>{lis}</ul></nav>'
@@ -247,7 +247,7 @@ def secao(conteudo, cls='', id_=None, rotulo=None):
 
 
 def provas():
-    itens = [('sol', 'Usina própria em Goiás'), ('relogio', 'Cálculo em reais em até 24 horas'),
+    itens = [('sol', 'A usina é nossa, em Goiás'), ('relogio', 'Cálculo em reais em até 24 horas'),
              ('escudo', 'Sem obra e sem placa no telhado')]
     return '<ul class="provas">' + ''.join(f'<li>{icone(i)}<span>{t}</span></li>' for i, t in itens) + '</ul>'
 
@@ -279,8 +279,8 @@ def simulador(d, caminho, titulo):
         f'<label class="caixa"><input type="checkbox" name="varias"><span>Somei a conta de mais de uma unidade</span></label>'
         f'<p class="sim-vazio" data-sim-vazio id="sim-ajuda-{caminho_curto(caminho)}">Digite o valor da conta ou toque num exemplo. '
         f'A economia aparece aqui, em reais, sem pedir seu contato.</p>'
-        f'<p class="sim-abaixo" data-sim-abaixo hidden>Para conta abaixo de {reais(d.of["minimo_conta"])} por mês a assinatura '
-        f'ainda não compensa. Se a empresa tem mais de uma unidade, some as contas.</p>'
+        f'<p class="sim-abaixo" data-sim-abaixo hidden>A assinatura é para contas a partir de {reais(d.of["minimo_conta"])} '
+        f'por mês. Se a empresa tem mais de uma unidade, some as contas.</p>'
         f'<div class="nota" data-sim-saida hidden aria-live="polite"><dl>'
         f'{linha("Sua conta hoje", "conta")}'
         f'{linha("Fica fora do desconto <small>custo mínimo, iluminação pública e tributos</small>", "fora")}'
@@ -297,8 +297,7 @@ def simulador(d, caminho, titulo):
         f'<details class="sim-como"><summary>Como a conta é feita {icone("abre")}</summary>'
         f'<p>A economia vale só sobre a energia que a usina abate da sua conta. Ficam fora o custo mínimo que a Equatorial '
         f'cobra de toda ligação ({s["disponibilidade_kwh"]} kWh numa ligação trifásica), a iluminação pública e parte dos '
-        f'tributos. Por isso a gente mostra a economia em reais, e não em percentual da conta inteira. Alta tensão (Grupo A) '
-        f'tem outro cálculo: mande a fatura.</p></details>'
+        f'tributos. Por isso a gente mostra a economia em reais, e não em percentual da conta inteira.</p></details>'
         f'{provisorio}<noscript><p class="sim-vazio">Para simular, ative o JavaScript, ou mande a fatura pelo WhatsApp.</p></noscript></div>')
 
 
@@ -309,7 +308,7 @@ def passos(d, caminho, link=True):
         ('calculadora', 'Receba o cálculo em reais',
          f'Em até {of["proposta_horas"]} horas: quanto você paga hoje e quanto vai pagar com a AESOLAR.'),
         ('caneta', 'Assine e comece a receber',
-         f'O contrato é assinado pelo celular. Os créditos começam normalmente em até {of["creditos_dias_normal"]} dias '
+         f'O contrato é assinado pelo celular. Os créditos começam em torno de {of["creditos_dias_normal"]} dias '
          f'(o contrato prevê até {of["creditos_dias_contrato"]}).'),
     ]
     lis = ''.join(f'<li class="passo"><span class="passo-n" aria-hidden="true">{i}</span><div>'
@@ -355,66 +354,6 @@ def usina(d, titulo_tag='h2'):
         f'<p class="mais mais-escuro"><a href="/usinas/">Ver as fotos das usinas {icone("seta")}</a></p></div>'
         f'<figure class="usina-foto">{foto("vereda-aerea", "Vista aérea do Complexo Vereda, usina solar da Boreal Solar em Goiás", "(min-width: 900px) 560px, calc(100vw - 32px)")}'
         f'<figcaption>Complexo Vereda, visto de cima. Foto real, sem retoque.</figcaption></figure></div>')
-
-
-def letra_miuda(d):
-    of = d.of
-    itens = [
-        ('tomada', 'Você continua pagando a Equatorial',
-         'A conta dela fica menor e chega uma segunda conta, da AESOLAR. A soma das duas é que fica mais barata.'),
-        ('recibo', 'O desconto é sobre a energia, não sobre a conta inteira',
-         'Iluminação pública, o custo mínimo da Equatorial e parte dos tributos continuam. Por isso a gente mostra a '
-         'economia em reais.'),
-        ('relogio', 'Os créditos não começam no mês seguinte',
-         f'Normalmente levam até {of["creditos_dias_normal"]} dias para aparecer na conta. O contrato prevê até '
-         f'{of["creditos_dias_contrato"]}.'),
-        ('local', 'Não serve para qualquer conta',
-         f'Abaixo de {reais(of["minimo_conta"])} por mês não compensa. E só atendemos Goiás, inclusive o Entorno do DF '
-         f'atendido pela Equatorial Goiás.'),
-        ('olho', 'Você só paga pela energia que virou crédito',
-         'Se num mês a usina gerar menos, a conta da AESOLAR vem menor. '
-         + pendente('D2', 'confirmar com o contrato antes de publicar.')),
-        ('caneta', 'Como sair do contrato',
-         pendente('D2', 'prazo, aviso prévio e multa, como estão no contrato, depois da revisão jurídica.')),
-    ]
-    lis = ''.join(f'<li class="cartao">{icone(i, "ic ic-cartao")}<h3>{t}</h3><p>{txt}</p></li>' for i, t, txt in itens)
-    return (f'<p class="olho">O que ninguém te conta</p><h2 id="t-miuda">A letra miúda, em letra grande</h2>'
-            f'<p class="intro">Desconto todo mundo promete. Antes de você assinar, a gente mostra o que muda de verdade na '
-            f'sua conta, e o que não muda.</p><ul class="cartoes">{lis}</ul>')
-
-
-def para_quem(d):
-    icones = {'predio': 'predio', 'loja': 'loja', 'rede': 'rede'}
-    lis = ''
-    for s in d.b['segmentos']:
-        corpo = f'{icone(icones[s["icone"]], "ic ic-cartao")}<h3>{s["nome"]}</h3><p>{s["texto"]}</p>'
-        if d.link_ok(s['pagina']):
-            corpo += f'<span class="cartao-link">Ver como funciona para {s["nome"].lower()} {icone("seta")}</span>'
-            lis += f'<li><a class="cartao cartao-a" href="{s["pagina"]}">{corpo}</a></li>'
-        else:
-            lis += f'<li class="cartao">{corpo}</li>'
-    return (f'<p class="olho">Para quem é</p><h2 id="t-quem">Feito para empresa de conta alta</h2>'
-            f'<p class="intro">Para empresas e condomínios de Goiás com conta a partir de {reais(d.of["minimo_conta"])} por mês. '
-            f'Quanto maior a conta, maior a economia em reais. Residência não é o nosso foco.</p>'
-            f'<ul class="cartoes cartoes-3">{lis}</ul>')
-
-
-def quem_somos(d):
-    emp = d.emp
-    linha = ''.join(f'<li><span class="hist-ano">{h["ano"]}</span><p>{h["texto"]}</p></li>' for h in d.b['historia'])
-    deps = ''
-    if d.b['depoimentos']:
-        deps = '<ul class="deps">' + ''.join(
-            f'<li class="dep"><blockquote>{e(x["texto"])}</blockquote><p>{e(x["quem"])}</p></li>' for x in d.b['depoimentos']) + '</ul>'
-    return (
-        f'<div class="quem"><div><p class="olho">Quem está por trás</p><h2 id="t-somos">Uma empresa goiana, com nome, endereço e CNPJ</h2>'
-        f'<p>A AESOLAR é a associação de geração compartilhada operada pela <strong>Boreal Solar</strong>, empresa de Goiás '
-        f'que constrói e opera usinas solares no estado. Quando a conta vier errada, você sabe com quem falar.</p>'
-        f'{pendente_bloco("D5", "Vídeo do Rafael (30 a 60 segundos, de preferência na usina) e o texto de apresentação com o nome dele.")}'
-        f'<p class="grande">{d.of["economia_gerada"]}</p><p class="grande-rot">de economia gerada para os clientes</p></div>'
-        f'<div><ol class="hist">{linha}</ol>'
-        f'<div class="ficha"><p class="ficha-tit">Com quem você fecha</p><p>{emp["razao_social"]}<br>CNPJ {emp["cnpj"]}<br>'
-        f'{emp["rua"]}, {emp["bairro"]}, {emp["cidade"]}-{emp["uf"]}</p></div></div></div>{deps}')
 
 
 def perguntas_bloco(d, itens, titulo='Perguntas frequentes', link=True, h='h2', id_titulo='t-faq'):

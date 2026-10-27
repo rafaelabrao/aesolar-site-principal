@@ -26,7 +26,7 @@ def corpo(d):
          'O contrato e a procuração que permite cadastrar sua unidade na usina junto à Equatorial são assinados de forma '
          'digital. Sem cartório e sem visita.'),
         ('raio', 'A Equatorial cadastra sua unidade',
-         f'A usina passa a mandar energia para a sua unidade. Os créditos aparecem normalmente em até '
+         f'A usina passa a mandar energia para a sua unidade. Os créditos aparecem em torno de '
          f'{of["creditos_dias_normal"]} dias; o contrato prevê até {of["creditos_dias_contrato"]}. Até lá, sua conta continua '
          f'como está.'),
         ('recibo', 'Todo mês, duas contas',

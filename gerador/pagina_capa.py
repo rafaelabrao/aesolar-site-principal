@@ -1,33 +1,47 @@
-"""A capa (/). Ordem da diretriz A1 §5.1, com "quem está por trás" e "resultados" num bloco só."""
+"""A capa (/), para quem já ouviu falar da AESOLAR e quer saber se é séria (decisão D19, 26/10/2026).
+A usina real ocupa a primeira tela, com o título curto e o número em reais logo ali; o simulador fica ao lado no
+computador e logo abaixo no celular. Depois, a prova com contas de clientes e o resto da página. Só fotos reais."""
 import blocos as b
+import capas
 import perguntas
 
 CAMINHO = '/'
-TITULO = 'AESOLAR | Energia por assinatura com usina própria em Goiás'
-DESCRICAO = ('Até 30% de economia na parte da energia da conta, com usina própria em Goiás e sem obra. Simule em reais '
-             'ou mande a fatura e receba o cálculo em até 24 horas.')
+TITULO = 'AESOLAR | Energia solar por assinatura em Goiás'
+DESCRICAO = ('Energia solar por assinatura para empresas e condomínios de Goiás: até 30% de economia na parte da energia, '
+             'sem obra e sem investimento.')
 CABECALHO = 'completo'
 SEGMENTO = 'geral'
 SIMULADOR = True
+CLASSE_BODY = 'capa-v2'
+SIM_HREF = '#simulador'
+CSS_EXTRA = 'estilo_capas.css'
+JS_EXTRA = ['capas.js']
+PRELOAD = capas.preload('vereda-entardecer-larga', ('vereda-entardecer-retrato', 699))
+SPRITE_EXTRA = capas.sprite_extra
 FAQ = ['precisa-instalar', 'continuo-pagando', 'quanto-economizo', 'quando-comeca', 'quem-pode', 'contrato-prazo',
        'mercado-livre']
 
 
 def corpo(d):
     return (
-        b.topo(d, CAMINHO, 'Só para empresas e condomínios de Goiás',
-               'Desconto todo mundo promete. A gente mostra em reais.',
-               f'Energia solar por assinatura: até {b.pct(d.of["desconto_max_pct"])} de economia na parte da energia da '
-               f'conta, com usina própria em Goiás e sem obra. Mande a fatura e receba o cálculo em até '
-               f'{d.of["proposta_horas"]} horas.')
-        + b.pendente_bloco('D1', 'Aprovar o título e o subtítulo do topo (posicionamento).')
-        + b.secao(b.passos(d, CAMINHO), 'sec-clara', 'como-funciona', 't-passos')
-        + b.secao(b.usina(d), 'sec-escura', 'usina', 't-usina')
-        + b.secao(b.letra_miuda(d), '', 'letra-miuda', 't-miuda')
-        + b.secao(b.para_quem(d), 'sec-clara', 'para-quem', 't-quem')
-        + b.secao(b.quem_somos(d), '', 'quem-somos', 't-somos')
-        + b.secao(b.perguntas_bloco(d, perguntas.escolhe(d, FAQ)), 'sec-clara', 'perguntas', 't-faq')
-        + b.secao(b.contato(d, CAMINHO, SEGMENTO), 'sec-escura', 'contato', 't-contato')
+        capas.topo_v2(d, CAMINHO)
+        + b.secao(capas.numeros(d), 'sec-num', 'numeros', 't-numeros')
+        + b.secao(f'<div class="revela">{capas.caso(d)}</div>', '', 'caso', 't-caso')
+        + b.secao(f'<div class="revela">{capas.passos(d)}</div>'
+                  f'<div class="contas2 revela"><div><h3>Como fica a sua conta</h3><p><strong>Você continua pagando a '
+                  f'Equatorial.</strong> A conta dela fica menor e chega uma segunda, da AESOLAR, com o desconto. A soma das '
+                  f'duas é que fica mais barata.</p></div>{capas.contas_espelho(d)}</div>',
+                  'sec-clara', 'como-funciona', 't-passos')
+        + capas.usina_v2(d)
+        + b.secao(f'<div class="revela">{capas.vantagens(d)}</div>', '', 'vantagens', 't-vant')
+        + b.secao(f'<div class="revela">{capas.mapa(d)}</div>', 'sec-escura sec-mapa', 'onde', 't-mapa')
+        + b.secao(f'<div class="revela">{capas.para_quem_v2(d)}</div>', 'sec-clara', 'para-quem', 't-quem')
+        + b.secao(capas.quem(d), 'sec-escura sec-quem', 'quem-somos', 't-somos')
+        + b.secao(b.perguntas_bloco(d, perguntas.escolhe(d, FAQ)), '', 'perguntas', 't-faq')
+        + capas.final(d, CAMINHO, 'vereda-ceu', 'Fileira de painéis do Complexo Vereda sob céu de nuvens, em Goiás',
+                      f'Sua conta, em reais, em até {d.of["proposta_horas"]} horas.',
+                      'Mande uma foto da última conta da Equatorial. A gente devolve quanto você paga hoje e quanto vai '
+                      'pagar com a AESOLAR.')
     )
 
 
