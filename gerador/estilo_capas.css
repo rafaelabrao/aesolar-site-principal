@@ -156,6 +156,15 @@
 .caso-nota { margin: 0; font-size: var(--t-xs); color: var(--slate-500); }
 .caso-fig { margin: 0; overflow: hidden; border: 1px solid var(--slate-200); border-radius: var(--raio-lg); background: var(--branco); box-shadow: var(--sombra-md); }
 .caso-fig img { display: block; width: 100%; height: auto; }
+/* caso sem a fatura em imagem: as duas contas do mês em barras */
+/* no celular, os números já estão logo acima: o desenho só aparece no computador, ao lado deles */
+.caso-fig-barras { display: none; padding: var(--e-6); }
+.caso-fig-barras figcaption { margin-bottom: var(--e-5); font-size: var(--t-sm); font-weight: 700; color: var(--slate-900); }
+.caso-fig-barras .trilho { height: 2.25rem; }
+.caso-fig-barras .barra-v { font-size: var(--t-lg); }
+
+/* páginas de segmento */
+.passos-bt { margin: var(--e-6) 0 0; }
 
 /* faixa de foto grande (a usina) */
 .faixa-foto { position: relative; min-height: 36rem; display: flex; align-items: flex-end; background: var(--slate-950); color: var(--branco-85); overflow: hidden; }
@@ -380,6 +389,7 @@ a.sf:hover { border-color: var(--laranja); }
   .cmp .cmp-cab { display: grid; padding: var(--e-3) 0; font-size: var(--t-xs); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-600); }
   .cmp .cmp-cab span:last-child { color: var(--laranja-texto); }
   .caso { grid-template-columns: 1fr 1.05fr; gap: var(--e-14); }
+  .caso-fig-barras { display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {

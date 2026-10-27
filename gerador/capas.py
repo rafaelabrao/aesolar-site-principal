@@ -125,14 +125,15 @@ def _chip(v):
     return f'R$ {v // 1000} mil' if v % 1000 == 0 else reais(v)
 
 
-def calc(d, caminho, titulo, variante='cartao'):
+def calc(d, caminho, titulo, variante='cartao', exemplo=None, rotulo='Valor médio da conta de luz, por mês'):
     """Um campo só (o valor da conta). Já abre com o exemplo calculado; a pessoa digita a dela e a conta muda na hora.
     O exemplo não conta como simulação: nem medição, nem vai para o formulário (capas.js).
-    variante 'cartao' (v2, ao lado da foto): enxuto, sem as barras. 'larga' (v3, o topo): com as duas contas."""
+    variante 'cartao' (v2, ao lado da foto): enxuto, sem as barras. 'larga' (v3, o topo): com as duas contas.
+    exemplo: a conta com que abre (as páginas de segmento usam uma conta típica do segmento)."""
     s = d.sim
     c = caminho_curto(caminho)
     onde = f'{c}:simulador'
-    ex = s['exemplo_pagina']
+    ex = exemplo or s['exemplo_pagina']
     r = estima(ex, d.sim_params)
     chips = ''.join(f'<button type="button" class="chip" data-calc-exemplo="{v}">{_chip(v)}</button>' for v in s['exemplos'])
     provisorio = '' if s['validado_em'] else pendente(
@@ -153,7 +154,7 @@ def calc(d, caminho, titulo, variante='cartao'):
              f'</details>{provisorio}')
     entra = (
         f'<div class="calc-entra">{tit}'
-        f'<label class="calc-rot-campo" for="conta-{c}">Valor médio da conta de luz, por mês</label>'
+        f'<label class="calc-rot-campo" for="conta-{c}">{rotulo}</label>'
         f'<div class="calc-campo"><span aria-hidden="true">R$</span><input id="conta-{c}" name="conta" type="text" '
         f'inputmode="numeric" autocomplete="off" placeholder="{reais(ex)[3:]}" aria-describedby="calc-estado-{c}"></div>'
         f'<div class="chips" role="group" aria-label="Exemplos de valor">{chips}</div>'
@@ -263,11 +264,29 @@ MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'a
          'novembro', 'dezembro']
 
 
-def caso(d):
+def _caso_barras(x):
+    """Para o caso sem a fatura tarjada em imagem: as duas contas do mês, sem e com a AESOLAR, em barras."""
+    w = f'{x["com_aesolar"] / x["sem_aesolar"] * 100:.1f}%'
+    eco = f'{x["economia"] / x["sem_aesolar"] * 100:.1f}%'
+    return (
+        f'<figure class="caso-fig caso-fig-barras"><figcaption>{x["quem"]}, {MESES[int(x["mes"][5:7]) - 1]} de '
+        f'{x["mes"][:4]}</figcaption><div class="barras" aria-hidden="true">'
+        f'<div class="barra-l"><span class="barra-rot">Sem a AESOLAR</span><div class="trilho"><i class="b-eq" style="--w:100%"></i>'
+        f'</div><span class="barra-v">{reais(x["sem_aesolar"])}</span></div>'
+        f'<div class="barra-l"><span class="barra-rot">Com a AESOLAR</span><div class="trilho"><i class="b-ae" style="--w:{w}"></i>'
+        f'<i class="b-eco" style="--w:{eco}"></i></div><span class="barra-v">{reais(x["com_aesolar"])}</span></div></div>'
+        f'<ul class="leg"><li><i class="b-ae"></i>Equatorial + AESOLAR</li>'
+        f'<li><i class="b-eco"></i>Ficou com o cliente <b>{_centavos(x["economia"])}</b></li></ul></figure>')
+
+
+def caso(d, ids=None):
     """A prova: faturas reais de clientes, anônimos, com termo assinado (dados.json, casos). Mesmo mês, sem e com.
-    O primeiro caso vem em destaque, com a fatura tarjada e a economia desde o início do contrato (número real, não
-    projeção); os outros, numa linha cada."""
-    x, outros = d.b['casos'][0], d.b['casos'][1:]
+    O primeiro caso vem em destaque, com a fatura tarjada (ou as duas contas em barras, se não há imagem) e a economia
+    desde o início do contrato (número real, não projeção); os outros, numa linha cada.
+    ids: quais casos e em que ordem (as páginas de segmento põem na frente o caso do segmento)."""
+    por_id = {c['id']: c for c in d.b['casos']}
+    escolhidos = [por_id[i] for i in ids] if ids else d.b['casos']
+    x, outros = escolhidos[0], escolhidos[1:]
     mes, ano = MESES[int(x['mes'][5:7]) - 1], x['mes'][:4]
     alt = f'Fatura da AESOLAR de {mes} de {ano} de um cliente, com os dados do cliente tarjados'
     desde = (f'<div class="caso-n-desde"><dt>Desde o início do contrato</dt><dd>{_centavos(x["desde_inicio"])}</dd></div>'
@@ -287,7 +306,7 @@ def caso(d):
         f'tarjados. A economia de cada empresa depende da conta dela: o simulador e a análise da sua fatura mostram a '
         f'sua.</p></div>'
         + (f'<figure class="caso-fig">{foto(d, x["imagem"], alt, "(min-width: 900px) 520px, calc(100vw - 32px)")}</figure>'
-           if x.get('imagem') else '') + '</div>')
+           if x.get('imagem') else _caso_barras(x)) + '</div>')
 
 
 def quem(d, video=True):
@@ -494,3 +513,48 @@ def para_quem_v3(d):
     return (f'<p class="olho">Para quem é</p><h2 id="t-quem">Para quem tem conta alta todo mês</h2>'
             f'<p class="intro">Para empresas e condomínios de Goiás com conta a partir de {reais(d.of["minimo_conta"])} por '
             f'mês, inclusive no Entorno do DF.</p><ul class="sfs">{lis}</ul>')
+
+
+# ---------- páginas de segmento (condomínios, comércio e serviços, várias unidades) ----------
+# O molde é o da página do Google (v3): o simulador no topo, a prova logo depois. O texto de cada página fica no
+# pagina_*.py dela, e precisa ser próprio: página repetida o Google rebaixa.
+
+def topo_seg(d, caminho, olho, h1, sub, foto_seg, alt, titulo_calc, exemplo, rotulo=None):
+    """O topo claro com o simulador, como o da página do Google, e a foto do segmento embaixo (foto de IA aprovada:
+    ilustra o tipo de cliente, nunca é apresentada como cliente)."""
+    pre, _ = _economia_gerada(d)
+    kw = {'rotulo': rotulo} if rotulo else {}
+    return (
+        f'<section class="h3t h3t-seg" data-sem-barra aria-labelledby="t-topo">'
+        f'<div class="wrap h3t-in"><div class="h3t-txt">'
+        f'<p class="olho">{icone("local")}<span>{olho}</span></p>'
+        f'<h1 id="t-topo">{h1}</h1><p class="h3t-sub">{sub}</p></div>'
+        f'<ul class="selos"><li>{icone("sol")}<span>A usina é nossa, em Goiás</span></li>'
+        f'<li>{icone("escudo")}<span>Créditos conferidos todo mês</span></li>'
+        f'<li>{icone("recibo")}<span>{pre.capitalize()} R$ <span data-economia-mil>{d.of["economia_gerada_piso"] // 1000}</span> mil '
+        f'de economia gerada</span></li></ul>'
+        f'{calc(d, caminho, titulo_calc, "larga", exemplo, **kw)}</div>'
+        f'<div class="h3t-foto">{foto(d, foto_seg, alt, "100vw", cls="h3t-img")}</div></section>')
+
+
+def muda(titulo, intro, sim, nao, olho_txt):
+    """O texto do segmento, e as duas listas: o que muda e o que não muda."""
+    li = lambda xs, ic_: ''.join(f'<li>{icone(ic_)}<span>{x}</span></li>' for x in xs)
+    return (f'<div class="estreito"><p class="olho">{olho_txt}</p><h2 id="t-seg">{titulo}</h2>{intro}</div>'
+            f'<div class="muda"><div><h3>O que muda</h3><ul class="m-lista m-sim">{li(sim, "check")}</ul></div>'
+            f'<div><h3>O que não muda</h3><ul class="m-lista m-nao">{li(nao, "igual")}</ul></div></div>')
+
+
+def cartoes(olho_txt, titulo, itens):
+    """Os diferenciais do segmento, em cartões: (ícone, título, texto)."""
+    lis = ''.join(f'<li class="pv">{icone(i, "ic pv-ic")}<h3>{t}</h3><p>{x}</p></li>' for i, t, x in itens)
+    return f'<p class="olho">{olho_txt}</p><h2 id="t-dif">{titulo}</h2><ul class="provas3">{lis}</ul>'
+
+
+def passos_seg(d, caminho, titulo):
+    """Os três passos, com o lembrete de que a Equatorial continua e o botão do WhatsApp logo embaixo."""
+    c = caminho_curto(caminho)
+    return (f'{passos(d, titulo)}<p class="cmp-eq">{icone("tomada")}<span><strong>Você continua pagando a Equatorial.'
+            f'</strong> A conta dela fica menor e chega uma segunda, da AESOLAR, com o desconto. A soma das duas é que '
+            f'fica mais barata.</span></p>'
+            f'<p class="passos-bt">{wa(d, MSG_FATURA, c + ":passos", "Mandar minha fatura pelo WhatsApp")}</p>')

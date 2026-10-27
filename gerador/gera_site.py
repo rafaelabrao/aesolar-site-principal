@@ -33,9 +33,10 @@ import capas  # noqa: E402
 from blocos import Erro  # noqa: E402
 import pagina_capa, pagina_assinatura, pagina_como_funciona, pagina_usinas, pagina_perguntas  # noqa: E402,E401
 import pagina_representante, pagina_privacidade, pagina_termos, pagina_condominios, pagina_404  # noqa: E402,E401
+import pagina_comercio, pagina_varias_unidades  # noqa: E402,E401
 
 PAGINAS = [pagina_capa, pagina_assinatura, pagina_como_funciona, pagina_usinas, pagina_perguntas, pagina_representante,
-           pagina_privacidade, pagina_termos, pagina_condominios, pagina_404]
+           pagina_privacidade, pagina_termos, pagina_condominios, pagina_comercio, pagina_varias_unidades, pagina_404]
 
 # Regras da marca (fonte única comercial §4 e CLAUDE.md do aesolar-marketing). Se uma aparecer, a página não é gravada.
 PROIBIDO = [

@@ -4,7 +4,7 @@
   "site": "https://aesolar.com.br",
   "previa": true,
   "_previa": "true = todas as páginas com 'não indexar' e robots.txt fechado. Liberar para o Google = false, só com ordem do Rafael e sem nenhuma marca PENDENTE (o gerador confere).",
-  "previa_paginas": ["/condominios/"],
+  "previa_paginas": [],
   "_previa_paginas": "Páginas prontas mas ainda não liberadas: 'não indexar', fora do sitemap e fora dos menus.",
 
   "empresa": {
@@ -80,9 +80,9 @@
   "segmentos": [
     {"id": "condominio", "nome": "Condomínios", "pagina": "/condominios/", "icone": "predio",
      "texto": "A conta das áreas comuns (elevador, bombas, portaria, iluminação) é a maior despesa fixa de muito condomínio. A proposta sai em reais, pronta para o síndico levar à assembleia."},
-    {"id": "comercio", "nome": "Comércio e serviços", "pagina": null, "icone": "loja",
+    {"id": "comercio", "nome": "Comércio e serviços", "pagina": "/comercio-e-servicos/", "icone": "loja",
      "texto": "Lojas, clínicas, escritórios, escolas e restaurantes com conta alta todo mês, sem espaço ou vontade de fazer obra no telhado."},
-    {"id": "varias_unidades", "nome": "Empresas com várias unidades", "pagina": null, "icone": "rede",
+    {"id": "varias_unidades", "nome": "Empresas com várias unidades", "pagina": "/empresas-com-varias-unidades/", "icone": "rede",
      "texto": "Redes, franquias e empresas com filiais em Goiás: uma proposta só para todas as unidades da Equatorial."}
   ],
 
