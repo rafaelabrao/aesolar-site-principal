@@ -85,9 +85,19 @@ python3 -m http.server 8090 --directory site   # ver em http://localhost:8090
   entregue) arredondado PARA BAIXO de 50 em 50 mil; nunca o número exato (o repositório é público). Cresce cerca de
   R$ 50 mil por mês; o gerador avisa depois de 45 dias sem atualizar. `oferta.economia_url` liga a atualização
   automática pelo app (prompt em `entregas-intensivo/A4-PROMPT-APP-ECONOMIA.md`).
-- Caso real (`casos` em `dados.json`): sempre anônimo, sem nome e sem cidade, com termo assinado e fatura tarjada. A
-  fatura do site vem de `entregas-intensivo/A4-caso/` (cópia da Academia).
+- Caso real (`casos` em `dados.json`): sempre anônimo, sem nome (a cidade pode, se o cliente autorizou), com termo
+  assinado e fatura tarjada. Números da exportação de faturas do app; a fatura tarjada e a foto de Goiânia à noite
+  ficam em `entregas-intensivo/A4-caso/`.
 - A multa de saída antecipada fica no contrato, não no site (decisão do Rafael, 27/10/2026).
+- Decisões fechadas em 27/10/2026 (zero marca PENDENTE): a AESOLAR confere os créditos todo mês (D3, pode anunciar);
+  cobrança única para várias unidades pode ser anunciada (D14); a tabela de comissão do representante não vai ao site
+  (D8); fotos de `/usinas/` são do Complexo Vereda (D11); privacidade com `comercial@aesolar.com.br` e guarda de 2
+  anos para quem não contratou (D6, sem revisão de advogado); a política cita o Pixel do Meta (D10); kit de
+  assembleia de condomínio fica para depois (D17).
+- Vídeo do Rafael na usina (D5): até ficar pronto, "Quem está por trás" mostra uma foto real da usina
+  (`capas.quem`). Com o vídeo editado, ele entra no lugar da foto.
+- Botão do WhatsApp: no celular, barra de lado a lado; no computador, botão redondo no canto (`.barra` em
+  `estilo.css`). Os dois somem quando outro botão grande do WhatsApp está na tela (`data-sem-barra`).
 - `.venv/bin/python gerador/prepara_assets.py capas` gera só as fotos dos protótipos (os originais de banco ficam em
   `entregas-intensivo/A3-imagens-banco/`); as do Gemini, em
   `entregas-intensivo/A4-imagens-gemini/`, com um LEIA-ME de qual foto vai onde).

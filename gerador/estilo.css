@@ -310,7 +310,7 @@ html { scroll-padding-top: 5rem; }
 .rod-base { border-top: 1px solid var(--borda-rodape); margin-top: var(--e-8); padding-top: var(--e-5); font-size: var(--t-xs); }
 .rod-base p { margin-bottom: var(--e-2); }
 
-/* barra fixa do WhatsApp (celular) */
+/* barra fixa do WhatsApp: de lado a lado no celular; no computador, um botão flutuando no canto */
 .barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--barra-fundo); border-top: 1px solid var(--slate-200); box-shadow: var(--sombra-barra); padding: var(--e-3) var(--margem) calc(var(--e-3) + env(safe-area-inset-bottom)); transition: transform .2s ease; }
 .js .barra:not(.mostra) { transform: translateY(110%); }
 
@@ -328,7 +328,11 @@ html { scroll-padding-top: 5rem; }
 @media (min-width: 900px) {
   :root { --margem: 1.5rem; }
   .rod { padding-bottom: var(--e-6); }
-  .barra { display: none; }
+  .barra { left: auto; right: var(--e-6); bottom: var(--e-6); padding: 0; background: none; border: 0; box-shadow: none; }
+  /* redondo, só o ícone: cabe na margem e não tapa o texto (o nome continua lá para leitor de tela) */
+  .barra .btn-larga { width: 3.5rem; height: 3.5rem; min-height: 0; padding: 0; justify-content: center; border-radius: var(--raio-total); box-shadow: var(--sombra-barra); }
+  .barra .btn-larga .ic { width: 1.75rem; height: 1.75rem; }
+  .barra .btn-larga span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .cab-nav, .cab-sim { display: flex; }
   .cab-menu { display: none; }
   .cab-in { gap: var(--e-8); min-height: 4.5rem; }

@@ -18,8 +18,7 @@ def corpo(d):
             'Quem vende para empresas em Goiás e tem uma boa rede de contatos.']
     divisao = [('pessoas', 'Você', 'Apresenta a AESOLAR, pega a fatura e acompanha o cliente até a assinatura.'),
                ('calculadora', 'A AESOLAR', 'Faz o cálculo, a proposta em reais, o contrato e a gestão da energia todo mês.'),
-               ('recibo', 'A comissão', 'Por cliente fechado, com a regra por escrito no seu contrato. '
-                + b.pendente('D8', 'publicar a tabela de comissão ou só esta frase?'))]
+               ('recibo', 'A comissão', 'Por cliente fechado, com a regra por escrito no seu contrato.')]
     cartoes = ''.join(f'<li class="cartao">{b.icone(i, "ic ic-cartao")}<h3>{t}</h3><p>{x}</p></li>' for i, t, x in divisao)
     recebe = ['Kit de apresentação com o seu nome, foto, cidade, WhatsApp e link próprio.',
               'Treinamento da Academia AESOLAR.', 'Acesso ao app para acompanhar os seus clientes e propostas.']

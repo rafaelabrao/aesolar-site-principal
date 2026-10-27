@@ -38,9 +38,7 @@ def corpo(d):
                         'Complexo Vereda, a cerca de 30 km de Goiânia, em operação desde 2023.', MIGALHAS)
         + b.secao(f'<figure class="foto-grande">{b.foto("vereda-aerea", "Vista aérea do Complexo Vereda, usina solar da Boreal Solar em Goiás", lazy=False)}'
                   '<figcaption>Complexo Vereda, visto de cima. Todas as fotos desta página são reais e sem retoque.'
-                  '</figcaption></figure>'
-                  + b.pendente_bloco('D11', 'Confirmar que as cinco fotos são do Complexo Vereda (o banco da Academia diz que '
-                                     'sim) e se quer citar o município.'), 'sec-foto')
+                  '</figcaption></figure>', 'sec-foto')
         + b.secao('<h2 id="t-caminho">Da usina até a sua conta</h2>' + trilha, '', 'caminho', 't-caminho')
         + b.secao(f'<h2 id="t-galeria">Por dentro da usina</h2><div class="galeria">{galeria}</div>', 'sec-clara',
                   'galeria', 't-galeria')

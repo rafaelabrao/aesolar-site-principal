@@ -295,10 +295,10 @@ def quem(d, video=True):
     linha = ''.join(f'<li><span class="hist-ano">{h["ano"]}</span><p>{h["texto"]}</p></li>' for h in d.b['historia'])
     vid = ''
     if video:
+        # foto real da usina até o vídeo do Rafael na usina ficar pronto (D5); aí o vídeo entra no lugar dela
         vid = (f'<figure class="video">{foto(d, "vereda-entardecer-larga", "Painéis do Complexo Vereda ao entardecer", "(min-width: 900px) 560px, calc(100vw - 32px)")}'
-               f'<figcaption><span class="video-bt">{ic("play")}</span><span><strong>O Rafael mostra a usina em um minuto.</strong> '
-               f'Espaço reservado para o vídeo.</span></figcaption></figure>'
-               f'{pendente_bloco("D5", "Vídeo do Rafael (30 a 60 segundos, na usina) e o texto de apresentação com o nome dele.")}')
+               f'<figcaption><span><strong>Complexo Vereda, a cerca de 30 km de Goiânia.</strong> '
+               f'Foto real da usina da Boreal Solar.</span></figcaption></figure>')
     return (
         f'<div class="quem2"><div class="quem2-a">{vid}</div><div class="quem2-b"><p class="olho olho-escuro">Quem está por trás</p>'
         f'<h2 id="t-somos">Gente de Goiás, com escritório em Goiânia</h2>'

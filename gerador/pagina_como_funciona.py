@@ -30,9 +30,8 @@ def corpo(d):
          f'{of["creditos_dias_normal"]} dias; o contrato prevê até {of["creditos_dias_contrato"]}. Até lá, sua conta continua '
          f'como está.'),
         ('recibo', 'Todo mês, duas contas',
-         'A da Equatorial, menor, e a da AESOLAR, com o desconto sobre a energia que virou crédito. '
-         + b.pendente('D3', 'se a conferência mensal da conta da Equatorial for feita para todo cliente, entra aqui: '
-                      '"e a gente confere se os créditos vieram certos".')),
+         'A da Equatorial, menor, e a da AESOLAR, com o desconto sobre a energia que virou crédito. E a gente confere, '
+         'todo mês, se os créditos entraram certos na sua conta.'),
     ]
     lis = ''.join(f'<li class="etapa">{b.icone(i, "ic ic-etapa")}<div><h3>{t}</h3><p>{x}</p></div></li>'
                   for i, t, x in etapas)

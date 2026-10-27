@@ -17,6 +17,7 @@
     "cidade": "Goiânia",
     "uf": "GO",
     "email": "contato@aesolar.com.br",
+    "email_privacidade": "comercial@aesolar.com.br",
     "whatsapp": "5562992727645",
     "whatsapp_exibir": "(62) 99272-7645",
     "_whatsapp": "O mesmo do site atual depois da troca de 10/2026 (commits adda573 e anteriores). O número antigo (…0248) não pode aparecer em lugar nenhum.",
@@ -71,7 +72,9 @@
     "modo": "simulado",
     "_modo": "'simulado' = o formulário só mostra o que mandaria (nada sai do navegador). 'app' = manda para o endpoint. Só trocar depois que o app aceitar a versão 2 do contrato (proposta A2, seção 4.3) e o domínio estiver no CORS do app.",
     "endpoint": "https://app.aesolar.com.br/api/public/leads",
-    "politica_versao": "2026-10-21"
+    "politica_versao": "2026-10-27",
+    "guarda_anos": 2,
+    "_guarda_anos": "Prazo de guarda dos dados de quem pediu proposta e não contratou (Rafael, 27/10/2026). Mudou: mude politica_versao."
   },
 
   "segmentos": [

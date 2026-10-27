@@ -64,7 +64,7 @@
     acompanha();
   }
 
-  // ---------- barra fixa do WhatsApp no celular: só aparece quando nenhum outro botão de WhatsApp grande está na
+  // ---------- barra fixa do WhatsApp (no computador, botão no canto): só aparece quando nenhum outro botão de WhatsApp grande está na
   // tela (topo com o simulador, contato, rodapé). Assim ela nunca tapa o botão do simulador, que leva o valor. ----------
   var barra = doc.querySelector('[data-barra]');
   var vigiados = $$('.topo, .pg-topo, #contato, .rod, [data-sem-barra]');

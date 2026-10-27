@@ -31,7 +31,7 @@ def todas(d):
               f'com conta a partir de {mn} por mês. O Distrito Federal tem outra distribuidora e não é atendido.</p>'},
         {'id': 'varias-unidades', 'grupo': 'quem', 'p': 'Minha empresa tem várias unidades. Dá para incluir todas?',
          'r': '<p>Dá. A proposta pode reunir todas as unidades da Equatorial em Goiás em nome da mesma empresa, cada uma com o '
-              'seu cálculo. ' + pendente('D14', 'anunciar a cobrança única para todas as unidades?') + '</p>'},
+              'seu cálculo, e a cobrança da AESOLAR chega numa fatura só, somando todas as unidades.</p>'},
         {'id': 'alta-tensao', 'grupo': 'quem', 'p': 'Minha empresa é atendida em alta tensão. Serve?',
          'r': '<p>Hoje atendemos baixa tensão (Grupo B), que é o caso da maioria das empresas e condomínios. Alta tensão '
               '(Grupo A) ainda não faz parte da assinatura.</p>'},
@@ -49,9 +49,10 @@ def todas(d):
          'r': '<p>Com a Equatorial, como hoje. A rede, a ligação e a manutenção continuam com ela. A AESOLAR cuida da energia '
               'da usina e dos créditos na sua conta.</p>'},
         {'id': 'conferencia', 'grupo': 'conta', 'p': 'Quem confere se os créditos vieram certos?',
-         'r': '<p>' + pendente('D3', 'se a conferência mensal da conta da Equatorial já é feita para todo cliente, a resposta '
-                               'é "a gente confere todo mês e avisa o erro". Senão, a pergunta sai.') + '</p>',
-         'pendente': True},
+         'r': '<p>A AESOLAR. Todo mês a gente confere, na sua conta da Equatorial, se os créditos da usina entraram certos. '
+              'Você só paga à AESOLAR pela energia que virou crédito; a conferência existe para que nenhum crédito fique '
+              'para trás e você não pague à Equatorial, com a tarifa cheia, uma energia que a usina já gerou para você. Se '
+              'algo vier errado, a gente pede a correção.</p>'},
         {'id': 'contrato-prazo', 'grupo': 'contrato', 'p': 'Quanto tempo dura o contrato? Como faço para sair?',
          'r': f'<p>O contrato é de {of["contrato_meses"]} meses: o tempo de a economia aparecer em várias contas seguidas. '
               f'Para sair ao fim desse prazo, sem custo, basta avisar com {of["aviso_saida_dias"]} dias de antecedência: '
@@ -61,8 +62,7 @@ def todas(d):
         {'id': 'mercado-livre', 'grupo': 'contrato', 'p': 'Vale esperar o mercado livre de energia?',
          'r': '<p>A lei prevê abrir o mercado livre para empresas em baixa tensão a partir do fim de 2027, com regras que '
               'ainda estão sendo definidas. Até lá, a assinatura já reduz sua conta. Quando o mercado abrir, a gente avalia '
-              'com você o que vale mais a pena. ' + pendente('D7', 'texto a revisar por especialista antes de publicar.')
-              + '</p>', 'pendente': True},
+              'com você o que vale mais a pena.</p>'},
         {'id': 'meus-dados', 'grupo': 'contrato', 'p': 'O que vocês fazem com a minha fatura e os meus dados?',
          'r': '<p>Usamos só para calcular e preparar a sua proposta. Não vendemos seus dados. Eles ficam com a AESOLAR e com '
               'os serviços que usamos para guardar e atender, como a hospedagem e o WhatsApp. O detalhe está na <a href="/politica-de-privacidade/">Política de privacidade</a>.</p>'},

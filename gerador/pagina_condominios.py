@@ -35,8 +35,7 @@ def corpo(d):
                   'perguntar, respondido no papel</h2><p>Elevador, bombas, portaria e iluminação fazem da conta de luz uma das '
                   'maiores despesas fixas do condomínio. A proposta mostra, em reais, quanto o condomínio paga hoje e quanto '
                   'vai pagar: é o número que o síndico precisa para prestar contas.</p>'
-                  + b.pendente_bloco('D17', 'Kit de assembleia (apresentação e modelo de ata): só anunciar quando existir.')
-                  + '</div><div><h2>O que não muda no prédio</h2>'
+                  '</div><div><h2>O que não muda no prédio</h2>'
                   + lista(['Nada é instalado no telhado nem na garagem.', 'A conta de cada apartamento continua igual.',
                            'A Equatorial continua cuidando da rede e da ligação.'])
                   + '</div></div>', '', 'sindico', 't-sindico')

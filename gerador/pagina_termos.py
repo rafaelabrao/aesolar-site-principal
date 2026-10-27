@@ -1,4 +1,4 @@
-"""/termos-de-uso/: rascunho para a revisão jurídica (D6)."""
+"""/termos-de-uso/: texto aprovado pelo Rafael em 27/10/2026, sem revisão de advogado."""
 import blocos as b
 
 CAMINHO = '/termos-de-uso/'
@@ -17,8 +17,7 @@ def corpo(d):
         b.cabeca_pagina('Regras do site', 'Termos de uso', 'O que vale para quem usa este site.', MIGALHAS)
         + b.secao(
             '<div class="texto-legal">'
-            + b.pendente_bloco('D6', 'Rascunho para a revisão jurídica.')
-            + f'<h2>Quem somos</h2><p>Este site é da {emp["razao_social"]}, CNPJ {emp["cnpj"]}, com sede em {emp["cidade"]}-'
+            f'<h2>Quem somos</h2><p>Este site é da {emp["razao_social"]}, CNPJ {emp["cnpj"]}, com sede em {emp["cidade"]}-'
             f'{emp["uf"]}, operada pela Boreal Solar.</p>'
             '<h2>O simulador é uma estimativa</h2><p>O simulador usa premissas que aparecem logo abaixo do resultado (tarifa, '
             'faixa de desconto, bandeira verde, baixa tensão). Ele não é proposta nem promessa de economia. O valor que vale é '
@@ -31,8 +30,7 @@ def corpo(d):
             '<h2>Conteúdo do site</h2><p>Textos, fotos e marcas são da AESOLAR e da Boreal Solar. As fotos das usinas são '
             'reais. Não use sem autorização.</p>'
             '<h2>Seus dados</h2><p>Estão na <a href="/politica-de-privacidade/">Política de privacidade</a>.</p>'
-            f'<h2>Foro</h2><p>Fica eleito o foro de {emp["cidade"]}-{emp["uf"]}. '
-            + b.pendente('D6', 'conferir com a advogada.') + '</p></div>', '', None)
+            f'<h2>Foro</h2><p>Fica eleito o foro de {emp["cidade"]}-{emp["uf"]}.</p></div>', '', None)
     )
 
 

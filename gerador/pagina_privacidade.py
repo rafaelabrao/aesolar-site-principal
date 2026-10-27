@@ -1,4 +1,4 @@
-"""/politica-de-privacidade/: rascunho para a revisão jurídica (D6). Cita cada campo que o formulário coleta: se o
+"""/politica-de-privacidade/: texto aprovado pelo Rafael em 27/10/2026, sem revisão de advogado. Cita cada campo que o formulário coleta: se o
 formulário mudar o que coleta, esta página muda junto."""
 import blocos as b
 
@@ -21,12 +21,9 @@ def corpo(d):
                         f'de Dados (Lei 13.709/2018).', MIGALHAS)
         + b.secao(
             '<div class="texto-legal">'
-            + b.pendente_bloco('D6', 'Rascunho para a revisão jurídica: base legal, prazo de guarda, encarregado e modelo de '
-                               'cookies.')
-            + f'<h2>Quem cuida dos seus dados</h2><p>{emp["razao_social"]}, CNPJ {emp["cnpj"]}, {emp["rua"]}, {emp["bairro"]}, '
-            f'{emp["cidade"]}-{emp["uf"]} ("AESOLAR"). Contato para assuntos de privacidade: '
-            f'<a href="mailto:{emp["email"]}">{emp["email"]}</a>. '
-            + b.pendente('D6', 'nome ou e-mail do encarregado de dados.') + '</p>'
+            f'<h2>Quem cuida dos seus dados</h2><p>{emp["razao_social"]}, CNPJ {emp["cnpj"]}, {emp["rua"]}, {emp["bairro"]}, '
+            f'{emp["cidade"]}-{emp["uf"]} ("AESOLAR"). Contato para assuntos de privacidade (encarregado): '
+            f'<a href="mailto:{emp["email_privacidade"]}">{emp["email_privacidade"]}</a>.</p>'
             '<h2>O que coletamos, e para quê</h2>'
             '<table class="tabela"><thead><tr><th scope="col">Dado</th><th scope="col">Onde</th><th scope="col">Para quê</th></tr></thead><tbody>'
             '<tr><td>Nome</td><td>formulário</td><td>saber com quem falar e preparar a proposta</td></tr>'
@@ -46,16 +43,16 @@ def corpo(d):
             'escolha no aviso de cookies.</p>'
             '<h2>Com quem compartilhamos</h2><p>Não vendemos seus dados. Eles passam só pelos serviços que usamos para '
             'funcionar: a hospedagem do site e do nosso sistema, o WhatsApp (Meta) para a conversa e, se você aceitar os '
-            'cookies, o Google (Tag Manager, Analytics e Google Ads) para medir as visitas. '
-            + b.pendente('D10', 'conferir o que o Tag Manager GTM-NBMNDLNH carrega hoje (Pixel do Meta?) e listar aqui.')
-            + '</p>'
+            'cookies, o Google (Tag Manager, Analytics e Google Ads) e a Meta (Pixel do Facebook e do Instagram) para '
+            'medir as visitas e os anúncios.</p>'
             '<h2 id="cookies">Cookies</h2><p>Usamos cookies de medição para saber de onde vêm as visitas e quais anúncios '
             'funcionam. Você pode recusar no aviso que aparece no alto da página, e o site continua funcionando igual. Para '
             'mudar a escolha depois, apague os dados deste site no seu navegador.</p>'
-            '<h2>Por quanto tempo guardamos</h2><p>' + b.pendente('D6', 'prazo de guarda de quem não contratou e de quem '
-                                                             'contratou.') + '</p>'
+            f'<h2>Por quanto tempo guardamos</h2><p>Se você pediu proposta e não contratou, guardamos seus dados por até '
+            f'{d.b["integracao"]["guarda_anos"]} anos depois do último contato, e depois apagamos. Se contratou, guardamos '
+            f'enquanto durar o contrato e, depois dele, pelo prazo que a lei exige para documentos fiscais e contratuais.</p>'
             '<h2>Seus direitos</h2><p>Você pode pedir, a qualquer momento, para ver, corrigir ou apagar seus dados, e saber '
-            f'com quem foram compartilhados (art. 18 da lei). Basta escrever para <a href="mailto:{emp["email"]}">{emp["email"]}</a> '
+            f'com quem foram compartilhados (art. 18 da lei). Basta escrever para <a href="mailto:{emp["email_privacidade"]}">{emp["email_privacidade"]}</a> '
             'ou pedir pelo WhatsApp.</p>'
             '<h2>Mudanças nesta política</h2><p>Se mudarmos o que coletamos, esta página muda junto e a data no alto é '
             'atualizada.</p></div>', '', None)

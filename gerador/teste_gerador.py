@@ -94,7 +94,10 @@ class TravasDaMarca(unittest.TestCase):
         return g.confere_pagina(self.d, pagina_capa, html)
 
     def test_capa_atual_passa(self):
-        self.assertGreater(self.confere(self.pagina), 0)  # passa, e tem marcas PENDENTE (é prévia)
+        self.assertEqual(self.confere(self.pagina), 0)  # passa, e sem marca PENDENTE (decisões fechadas em 27/10/2026)
+
+    def test_marca_pendente_e_contada(self):
+        self.assertEqual(self.confere(self.pagina.replace('</main>', b.pendente('D99', 'teste') + '</main>')), 1)
 
     def test_frases_proibidas_param(self):
         for frase in ['Economize até 26% na conta', 'Energia grátis para sua empresa', 'Zere sua conta de luz',
@@ -163,8 +166,8 @@ class CapasNovas(unittest.TestCase):
         self.v3 = pagina(self.d, pagina_capa_v3)
 
     def test_as_duas_passam_nas_travas(self):
-        self.assertGreater(g.confere_pagina(self.d, pagina_capa_v2, self.v2), 0)
-        self.assertGreater(g.confere_pagina(self.d, pagina_capa_v3, self.v3), 0)
+        self.assertEqual(g.confere_pagina(self.d, pagina_capa_v2, self.v2), 0)
+        self.assertEqual(g.confere_pagina(self.d, pagina_capa_v3, self.v3), 0)
 
     def test_v2_so_tem_foto_real_e_v3_marca_as_de_banco(self):
         self.assertEqual(g.provisorias(self.v2), [])
@@ -198,7 +201,7 @@ class CapasNovas(unittest.TestCase):
         v3 = pagina(d, pagina_capa_v3)
         self.assertEqual(g.provisorias(v3), [])
         self.assertNotIn('Imagem provisória', v3)
-        self.assertGreater(g.confere_pagina(d, pagina_capa_v3, v3), 0)
+        self.assertEqual(g.confere_pagina(d, pagina_capa_v3, v3), 0)
         with self.assertRaises(Erro):
             capas.foto(d, 'ia-comercio', 'Cliente no balcão')
 
@@ -213,7 +216,7 @@ class Producao(unittest.TestCase):
     def test_producao_recusa_previa_pendencias_e_simulador_provisorio(self):
         r = subprocess.run([sys.executable, os.path.join(AQUI, 'gera_site.py'), '--producao'], capture_output=True, text=True)
         self.assertEqual(r.returncode, 1)
-        for trecho in ('"previa" ainda é true', 'marca(s) PENDENTE', 'modo "simulado"'):
+        for trecho in ('"previa" ainda é true', 'modo "simulado"'):
             self.assertIn(trecho, r.stdout)
 
 

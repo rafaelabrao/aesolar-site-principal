@@ -28,9 +28,10 @@ def corpo(d):
         + b.secao(capas.numeros(d), 'sec-num', 'numeros', 't-numeros')
         + b.secao(f'<div class="revela">{capas.caso(d)}</div>', '', 'caso', 't-caso')
         + b.secao(f'<div class="revela">{capas.passos(d)}</div>'
-                  f'<div class="contas2 revela"><div><h3>Como fica a sua conta</h3><p><strong>Você continua pagando a '
-                  f'Equatorial.</strong> A conta dela fica menor e chega uma segunda, da AESOLAR, com o desconto. A soma das '
-                  f'duas é que fica mais barata.</p></div>{capas.contas_espelho(d)}</div>',
+                  f'<div class="contas2 revela" data-sem-barra><div><h3>Como fica a sua conta</h3><p><strong>Você continua '
+                  f'pagando a Equatorial.</strong> A conta dela fica menor e chega uma segunda, da AESOLAR, com o desconto. '
+                  f'A soma das duas é que fica mais barata.</p></div>{capas.contas_espelho(d)}'
+                  f'<p class="contas2-bt">{b.wa(d, b.MSG_FATURA, "capa:conta", "Quero o cálculo da minha conta")}</p></div>',
                   'sec-clara', 'como-funciona', 't-passos')
         + capas.usina_v2(d)
         + b.secao(f'<div class="revela">{capas.vantagens(d)}</div>', '', 'vantagens', 't-vant')
