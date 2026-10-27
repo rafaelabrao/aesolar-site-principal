@@ -433,16 +433,20 @@ def organizacao(d):
     }
 
 
-def servico(d, caminho):
-    return {
+def servico(d, caminho, publico=None):
+    """O serviço; nas páginas de segmento, com o público delas (publico: 'condomínios', 'comércio e serviços'...)."""
+    no = {
         '@type': 'Service', '@id': f'{d.site}{caminho}#servico',
-        'name': 'Energia solar por assinatura (geração compartilhada)',
-        'serviceType': 'Energia solar por assinatura para empresas e condomínios',
+        'name': 'Energia solar por assinatura (geração compartilhada)' + (f' para {publico}' if publico else ''),
+        'serviceType': f'Energia solar por assinatura para {publico or "empresas e condomínios"}',
         'provider': {'@id': f'{d.site}/#organizacao'},
         'areaServed': {'@type': 'State', 'name': 'Goiás', 'containedInPlace': {'@type': 'Country', 'name': 'Brasil'}},
         'description': (f'Créditos de energia de usina solar própria em Goiás, com economia de até '
                         f'{pct(d.of["desconto_max_pct"])} na parte da energia da conta da Equatorial.'),
     }
+    if publico:
+        no['audience'] = {'@type': 'BusinessAudience', 'name': publico[0].upper() + publico[1:]}
+    return no
 
 
 def texto_puro(h):

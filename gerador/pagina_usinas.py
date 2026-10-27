@@ -4,6 +4,8 @@ import blocos as b
 
 CAMINHO = '/usinas/'
 TITULO = 'Nossas usinas solares em Goiás | AESOLAR'
+# A prévia no WhatsApp e no Facebook (gerador/prepara_assets.py compartilhar): título e linha de baixo.
+COMPARTILHAR = ('A usina é nossa, e fica em Goiás', 'É de lá que vem a energia por assinatura da AESOLAR')
 DESCRICAO = ('Conheça o Complexo Vereda, a principal usina solar da Boreal Solar, a cerca de 30 km de Goiânia: é de lá que '
              'vem a energia por assinatura da AESOLAR.')
 CABECALHO = 'completo'

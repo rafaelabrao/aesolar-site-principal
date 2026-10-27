@@ -6,6 +6,8 @@ import perguntas
 
 CAMINHO = '/condominios/'
 TITULO = 'Energia solar por assinatura para condomínios | AESOLAR'
+# A prévia no WhatsApp e no Facebook (gerador/prepara_assets.py compartilhar): título e linha de baixo.
+COMPARTILHAR = ('Energia solar por assinatura para condomínios', 'Sem obra no prédio · Goiás')
 DESCRICAO = ('Conta das áreas comuns do condomínio até 30% mais barata na parte da energia, sem obra no prédio. Simule em '
              'reais e receba a proposta para a assembleia.')
 CABECALHO = 'completo'
@@ -83,4 +85,4 @@ def corpo(d):
 
 def schema(d):
     itens = FAQ_CONDO + perguntas.escolhe(d, FAQ)
-    return [b.servico(d, CAMINHO), b.faq_schema(itens), b.migalhas_schema(d, MIGALHAS)]
+    return [b.servico(d, CAMINHO, 'condomínios'), b.faq_schema(itens), b.migalhas_schema(d, MIGALHAS)]

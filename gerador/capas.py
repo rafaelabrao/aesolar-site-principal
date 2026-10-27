@@ -366,9 +366,11 @@ def escassez(d):
 
 
 def economia_fonte(d):
-    """Endereço do app que devolve a economia gerada (piso de 50 mil). Vazio: nada a buscar, vale o número da página."""
+    """Endereço do app que devolve a economia gerada (piso de 50 mil). Vazio: nada a buscar, vale o número da página.
+    Só busca no domínio oficial: o app só libera esse endereço para ele, e fora dele a busca vira erro no console."""
     url = d.of.get('economia_url')
-    return f'<span hidden data-economia-url="{e(url)}"></span>' if url else ''
+    dom = d.emp['dominio_medicao']
+    return f'<span hidden data-economia-url="{e(url)}" data-economia-dominio="{e(dom)}"></span>' if url else ''
 
 
 # ---------- v2: a usina em tela cheia ----------

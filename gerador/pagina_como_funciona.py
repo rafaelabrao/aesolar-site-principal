@@ -4,6 +4,8 @@ import perguntas
 
 CAMINHO = '/como-funciona/'
 TITULO = 'Como funciona a energia solar por assinatura | AESOLAR'
+# A prévia no WhatsApp e no Facebook (gerador/prepara_assets.py compartilhar): título e linha de baixo.
+COMPARTILHAR = ('Como funciona a energia solar por assinatura', 'Da fatura ao crédito na conta da Equatorial')
 DESCRICAO = ('Passo a passo da energia solar por assinatura da AESOLAR: da fatura ao crédito na conta da Equatorial, '
              'com as duas contas do mês e um exemplo em reais.')
 CABECALHO = 'completo'

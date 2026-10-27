@@ -3,6 +3,8 @@ import blocos as b
 
 CAMINHO = '/representante/'
 TITULO = 'Seja Representante Autorizado AESOLAR em Goiás'
+# A prévia no WhatsApp e no Facebook (gerador/prepara_assets.py compartilhar): título e linha de baixo.
+COMPARTILHAR = ('Seja Representante Autorizado AESOLAR', 'Você apresenta; a gente faz a proposta e o contrato')
 DESCRICAO = ('Conhece empresários e síndicos em Goiás? Você apresenta a AESOLAR; a gente faz a proposta, o contrato e a '
              'gestão. Comissão por cliente fechado.')
 CABECALHO = 'completo'

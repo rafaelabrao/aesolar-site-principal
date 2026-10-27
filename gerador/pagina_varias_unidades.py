@@ -8,6 +8,8 @@ import perguntas
 
 CAMINHO = '/empresas-com-varias-unidades/'
 TITULO = 'Energia solar para empresas com filiais em Goiás | AESOLAR'
+# A prévia no WhatsApp e no Facebook (gerador/prepara_assets.py compartilhar): título e linha de baixo.
+COMPARTILHAR = ('Todas as unidades.\nUma cobrança só.', 'Energia solar por assinatura para redes e filiais em Goiás')
 DESCRICAO = ('Todas as unidades da sua empresa em Goiás numa proposta só e numa cobrança única da AESOLAR, com os créditos '
              'de cada unidade conferidos todo mês.')
 CABECALHO = 'completo'
@@ -85,4 +87,4 @@ def corpo(d):
 
 def schema(d):
     itens = faq_vu(d) + perguntas.escolhe(d, FAQ)
-    return [b.servico(d, CAMINHO), b.faq_schema(itens), b.migalhas_schema(d, MIGALHAS)]
+    return [b.servico(d, CAMINHO, 'empresas com várias unidades'), b.faq_schema(itens), b.migalhas_schema(d, MIGALHAS)]

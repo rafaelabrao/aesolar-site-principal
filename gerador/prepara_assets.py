@@ -2,6 +2,7 @@
 """Prepara os arquivos de imagem e fonte do site a partir dos originais no OneDrive.
 
     .venv/bin/python gerador/prepara_assets.py
+    .venv/bin/python gerador/prepara_assets.py compartilhar   só as prévias de compartilhar de cada página
 
 Precisa do Pillow, do fontTools e do brotli (estão no .venv do projeto). Só reduz, recorta e converte:
 nunca retoca foto. Grava em site/assets/ e em site/ (ícones). Rodar de novo só quando um original mudar.
@@ -179,6 +180,67 @@ def imagem_de_compartilhar():
     print(f'compartilhar.jpg: 1200x630  {n // 1024} KB')
 
 
+def imagens_de_compartilhar_por_pagina():
+    """A prévia de cada página que tem COMPARTILHAR (título, linha de baixo): a usina real ao entardecer, escurecida à
+    esquerda, com o título da página e o logo. Mesmo tamanho da geral (1200x630). Cores da identidade visual."""
+    from PIL import ImageDraw, ImageFont
+    sys.path.insert(0, AQUI)
+    import gera_site
+
+    base = Image.open(os.path.join(VEREDA, 'vereda_14_20231208.jpg')).convert('RGB')
+    base = recorta_foco(base, 1200 / 630, (0.55, 0.5)).resize((1200, 630), Image.LANCZOS)
+    # escurece da esquerda (onde fica o texto) para a direita, com o --slate-900 (15, 23, 42)
+    sombra = Image.new('L', (1200, 1))
+    sombra.putdata([round(240 - 150 * min(1, x / 900)) for x in range(1200)])
+    base.paste(Image.new('RGB', (1200, 630), (15, 23, 42)), (0, 0), sombra.resize((1200, 630)))
+    logo = sem_borda(Image.open(os.path.join(LOGOS, 'aesolar-logo-fundo-escuro.png')).convert('RGBA'))
+    logo = logo.resize((round(logo.width * 72 / logo.height), 72), Image.LANCZOS)
+
+    def fonte_inter(peso, tamanho):
+        f = ImageFont.truetype(INTER, tamanho)
+        f.set_variation_by_axes([32, peso])  # eixos da Inter variável: opsz, wght
+        return f
+
+    def quebra(desenho, texto, fonte, largura):
+        linhas, atual = [], ''
+        for palavra in texto.split():
+            teste = (atual + ' ' + palavra).strip()
+            if desenho.textlength(teste, font=fonte) <= largura or not atual:
+                atual = teste
+            else:
+                linhas.append(atual)
+                atual = palavra
+        return linhas + [atual]
+
+    for m in gera_site.PAGINAS:
+        if not getattr(m, 'COMPARTILHAR', None):
+            continue
+        titulo, sub = m.COMPARTILHAR
+        im = base.copy()
+        im.paste(logo, (64, 56), logo)
+        dz = ImageDraw.Draw(im)
+        for tam in (68, 62, 56, 50):  # o maior que caiba em 3 linhas
+            ft = fonte_inter(750, tam)
+            linhas = [x for parte in titulo.split('\n') for x in quebra(dz, parte, ft, 820)]  # \n: quebra escolhida
+            if len(linhas) <= 3:
+                break
+        fs = fonte_inter(450, 30)
+        subs = quebra(dz, sub, fs, 820)
+        altura = len(linhas) * round(tam * 1.12) + 28 + len(subs) * 40
+        y = 630 - 64 - altura
+        dz.rectangle((64, y - 28, 64 + 72, y - 22), fill=(232, 96, 28))  # o traço laranja (--laranja) acima do título
+        for linha in linhas:
+            dz.text((64, y), linha, font=ft, fill=(255, 255, 255))
+            y += round(tam * 1.12)
+        y += 28
+        for linha in subs:
+            dz.text((64, y), linha, font=fs, fill=(226, 232, 240))  # --slate-200
+            y += 40
+        nome = gera_site.imagem_de_compartilhar(m)
+        n = grava(im, os.path.join(IMG, nome), quality=82, optimize=True, progressive=True)
+        print(f'{nome}: 1200x630  {n // 1024} KB')
+
+
 def fonte():
     """Inter (a fonte da marca), só com os caracteres do português e o eixo de peso de 400 a 800.
     O original variável tem 850 KB; o recorte fica perto de 50 KB."""
@@ -214,6 +276,10 @@ if __name__ == '__main__':
     for pasta, nome in ((LOGOS, 'logos'), (FOTOS, 'fotos das usinas')):
         if not os.path.isdir(pasta):
             sys.exit(f'Não achei a pasta de {nome}: {pasta}')
+    if sys.argv[1:] == ['compartilhar']:
+        # só as prévias de compartilhar por página (mudou o COMPARTILHAR de uma página: rodar de novo)
+        imagens_de_compartilhar_por_pagina()
+        sys.exit(0)
     if sys.argv[1:] == ['capas']:
         # só as fotos dos protótipos da capa: não regrava as da v1
         fotos_capas()
@@ -223,4 +289,5 @@ if __name__ == '__main__':
     fotos()
     logos()
     imagem_de_compartilhar()
+    imagens_de_compartilhar_por_pagina()
     fonte()

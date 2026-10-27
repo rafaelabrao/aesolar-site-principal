@@ -7,6 +7,8 @@ import perguntas
 
 CAMINHO = '/energia-solar-por-assinatura-goias/'
 TITULO = 'Energia solar por assinatura em Goiás | AESOLAR'
+# A prévia no WhatsApp e no Facebook (gerador/prepara_assets.py compartilhar): título e linha de baixo.
+COMPARTILHAR = ('Energia solar por assinatura em Goiás', 'Simule em reais quanto a sua conta de luz cai')
 DESCRICAO = ('Para empresas e condomínios de Goiás: simule em reais quanto a sua conta de luz cai com a energia da nossa '
              'usina, sem obra. Cálculo exato em até 24 horas.')
 CABECALHO = 'enxuto'

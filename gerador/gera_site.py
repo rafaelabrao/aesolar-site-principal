@@ -164,6 +164,17 @@ j=d.createElement(s);j.async=true;j.src='https://www.googletagmanager.com/gtm.js
 </script>"""
 
 
+def imagem_de_compartilhar(m):
+    """A prévia no WhatsApp e no Facebook: a da página (com o título dela), ou a geral, com a usina e o logo."""
+    return f'compartilhar-{b.caminho_curto(m.CAMINHO)}.jpg' if getattr(m, 'COMPARTILHAR', None) else 'compartilhar.jpg'
+
+
+def alt_compartilhar(m):
+    if getattr(m, 'COMPARTILHAR', None):
+        return ' — '.join(m.COMPARTILHAR).replace('\n', ' ')
+    return 'Vista aérea do Complexo Vereda, usina solar da Boreal Solar em Goiás, com o logo da AESOLAR'
+
+
 def monta(d, m, css, v):
     caminho = m.CAMINHO
     corpo = m.corpo(d)
@@ -193,13 +204,14 @@ def monta(d, m, css, v):
         '<!doctype html>\n<html lang="pt-BR">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         f'<title>{b.e(m.TITULO)}</title>\n<meta name="description" content="{b.e(m.DESCRICAO)}">\n'
-        f'<link rel="canonical" href="{url}">\n'
+        + (f'<link rel="canonical" href="{url}">\n' if caminho != '/404.html' else '')
         + ('<meta name="robots" content="noindex, nofollow">\n' if noindex else '')
         + f'<meta property="og:type" content="website">\n<meta property="og:locale" content="pt_BR">\n'
         f'<meta property="og:site_name" content="AESOLAR">\n<meta property="og:title" content="{b.e(m.TITULO)}">\n'
         f'<meta property="og:description" content="{b.e(m.DESCRICAO)}">\n<meta property="og:url" content="{url}">\n'
-        f'<meta property="og:image" content="{d.site}/assets/img/compartilhar.jpg">\n'
+        f'<meta property="og:image" content="{d.site}/assets/img/{imagem_de_compartilhar(m)}">\n'
         '<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
+        f'<meta property="og:image:alt" content="{b.e(alt_compartilhar(m))}">\n'
         '<meta name="twitter:card" content="summary_large_image">\n'
         '<meta name="theme-color" content="#0F172A">\n'
         '<link rel="icon" href="/favicon.ico" sizes="any">\n<link rel="icon" href="/favicon-32.png" type="image/png">\n'
@@ -295,6 +307,11 @@ def confere_pagina(d, m, pagina):
             arq = parte.strip().split(' ')[0].split('?')[0]
             if arq.startswith('/') and not os.path.isfile(os.path.join(SITE, arq.lstrip('/'))):
                 raise Erro(f'{c}: arquivo que não existe: {arq}')
+
+    # a prévia de compartilhar existe (é gerada por prepara_assets.py compartilhar, a partir de COMPARTILHAR)
+    if not os.path.isfile(os.path.join(SITE, 'assets', 'img', imagem_de_compartilhar(m))):
+        raise Erro(f'{c}: falta a imagem de compartilhar {imagem_de_compartilhar(m)}. Rode '
+                   f'.venv/bin/python gerador/prepara_assets.py compartilhar')
 
     # uma fonte única de cor: nenhuma cor escrita no HTML (só a theme-color, que o navegador pede)
     sem_meta = re.sub(r'<meta name="theme-color"[^>]*>|<style>.*?</style>', '', pagina, flags=re.S)  # o CSS tem conferência própria

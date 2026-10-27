@@ -143,7 +143,7 @@
   // ---------- a economia gerada, do app (piso de 50 em 50 mil) ----------
   // A página já abre com o número do dia da geração, que é verdadeiro; a busca só troca por um maior, depois de carregar.
   var fonte = doc.querySelector('[data-economia-url]');
-  if (fonte && window.fetch) {
+  if (fonte && window.fetch && location.hostname === fonte.getAttribute('data-economia-dominio')) {
     fetch(fonte.getAttribute('data-economia-url'), { cache: 'no-store' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {

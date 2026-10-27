@@ -7,6 +7,8 @@ import perguntas
 
 CAMINHO = '/comercio-e-servicos/'
 TITULO = 'Energia solar para comércio e serviços em Goiás | AESOLAR'
+# A prévia no WhatsApp e no Facebook (gerador/prepara_assets.py compartilhar): título e linha de baixo.
+COMPARTILHAR = ('Energia solar por assinatura para comércio e serviços', 'Sem obra e sem investimento · Goiás')
 DESCRICAO = ('Loja, clínica, escritório ou restaurante em Goiás: até 30% de economia na parte da energia da conta de luz, '
              'sem obra e sem fechar um dia. Simule em reais.')
 CABECALHO = 'completo'
@@ -80,4 +82,4 @@ def corpo(d):
 
 def schema(d):
     itens = FAQ_COM + perguntas.escolhe(d, FAQ)
-    return [b.servico(d, CAMINHO), b.faq_schema(itens), b.migalhas_schema(d, MIGALHAS)]
+    return [b.servico(d, CAMINHO, 'comércio e serviços'), b.faq_schema(itens), b.migalhas_schema(d, MIGALHAS)]
