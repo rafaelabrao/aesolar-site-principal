@@ -60,6 +60,9 @@ python3 gerador/gera_site.py --producao   # o que precisa passar antes de public
 python3 gerador/teste_gerador.py          # testes (precisa do node)
 python3 -m http.server 8090 --directory site   # ver em http://localhost:8090
 .venv/bin/python gerador/prepara_assets.py     # só se mudar foto, logo ou fonte (Pillow e fontTools no .venv)
+.venv/bin/python gerador/prepara_assets.py compartilhar   # só as prévias de WhatsApp/Facebook de cada página
+node entregas-intensivo/A5-ferramentas/revisao.cjs <pasta>     # capturas tela a tela (390 e 1440) + conferências
+node entregas-intensivo/A5-ferramentas/funcional.cjs <pasta>   # simulador, menu, barra, cookies, formulário (envio interceptado)
 ```
 
 - `gerador/dados.json` é a fonte única (WhatsApp, mínimo, prazos, parâmetros do simulador). Nunca editar
@@ -80,6 +83,14 @@ python3 -m http.server 8090 --directory site   # ver em http://localhost:8090
   `site/assets/capas.js`. As peças antigas de `blocos.py` que sobraram servem às páginas internas.
 - Foto de banco ou de IA aprovada fica em `imagens_banco` com `"provisoria": false`: sai sem etiqueta, mas continua
   proibido descrevê-la como usina, cliente ou equipe.
+- Prévia de compartilhar: página com `COMPARTILHAR = (título, linha de baixo)` no módulo ganha imagem própria
+  (`compartilhar-<página>.jpg`, gerada por `prepara_assets.py compartilhar`); sem ele, sai a geral. O texto vira o
+  `og:image:alt` e passa pelas travas da marca; o gerador para se a imagem não existir.
+- O olho (a linha acima do H1) da página do Google e das de segmento repete a busca do anúncio ("Energia solar por
+  assinatura · Goiás", "Energia solar para condomínios · Goiás"): o Google Ads mede se a primeira tela fala da
+  palavra-chave (D25 e D26, 27/10/2026).
+- SEO, Google Ads e Tag Manager (estado e proposta): `entregas-intensivo/A5-SEO-ADS-MEDICAO.md`. Revisão tela a tela:
+  `entregas-intensivo/A5-REVISAO-TELAS.md`.
 - `?limpo` no endereço esconde as marcas PENDENTE e a faixa da prévia, só para julgar o visual.
 - Economia gerada: `oferta.economia_gerada_piso` em `dados.json`, sempre o valor do app (Painel geral → Economia
   entregue) arredondado PARA BAIXO de 50 em 50 mil; nunca o número exato (o repositório é público). Cresce cerca de
@@ -119,6 +130,18 @@ Armadilhas já pagas no site novo:
 - Unsplash: o endereço `/download` responde 401 para navegador; baixar pelo `images.unsplash.com/photo-...?w=2400`.
 - potracer (vetorizar PNG): o `Bitmap` trata o valor baixo como tinta; passar a máscara invertida (`~mascara`), senão
   ele pinta o fundo e deixa a figura vazada. Logo em SVG e o script: `entregas-intensivo/A3-logo-svg/` (em revisão).
+- Botão fixo que fica acima da borda (o redondo do WhatsApp no computador, `bottom: 1.5rem`): escondido com
+  `translateY(110%)` deixa meio botão na tela. O deslocamento soma a folga da borda.
+- Legenda branca sobre foto some no céu claro, e o Lighthouse não acusa (o fundo é imagem): legenda sobre foto leva
+  fundo escuro próprio (`--veu-3`).
+- Texto livre de `dados.json` com valor ("R$ 1.216,00 da Equatorial + R$ ...") quebra a linha entre "R$" e o número:
+  o gerador troca o espaço por um que não quebra.
+- O app só libera o CORS para `https://aesolar.com.br` (não `www`, não localhost): `capas.js` só busca a economia no
+  domínio oficial. Medido fora dele, a busca vira erro de console e derruba "boas práticas".
+- `package.json` tem `"type": "module"`: script Node com `require` precisa da extensão `.cjs`.
+- Teste que abre outra página do site antes de chegar com `?gclid=` grava a página errada como "primeira da visita":
+  ler o que precisar em outro contexto do navegador.
+- Formulário em modo `app` manda lead de verdade: teste de tela intercepta o envio (`page.route`), nunca envia.
 - Lighthouse neste Mac: `CHROME_PATH` apontando para o Chromium do Playwright
   (`~/Library/Caches/ms-playwright/chromium-*/chrome-mac-arm64/Google Chrome for Testing.app/...`). Medir o SEO
   numa cópia sem o "não indexar" e com o `robots.txt` aberto; senão dá 69.
