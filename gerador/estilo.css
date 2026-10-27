@@ -299,6 +299,8 @@ html { scroll-padding-top: 5rem; }
 /* no celular, o fim do rodapé reserva o espaço da barra fixa do WhatsApp, para ela não tapar o CNPJ */
 .rod { background: var(--slate-950); color: var(--slate-400); font-size: var(--t-sm); padding: var(--e-12) 0 calc(var(--e-6) + 5.5rem); }
 .rod-in { display: grid; gap: var(--e-8); }
+/* celular: links em duas colunas, senão o rodapé ocupa quase duas telas */
+.rod-links ul { grid-template-columns: 1fr 1fr; column-gap: var(--e-4); }
 .rod-marca img { height: 2.25rem; width: auto; margin-bottom: var(--e-3); }
 .rod p { color: var(--slate-400); }
 .rod ul { list-style: none; display: grid; gap: var(--e-2); }
@@ -352,6 +354,7 @@ html { scroll-padding-top: 5rem; }
   .duas-col, .usina, .quem, .contato { grid-template-columns: 1fr 1fr; gap: var(--e-14); }
   .trilha { grid-template-columns: repeat(4, 1fr); }
   .rod-in { grid-template-columns: 1.2fr 1fr 1fr; }
+  .rod-links ul { grid-template-columns: 1fr; }
   .pg-topo { padding: var(--e-10) 0 var(--e-14); }
 }
 

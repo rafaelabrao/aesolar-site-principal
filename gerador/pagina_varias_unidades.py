@@ -76,7 +76,7 @@ def corpo(d):
         ]) + '</div>', '', 'diferenciais', 't-dif')
         + b.secao(f'<div class="revela">{capas.passos_seg(d, CAMINHO, "Três passos. Todas as unidades de uma vez.")}</div>',
                   'sec-clara', 'como-funciona', 't-passos')
-        + capas.usina_v2(d)
+        + capas.usina_v2(d, 'conta de cada unidade')
         + b.secao(b.perguntas_bloco(d, itens, 'Dúvidas de quem tem várias unidades'), '', 'perguntas', 't-faq')
         + capas.final(d, CAMINHO, 'vereda-ceu', 'Fileira de painéis do Complexo Vereda sob céu de nuvens, em Goiás',
                       'Mande as faturas. A gente soma e devolve em reais.',

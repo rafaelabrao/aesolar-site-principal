@@ -78,11 +78,11 @@
   },
 
   "segmentos": [
-    {"id": "condominio", "nome": "Condomínios", "pagina": "/condominios/", "icone": "predio",
+    {"id": "condominio", "nome": "Condomínios", "pagina": "/condominios/", "link": "Ver a proposta para condomínios", "icone": "predio",
      "texto": "A conta das áreas comuns (elevador, bombas, portaria, iluminação) é a maior despesa fixa de muito condomínio. A proposta sai em reais, pronta para o síndico levar à assembleia."},
-    {"id": "comercio", "nome": "Comércio e serviços", "pagina": "/comercio-e-servicos/", "icone": "loja",
+    {"id": "comercio", "nome": "Comércio e serviços", "pagina": "/comercio-e-servicos/", "link": "Ver a proposta para o comércio", "icone": "loja",
      "texto": "Lojas, clínicas, escritórios, escolas e restaurantes com conta alta todo mês, sem espaço ou vontade de fazer obra no telhado."},
-    {"id": "varias_unidades", "nome": "Empresas com várias unidades", "pagina": "/empresas-com-varias-unidades/", "icone": "rede",
+    {"id": "varias_unidades", "nome": "Empresas com várias unidades", "pagina": "/empresas-com-varias-unidades/", "link": "Ver a proposta para várias unidades", "icone": "rede",
      "texto": "Redes, franquias e empresas com filiais em Goiás: uma proposta só para todas as unidades da Equatorial."}
   ],
 

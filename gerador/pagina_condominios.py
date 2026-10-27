@@ -74,7 +74,7 @@ def corpo(d):
         ]) + '</div>', '', 'diferenciais', 't-dif')
         + b.secao(f'<div class="revela">{capas.passos_seg(d, CAMINHO, "Três passos. Nenhuma obra no prédio.")}</div>',
                   'sec-clara', 'como-funciona', 't-passos')
-        + capas.usina_v2(d)
+        + capas.usina_v2(d, 'conta do condomínio')
         + b.secao(b.perguntas_bloco(d, itens, 'Dúvidas de síndico'), '', 'perguntas', 't-faq')
         + capas.final(d, CAMINHO, 'vereda-ceu', 'Fileira de painéis do Complexo Vereda sob céu de nuvens, em Goiás',
                       'Mande a conta do condomínio. A gente devolve o número para a assembleia.',

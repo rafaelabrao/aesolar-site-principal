@@ -396,14 +396,14 @@ def topo_v2(d, caminho):
         f'<p class="h2t-leg">Complexo Vereda, a cerca de 30 km de Goiânia. Foto real.</p></section>')
 
 
-def usina_v2(d):
+def usina_v2(d, conta='conta da sua empresa'):
     return (
         f'<section class="faixa-foto" aria-labelledby="t-usina">'
         f'{foto(d, "vereda-aerea-larga", "Vista aérea do Complexo Vereda, usina solar da Boreal Solar em Goiás", "100vw", cls="ff-foto")}'
         f'<div class="wrap ff-in revela"><p class="olho olho-escuro">A usina é nossa</p>'
         f'<h2 id="t-usina">A energia vem daqui.</h2>'
         f'<p>Complexo Vereda, a cerca de 30 km de Goiânia, em operação desde 2023. Construído e operado pela Boreal Solar, '
-        f'empresa goiana. A usina gera, a energia entra na rede da Equatorial e vira crédito na conta da sua empresa.</p>'
+        f'empresa goiana. A usina gera, a energia entra na rede da Equatorial e vira crédito na {conta}.</p>'
         f'<p class="mais mais-escuro"><a href="/usinas/">Ver as fotos das usinas {icone("seta")}</a></p></div>'
         f'<p class="ff-leg">Vista aérea do Complexo Vereda. Foto real, sem retoque.</p></section>')
 
@@ -413,7 +413,7 @@ def para_quem_v2(d):
     for s in d.b['segmentos']:
         corpo = f'<h3>{s["nome"]}</h3><p>{s["texto"]}</p>'
         if d.link_ok(s['pagina']):
-            lis += (f'<li><a class="seg" href="{s["pagina"]}">{corpo}<span class="seg-link">Ver como funciona '
+            lis += (f'<li><a class="seg" href="{s["pagina"]}">{corpo}<span class="seg-link">{s["link"]} '
                     f'{icone("seta")}</span></a></li>')
         else:
             lis += f'<li class="seg">{corpo}</li>'
@@ -513,7 +513,7 @@ def para_quem_v3(d):
         fig = f'<div class="sf-foto">{foto(d, nome, alt, "(min-width: 900px) 340px, calc(100vw - 32px)")}</div>'
         corpo = f'{fig}<div class="sf-txt"><h3>{s["nome"]}</h3><p>{s["texto"]}</p>'
         if d.link_ok(s['pagina']):
-            lis += f'<li><a class="sf" href="{s["pagina"]}">{corpo}<span class="seg-link">Ver como funciona {icone("seta")}</span></div></a></li>'
+            lis += f'<li><a class="sf" href="{s["pagina"]}">{corpo}<span class="seg-link">{s["link"]} {icone("seta")}</span></div></a></li>'
         else:
             lis += f'<li class="sf">{corpo}</div></li>'
     return (f'<p class="olho">Para quem é</p><h2 id="t-quem">Para quem tem conta alta todo mês</h2>'

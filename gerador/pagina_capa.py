@@ -19,7 +19,7 @@ JS_EXTRA = ['capas.js']
 PRELOAD = capas.preload('vereda-entardecer-larga', ('vereda-entardecer-retrato', 699))
 SPRITE_EXTRA = capas.sprite_extra
 FAQ = ['precisa-instalar', 'continuo-pagando', 'quanto-economizo', 'quando-comeca', 'quem-pode', 'contrato-prazo',
-       'mercado-livre']
+       'e-legal']
 
 
 def corpo(d):

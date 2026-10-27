@@ -21,7 +21,7 @@ JS_EXTRA = ['capas.js']
 SPRITE_EXTRA = capas.sprite_extra
 MIGALHAS = [('Início', '/'), ('Energia solar por assinatura em Goiás', None)]
 FAQ = ['precisa-instalar', 'continuo-pagando', 'quanto-economizo', 'quando-comeca', 'quem-pode', 'contrato-prazo',
-       'mercado-livre']
+       'e-legal']
 
 
 def corpo(d):
