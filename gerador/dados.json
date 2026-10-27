@@ -37,7 +37,7 @@
     "economia_gerada_piso": 700000,
     "economia_gerada_data": "2026-10-27",
     "_economia_gerada": "Economia entregue (total) do app, arredondada PARA BAIXO de 50 em 50 mil, para o 'mais de' ser sempre verdadeiro. O número exato não entra aqui (repositório público). Cresce cerca de R$ 50 mil por mês (Rafael, 27/10/2026): o gerador avisa depois de 45 dias sem atualizar.",
-    "economia_url": null,
+    "economia_url": "https://app.aesolar.com.br/api/public/economia",
     "_economia_url": "Endereço público do app que devolve só o piso, em JSON: {\"economia_piso\": 750000}. Com ele, a página busca o número ao abrir, depois de mostrar o piso acima (não atrasa a página). Vazio = não busca nada.",
     "contrato_meses": 12,
     "aviso_saida_dias": 90,
@@ -69,7 +69,7 @@
   },
 
   "integracao": {
-    "modo": "simulado",
+    "modo": "app",
     "_modo": "'simulado' = o formulário só mostra o que mandaria (nada sai do navegador). 'app' = manda para o endpoint. Só trocar depois que o app aceitar a versão 2 do contrato (proposta A2, seção 4.3) e o domínio estiver no CORS do app.",
     "endpoint": "https://app.aesolar.com.br/api/public/leads",
     "politica_versao": "2026-10-27",

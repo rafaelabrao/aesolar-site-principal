@@ -216,8 +216,11 @@ class Producao(unittest.TestCase):
     def test_producao_recusa_previa_pendencias_e_simulador_provisorio(self):
         r = subprocess.run([sys.executable, os.path.join(AQUI, 'gera_site.py'), '--producao'], capture_output=True, text=True)
         self.assertEqual(r.returncode, 1)
-        for trecho in ('"previa" ainda é true', 'modo "simulado"'):
+        # O formulário saiu do modo "simulado" em 27/10/2026 (o app aceita a versão 2):
+        # essa pendência não aparece mais. Fica a da prévia, até a publicação.
+        for trecho in ('"previa" ainda é true',):
             self.assertIn(trecho, r.stdout)
+        self.assertNotIn('modo "simulado"', r.stdout)
 
 
 if __name__ == '__main__':
