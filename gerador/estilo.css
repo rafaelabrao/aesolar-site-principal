@@ -311,8 +311,9 @@ html { scroll-padding-top: 5rem; }
 .rod-base p { margin-bottom: var(--e-2); }
 
 /* barra fixa do WhatsApp: de lado a lado no celular; no computador, um botão flutuando no canto */
-.barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--barra-fundo); border-top: 1px solid var(--slate-200); box-shadow: var(--sombra-barra); padding: var(--e-3) var(--margem) calc(var(--e-3) + env(safe-area-inset-bottom)); transition: transform .2s ease; }
-.js .barra:not(.mostra) { transform: translateY(110%); }
+.barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--barra-fundo); border-top: 1px solid var(--slate-200); box-shadow: var(--sombra-barra); padding: var(--e-3) var(--margem) calc(var(--e-3) + env(safe-area-inset-bottom)); transition: transform .2s ease, visibility .2s; }
+/* escondida: fora da tela e fora do foco do teclado (visibility espera o fim do movimento para sumir) */
+.js .barra:not(.mostra) { transform: translateY(110%); visibility: hidden; }
 
 /* ---------- a partir de 600 px ---------- */
 @media (min-width: 600px) {
@@ -329,6 +330,8 @@ html { scroll-padding-top: 5rem; }
   :root { --margem: 1.5rem; }
   .rod { padding-bottom: var(--e-6); }
   .barra { left: auto; right: var(--e-6); bottom: var(--e-6); padding: 0; background: none; border: 0; box-shadow: none; }
+  /* o botão fica acima da borda: escondido, desce a própria altura mais essa folga, senão sobra meio botão na tela */
+  .js .barra:not(.mostra) { transform: translateY(calc(100% + var(--e-6) + var(--e-4))); }
   /* redondo, só o ícone: cabe na margem e não tapa o texto (o nome continua lá para leitor de tela) */
   .barra .btn-larga { width: 3.5rem; height: 3.5rem; min-height: 0; padding: 0; justify-content: center; border-radius: var(--raio-total); box-shadow: var(--sombra-barra); }
   .barra .btn-larga .ic { width: 1.75rem; height: 1.75rem; }

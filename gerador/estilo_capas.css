@@ -94,7 +94,7 @@
 .h2t-bt { display: flex; flex-direction: column; gap: var(--e-3); }
 .h2t .micro { color: var(--branco-70); }
 .h2t-calc { padding-bottom: var(--e-10); }
-.h2t-leg { position: absolute; z-index: 3; top: 5.25rem; right: var(--margem); margin: 0; font-size: 0.6875rem; color: var(--branco-70); text-align: right; max-width: 11rem; line-height: 1.35; }
+.h2t-leg { position: absolute; z-index: 3; top: 5.25rem; right: var(--margem); margin: 0; font-size: 0.6875rem; color: var(--branco-85); text-align: right; max-width: 11rem; line-height: 1.35; background: var(--veu-3); padding: 0.125rem var(--e-2); border-radius: var(--raio-xs); }
 @keyframes aproxima { from { transform: scale(1.08); } to { transform: scale(1); } }
 
 /* números grandes */
@@ -174,7 +174,8 @@
 .ff-in { position: relative; z-index: 2; width: 100%; padding-top: 8rem; padding-bottom: var(--e-12); }
 .ff-in h2 { font-size: clamp(2.25rem, 10vw, 4.5rem); color: var(--branco); letter-spacing: -0.045em; line-height: 1; margin: var(--e-2) 0 var(--e-4); }
 .ff-in p { color: var(--branco-85); max-width: 36rem; }
-.ff-leg { position: absolute; z-index: 2; top: var(--e-4); right: var(--margem); margin: 0; font-size: 0.6875rem; color: var(--branco-70); }
+/* legenda sobre foto: fundo escuro próprio, porque o céu da foto pode ser claro (branco sobre céu não se lê) */
+.ff-leg { position: absolute; z-index: 2; top: var(--e-4); right: var(--margem); margin: 0; font-size: 0.6875rem; color: var(--branco-85); background: var(--veu-3); padding: 0.125rem var(--e-2); border-radius: var(--raio-xs); }
 
 /* o que muda e o que não muda */
 .muda { display: grid; gap: var(--e-8); margin-top: var(--e-8); }

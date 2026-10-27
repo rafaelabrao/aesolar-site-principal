@@ -165,7 +165,8 @@ def calc(d, caminho, titulo, variante='cartao', exemplo=None, rotulo='Valor méd
         f'<div class="calc-sai" data-calc-res>'
         f'<p class="calc-estado" id="calc-estado-{c}" data-calc-estado aria-live="polite">Exemplo: conta de {reais(ex)}</p>'
         f'<p class="calc-rot">Fica com você, por mês</p>'
-        f'<p class="calc-valor"><span data-calc="min">{reais(r["min"])}</span> <span class="calc-a">a</span> '
+        # "a" preso ao segundo valor: quando a faixa não cabe numa linha, quebra antes do "a", nunca depois
+        f'<p class="calc-valor"><span data-calc="min">{reais(r["min"])}</span> <span class="calc-a">a</span>&nbsp;'
         f'<span data-calc="max">{reais(r["max"])}</span></p>'
         f'<p class="calc-ano">Em 12 meses: <b data-calc="ano_min">{reais(r["ano_min"])}</b> a '
         f'<b data-calc="ano_max">{reais(r["ano_max"])}</b></p>'
@@ -291,7 +292,8 @@ def caso(d, ids=None):
     alt = f'Fatura da AESOLAR de {mes} de {ano} de um cliente, com os dados do cliente tarjados'
     desde = (f'<div class="caso-n-desde"><dt>Desde o início do contrato</dt><dd>{_centavos(x["desde_inicio"])}</dd></div>'
              if x.get('desde_inicio') else '')
-    det = f'<small>{x["detalhe"]}</small>' if x.get('detalhe') else ''
+    # texto livre de dados.json: o "R$" não pode ficar no fim de uma linha e o número na outra
+    det = '<small>' + x['detalhe'].replace('R$ ', 'R$\u00a0') + '</small>' if x.get('detalhe') else ''
     mais = ''.join(
         f'<li><strong>{o["quem"]}:</strong> {_centavos(o["economia"])} a menos em {MESES[int(o["mes"][5:7]) - 1]} '
         f'<span>({_centavos(o["sem_aesolar"])} sem a AESOLAR, {_centavos(o["com_aesolar"])} com)</span></li>' for o in outros)
