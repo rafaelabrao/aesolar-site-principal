@@ -41,7 +41,7 @@
       est.className = 'barra-est';
       barra.insertBefore(est, barra.firstChild);
     }
-    est.innerHTML = 'Sua estimativa: <b></b> por mês';
+    est.innerHTML = 'Economia estimada: <b></b> por mês';
     est.querySelector('b').textContent = S.reais(r.min) + ' a ' + S.reais(r.max);
     var bt = barra.querySelector('[data-wa]');
     if (bt) { bt.setAttribute('data-wa', msg); if (window.AesolarWa) window.AesolarWa(bt); }

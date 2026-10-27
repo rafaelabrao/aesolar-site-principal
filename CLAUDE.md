@@ -92,7 +92,7 @@ python3 -m http.server 8090 --directory site   # ver em http://localhost:8090
 - Decisões fechadas em 27/10/2026 (zero marca PENDENTE): a AESOLAR confere os créditos todo mês (D3, pode anunciar);
   cobrança única para várias unidades pode ser anunciada (D14); a tabela de comissão do representante não vai ao site
   (D8); fotos de `/usinas/` são do Complexo Vereda (D11); privacidade com `comercial@aesolar.com.br` e guarda de 2
-  anos para quem não contratou (D6, sem revisão de advogado); a política cita o Pixel do Meta (D10); kit de
+  anos para quem não contratou (D6; termos e política aprovados pelo jurídico em 27/10/2026: mudou, volta para ele); a política cita o Pixel do Meta (D10); kit de
   assembleia de condomínio fica para depois (D17).
 - Vídeo do Rafael na usina (D5): até ficar pronto, "Quem está por trás" mostra uma foto real da usina
   (`capas.quem`). Com o vídeo editado, ele entra no lugar da foto.

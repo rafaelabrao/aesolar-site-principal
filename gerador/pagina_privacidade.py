@@ -1,4 +1,4 @@
-"""/politica-de-privacidade/: texto aprovado pelo Rafael em 27/10/2026, sem revisão de advogado. Cita cada campo que o formulário coleta: se o
+"""/politica-de-privacidade/: texto aprovado pelo jurídico em 27/10/2026; mudou o texto, volta para o jurídico. Cita cada campo que o formulário coleta: se o
 formulário mudar o que coleta, esta página muda junto."""
 import blocos as b
 

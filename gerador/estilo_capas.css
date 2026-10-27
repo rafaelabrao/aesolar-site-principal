@@ -293,6 +293,11 @@ a.sf:hover { border-color: var(--laranja); }
 /* a barra fixa leva o número simulado (capas.js) */
 .barra-est { margin: 0 0 var(--e-2); text-align: center; font-size: var(--t-sm); color: var(--slate-700); }
 .barra-est b { color: var(--slate-900); font-variant-numeric: tabular-nums; }
+/* no computador a barra é só o botão redondo: o número vira uma etiqueta branca ao lado dele, legível em qualquer fundo */
+@media (min-width: 900px) {
+  .barra:has(.barra-est) { display: flex; align-items: center; gap: var(--e-3); }
+  .barra-est { margin: 0; padding: var(--e-2) var(--e-4); background: var(--branco); border: 1px solid var(--slate-200); border-radius: var(--raio-total); box-shadow: var(--sombra-barra); }
+}
 
 /* D23, aprovado pelo Rafael em 22/10/2026: o símbolo "A" grande e quase transparente como elemento gráfico.
    É o SVG vetorizado (sessão A3), em revisão: a imagem fica atrás do conteúdo e não recebe toque. */

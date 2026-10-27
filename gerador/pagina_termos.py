@@ -1,4 +1,4 @@
-"""/termos-de-uso/: texto aprovado pelo Rafael em 27/10/2026, sem revisão de advogado."""
+"""/termos-de-uso/: texto aprovado pelo jurídico em 27/10/2026; mudou o texto, volta para o jurídico."""
 import blocos as b
 
 CAMINHO = '/termos-de-uso/'
