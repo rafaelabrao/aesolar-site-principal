@@ -2,7 +2,7 @@
   "_leia": "Fonte única do site. Telefone, mínimo, prazos, parâmetros do simulador e textos da marca moram SÓ aqui. Mudou algo: editar aqui e rodar python3 gerador/gera_site.py. Nunca editar à mão o HTML de site/.",
 
   "site": "https://aesolar.com.br",
-  "previa": true,
+  "previa": false,
   "_previa": "true = todas as páginas com 'não indexar' e robots.txt fechado. Liberar para o Google = false, só com ordem do Rafael e sem nenhuma marca PENDENTE (o gerador confere).",
   "previa_paginas": [],
   "_previa_paginas": "Páginas prontas mas ainda não liberadas: 'não indexar', fora do sitemap e fora dos menus.",

@@ -4,55 +4,41 @@ Site institucional e de captação de leads da Aesolar. Repositório **público*
 
 ## Push na `main` publica o site
 
-Todo push na branch `main` dispara `.github/workflows/pages.yml`, que compila
-e publica em **aesolar.com.br** (GitHub Pages; o domínio vem do arquivo
-`CNAME`). Não há etapa de aprovação: o que entra na `main` vai ao ar em poucos
-minutos.
+Todo push na branch `main` dispara `.github/workflows/pages.yml`, que **não gera nada**: roda
+`gera_site.py --producao` (a pasta `site/` tem de bater com a fonte, prévia desligada, nenhuma marca PENDENTE)
+e os testes do gerador, e publica a pasta `site/` em **aesolar.com.br** (GitHub Pages). Não há etapa de
+aprovação: o que entra na `main` vai ao ar em poucos minutos. Se a conferência falhar, nada é publicado e o
+site anterior continua no ar.
+
+O domínio está nas configurações do Pages do repositório (`rafaelabrao/aesolar-site-principal`, modo
+"workflow", HTTPS obrigatório, certificado para `aesolar.com.br` e `www`). O arquivo `CNAME` na raiz é só
+registro: não é ele que liga o domínio. O DNS fica na Locaweb, junto com o e-mail: não mexer.
 
 Por isso:
 
-- Não faça push na `main` sem o dono do repositório pedir aquela publicação.
-- Antes de qualquer push, rode `npm run build` e `npm test`. Build quebrado
-  não publica, mas build que passa com conteúdo errado publica.
+- Não faça push na `main` sem o Rafael pedir aquela publicação.
+- Antes de qualquer push: gerar, `--producao` e os testes (abaixo). Conteúdo errado que passa nas travas
+  publica.
 - Trabalho em andamento fica em outra branch.
+
+**Voltar atrás:** `git revert` do commit (ou do merge, com `-m 1`) e push: o site anterior volta em poucos
+minutos. O site antigo inteiro (Vite + React, até 27/10/2026) está na etiqueta `site-antigo-vite`; a página
+`/proposta_old/` tem cópia em `entregas-intensivo/backup-site-antigo/`.
 
 ## O repositório é público
 
-Qualquer pessoa lê tudo o que está aqui, inclusive o histórico. Nada de
-senha, token, dado de cliente ou número interno em arquivo, commit ou
-comentário.
+Qualquer pessoa lê tudo o que está aqui, inclusive o histórico. Nada de senha, token, dado de cliente ou
+número interno em arquivo, commit ou comentário.
 
-A URL do webhook que recebe os leads não está no código: ela entra no build
-pelo segredo `VITE_N8N_WEBHOOK_URL` do GitHub Actions. Sem essa variável (por
-exemplo, rodando local), o site abre normalmente e só o envio do formulário
-avisa que falta configuração.
+O formulário manda o lead direto ao app (`integracao.endpoint` em `dados.json`, rota pública do app, que só
+aceita a origem `https://aesolar.com.br`). Não há segredo no build. O segredo `VITE_N8N_WEBHOOK_URL` do
+GitHub Actions era do site antigo e não é mais usado (não foi apagado: só com ordem do Rafael).
 
 ## Como é feito
 
-- Vite + React + TypeScript + Tailwind, com componentes shadcn/ui. Nasceu no
-  Lovable; o `README.md` ainda é o modelo de lá.
-- Páginas em `src/pages/`: `Index.tsx` (a home) e `Proposta.tsx`.
-- Formulário de lead em `src/components/LeadCaptureForm.tsx`; botão do
-  WhatsApp em `src/components/WhatsAppButton.tsx`.
-- `public/proposta_old/` é uma página antiga em HTML puro, servida como está.
-- `vercel.json` e a menção ao Vercel no formulário são sobra de uma
-  hospedagem anterior; a publicação hoje é pelo GitHub Pages.
-
-## Comandos
-
-```bash
-npm ci           # instalar dependências
-npm run dev      # abrir local, com recarga automática
-npm run build    # compilar para dist/
-npm test         # testes (vitest)
-```
-
-## Site novo (em construção, branch `site-novo`)
-
-Desde 21/10/2026 o site novo está sendo feito na branch local `site-novo`, no modelo do site do Top
-Office: HTML pronto por página, gerado de um arquivo único de dados. Proposta e decisões pendentes:
-`entregas-intensivo/A2-PROPOSTA-SITE-NOVO.md` (fora do git, só neste Mac). Enquanto não for aprovado,
-o site no ar continua sendo o Vite da `main`.
+HTML pronto por página (no modelo do site do Top Office), gerado de um arquivo único de dados. Proposta
+original e decisões: `entregas-intensivo/A2-PROPOSTA-SITE-NOVO.md` (fora do git, só neste Mac). No ar desde a
+sessão A6 (10/2026).
 
 ```bash
 python3 gerador/gera_site.py              # gera site/ (só Python padrão, 3.9+)

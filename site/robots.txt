@@ -1,3 +1,5 @@
-# Prévia: nada indexado. Gerado por gerador/gera_site.py.
+# Gerado por gerador/gera_site.py.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://aesolar.com.br/sitemap.xml

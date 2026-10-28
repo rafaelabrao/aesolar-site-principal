@@ -144,7 +144,7 @@ class TravasDaMarca(unittest.TestCase):
             dados(depoimentos=[{'texto': 'Ótimo', 'quem': 'Cliente', 'termo_assinado': True}])
 
     def test_noindex_acompanha_a_previa(self):
-        self.assertIn('content="noindex', self.pagina)
+        self.assertIn('content="noindex', capa(dados(previa=True)))
         liberado = dados(previa=False)
         self.assertNotIn('content="noindex', capa(liberado))
 
@@ -213,14 +213,12 @@ class CapasNovas(unittest.TestCase):
 
 
 class Producao(unittest.TestCase):
-    def test_producao_recusa_previa_pendencias_e_simulador_provisorio(self):
+    def test_producao_passa_com_o_site_no_ar(self):
+        # Desde a publicação (A6) a prévia está desligada e não há pendência: --producao tem de passar, porque é
+        # ele que o pages.yml roda antes de publicar.
         r = subprocess.run([sys.executable, os.path.join(AQUI, 'gera_site.py'), '--producao'], capture_output=True, text=True)
-        self.assertEqual(r.returncode, 1)
-        # O formulário saiu do modo "simulado" em 27/10/2026 (o app aceita a versão 2):
-        # essa pendência não aparece mais. Fica a da prévia, até a publicação.
-        for trecho in ('"previa" ainda é true',):
-            self.assertIn(trecho, r.stdout)
-        self.assertNotIn('modo "simulado"', r.stdout)
+        self.assertEqual(r.returncode, 0, r.stdout)
+        self.assertNotIn('NÃO PUBLICAR', r.stdout)
 
 
 if __name__ == '__main__':
