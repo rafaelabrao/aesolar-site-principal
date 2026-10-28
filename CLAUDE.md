@@ -37,8 +37,8 @@ GitHub Actions era do site antigo e não é mais usado (não foi apagado: só co
 ## Como é feito
 
 HTML pronto por página (no modelo do site do Top Office), gerado de um arquivo único de dados. Proposta
-original e decisões: `entregas-intensivo/A2-PROPOSTA-SITE-NOVO.md` (fora do git, só neste Mac). No ar desde a
-sessão A6 (10/2026).
+original e decisões: `entregas-intensivo/A2-PROPOSTA-SITE-NOVO.md` (fora do git, só neste Mac). No ar desde
+28/10/2026 (sessão A6).
 
 ```bash
 python3 gerador/gera_site.py              # gera site/ (só Python padrão, 3.9+)
@@ -95,6 +95,8 @@ node entregas-intensivo/A5-ferramentas/funcional.cjs <pasta>   # simulador, menu
   (`capas.quem`). Com o vídeo editado, ele entra no lugar da foto.
 - Botão do WhatsApp: no celular, barra de lado a lado; no computador, botão redondo no canto (`.barra` em
   `estilo.css`). Os dois somem quando outro botão grande do WhatsApp está na tela (`data-sem-barra`).
+- Aviso de cookies no pé da tela (Rafael, 28/10/2026: no alto, tapava o logo e o menu no celular). Enquanto está
+  aberto, `site.js` põe a altura dele em `--ck-h`, e a barra (ou o botão redondo) sobe essa altura.
 - `.venv/bin/python gerador/prepara_assets.py capas` gera só as fotos dos protótipos (os originais de banco ficam em
   `entregas-intensivo/A3-imagens-banco/`); as do Gemini, em
   `entregas-intensivo/A4-imagens-gemini/`, com um LEIA-ME de qual foto vai onde).

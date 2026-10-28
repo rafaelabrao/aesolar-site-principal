@@ -79,11 +79,15 @@
     barra.classList.add('mostra');
   }
 
-  // ---------- aviso de cookies: no alto da tela, para não tapar a barra do WhatsApp ----------
+  // ---------- aviso de cookies: no pé da tela, para não tapar o logo e o menu (Rafael, 28/10/2026). Enquanto está
+  // aberto, a barra do WhatsApp sobe a altura dele (--ck-h) e o fim da página ganha a mesma folga ----------
   var ck = doc.getElementById('ck'), escolha = null;
   try { escolha = localStorage.getItem('aes_cookies'); } catch (e) {}
+  function alturaCk() { doc.documentElement.style.setProperty('--ck-h', ck.hidden ? '0px' : ck.offsetHeight + 'px'); }
   if (ck && !escolha) {
     ck.hidden = false;
+    alturaCk();
+    window.addEventListener('resize', alturaCk);
     $$('[data-ck]', ck).forEach(function (bt) {
       bt.addEventListener('click', function () {
         var v = bt.getAttribute('data-ck'), g = v === 'nao' ? 'denied' : 'granted';
@@ -91,6 +95,7 @@
         if (window.gtag) window.gtag('consent', 'update', { ad_storage: g, ad_user_data: g, ad_personalization: g, analytics_storage: g });
         dl.push({ event: 'cookie_choice', escolha: v });
         ck.hidden = true;
+        alturaCk();
       });
     });
   }
