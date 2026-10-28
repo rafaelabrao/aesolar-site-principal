@@ -1,0 +1,5 @@
+# Gerado por gerador/gera_site.py.
+User-agent: *
+Allow: /
+
+Sitemap: https://aesolar.com.br/sitemap.xml

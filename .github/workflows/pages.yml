@@ -1,19 +1,20 @@
-name: Deploy to GitHub Pages
+name: Publicar no GitHub Pages
 
-# Dispara o workflow em push na branch main ou manualmente
+# Push na main publica aesolar.com.br em poucos minutos, sem aprovação.
+# O site é o HTML pronto da pasta site/, gerado por gerador/gera_site.py a partir de gerador/dados.json.
+# Aqui nada é gerado: só se confere que site/ bate com a fonte e passa nas travas de produção, e se publica.
+# O domínio (aesolar.com.br) está nas configurações do Pages do repositório, não neste arquivo.
 on:
   push:
     branches:
       - main
   workflow_dispatch:
 
-# Permissões necessárias para o GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Concurrency para evitar execuções simultâneas no Pages
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -23,38 +24,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Faz checkout do repositório
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Configura o Node.js versão 20 com cache para npm
-      - name: Setup Node.js
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Node (os testes rodam o simulador.js de verdade)
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      # Instala as dependências com npm ci
-      - name: Install dependencies
-        run: npm ci
+      # Recusa publicar se site/ não bate com a fonte, se a prévia está ligada, se sobrou marca PENDENTE,
+      # imagem provisória ou formulário em modo "simulado".
+      - name: Conferência de produção
+        run: python3 gerador/gera_site.py --producao
 
-      # Builda o projeto com npm run build
-      - name: Build
-        run: npm run build
-        env:
-          VITE_N8N_WEBHOOK_URL: ${{ secrets.VITE_N8N_WEBHOOK_URL }}
+      - name: Testes do gerador
+        run: python3 gerador/teste_gerador.py
 
-      # Faz upload do artefato dist para o Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-      # Faz deploy no GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
