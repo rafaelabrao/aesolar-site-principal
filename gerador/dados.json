@@ -2,7 +2,7 @@
   "_leia": "Fonte única do site. Telefone, mínimo, prazos, parâmetros do simulador e textos da marca moram SÓ aqui. Mudou algo: editar aqui e rodar python3 gerador/gera_site.py. Nunca editar à mão o HTML de site/.",
 
   "site": "https://aesolar.com.br",
-  "verificacao_google": "",
+  "verificacao_google": "googled81396104927990f.html",
   "_verificacao_google": "Nome do arquivo de verificação do Search Console (google + 16 letras e números + .html; vazio = sem arquivo). O gerador grava o arquivo na raiz do site, com o conteúdo padrão do Google, e o deixa fora do sitemap. É público, não é segredo.",
   "previa": false,
   "_previa": "true = todas as páginas com 'não indexar' e robots.txt fechado. Liberar para o Google = false, só com ordem do Rafael e sem nenhuma marca PENDENTE (o gerador confere).",
