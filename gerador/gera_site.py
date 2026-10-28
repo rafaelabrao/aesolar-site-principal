@@ -73,6 +73,9 @@ class Dados:
         self.previa = bruto['previa']
         self.previa_paginas = set(bruto.get('previa_paginas', []))
         self.avisos = []
+        self.verificacao_google = bruto.get('verificacao_google', '')
+        if self.verificacao_google and not re.fullmatch(r'google[0-9a-f]{16}\.html', self.verificacao_google):
+            raise Erro('dados.json: "verificacao_google" tem de ser o nome do arquivo do Search Console (google + 16 letras e números + .html).')
         if not isinstance(self.previa, bool):
             raise Erro('dados.json: "previa" tem de ser true ou false.')
         if not re.fullmatch(r'55\d{10,11}', self.emp['whatsapp']):
@@ -409,6 +412,9 @@ def main(argv):
         saidas.append((m.CAMINHO, arquivo_de(m.CAMINHO), pagina))
     saidas.append(('/sitemap.xml', os.path.join(SITE, 'sitemap.xml'), mapa_do_site(d)))
     saidas.append(('/robots.txt', os.path.join(SITE, 'robots.txt'), robots(d)))
+    if d.verificacao_google:
+        saidas.append(('/' + d.verificacao_google, os.path.join(SITE, d.verificacao_google),
+                       f'google-site-verification: {d.verificacao_google}'))
 
     diferentes = 0
     for caminho, arquivo, conteudo in saidas:

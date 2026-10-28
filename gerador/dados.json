@@ -2,6 +2,8 @@
   "_leia": "Fonte única do site. Telefone, mínimo, prazos, parâmetros do simulador e textos da marca moram SÓ aqui. Mudou algo: editar aqui e rodar python3 gerador/gera_site.py. Nunca editar à mão o HTML de site/.",
 
   "site": "https://aesolar.com.br",
+  "verificacao_google": "",
+  "_verificacao_google": "Nome do arquivo de verificação do Search Console (google + 16 letras e números + .html; vazio = sem arquivo). O gerador grava o arquivo na raiz do site, com o conteúdo padrão do Google, e o deixa fora do sitemap. É público, não é segredo.",
   "previa": false,
   "_previa": "true = todas as páginas com 'não indexar' e robots.txt fechado. Liberar para o Google = false, só com ordem do Rafael e sem nenhuma marca PENDENTE (o gerador confere).",
   "previa_paginas": [],
@@ -72,7 +74,7 @@
     "modo": "app",
     "_modo": "'simulado' = o formulário só mostra o que mandaria (nada sai do navegador). 'app' = manda para o endpoint. Só trocar depois que o app aceitar a versão 2 do contrato (proposta A2, seção 4.3) e o domínio estiver no CORS do app.",
     "endpoint": "https://app.aesolar.com.br/api/public/leads",
-    "politica_versao": "2026-10-27",
+    "politica_versao": "2026-10-28",
     "guarda_anos": 2,
     "_guarda_anos": "Prazo de guarda dos dados de quem pediu proposta e não contratou (Rafael, 27/10/2026). Mudou: mude politica_versao."
   },

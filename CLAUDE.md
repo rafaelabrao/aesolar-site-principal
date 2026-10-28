@@ -80,8 +80,7 @@ node entregas-intensivo/A5-ferramentas/funcional.cjs <pasta>   # simulador, menu
 - Tag Manager (GTM-NBMNDLNH) na versão 7 desde 28/10/2026: as tags GA4 e do Pixel do Meta (2592116051257065) disparam
   pelos eventos que `site.js`, `capas.js` e `simulador.js` põem no `dataLayer`. Mudou o nome de um evento, quebra a
   tag; `whatsapp_click` e `form_submit` são as conversões do Google Ads (vêm do GA4): não renomear. O Pixel exige
-  `ad_storage`; a integração da API de Conversões do Meta ficou ligada (Rafael, 28/10/2026), e a política de
-  privacidade ainda não a cita: levar ao jurídico na próxima revisão.
+  `ad_storage`; a integração da API de Conversões do Meta ficou ligada (Rafael, 28/10/2026) e a política v2 a cita.
 - `simulador_usado` e `form_submit` mandam a faixa da conta, nunca o valor (as faixas do simulador e do formulário
   não são iguais: o formulário separa "abaixo-800" e "800-1500").
 - `?limpo` no endereço esconde as marcas PENDENTE e a faixa da prévia, só para julgar o visual.
@@ -96,7 +95,7 @@ node entregas-intensivo/A5-ferramentas/funcional.cjs <pasta>   # simulador, menu
 - Decisões fechadas em 27/10/2026 (zero marca PENDENTE): a AESOLAR confere os créditos todo mês (D3, pode anunciar);
   cobrança única para várias unidades pode ser anunciada (D14); a tabela de comissão do representante não vai ao site
   (D8); fotos de `/usinas/` são do Complexo Vereda (D11); privacidade com `comercial@aesolar.com.br` e guarda de 2
-  anos para quem não contratou (D6; termos e política aprovados pelo jurídico em 27/10/2026: mudou, volta para ele); a política cita o Pixel do Meta (D10); kit de
+  anos para quem não contratou (D6; termos e política aprovados pelo jurídico em 27/10/2026, política v2 em 28/10/2026: mudou, volta para ele); a política cita o Pixel do Meta (D10); kit de
   assembleia de condomínio fica para depois (D17).
 - Vídeo do Rafael na usina (D5): até ficar pronto, "Quem está por trás" mostra uma foto real da usina
   (`capas.quem`). Com o vídeo editado, ele entra no lugar da foto.
