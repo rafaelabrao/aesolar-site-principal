@@ -77,6 +77,13 @@ node entregas-intensivo/A5-ferramentas/funcional.cjs <pasta>   # simulador, menu
   palavra-chave (D25 e D26, 27/10/2026).
 - SEO, Google Ads e Tag Manager (estado e proposta): `entregas-intensivo/A5-SEO-ADS-MEDICAO.md`. Revisão tela a tela:
   `entregas-intensivo/A5-REVISAO-TELAS.md`.
+- Tag Manager (GTM-NBMNDLNH) na versão 7 desde 28/10/2026: as tags GA4 e do Pixel do Meta (2592116051257065) disparam
+  pelos eventos que `site.js`, `capas.js` e `simulador.js` põem no `dataLayer`. Mudou o nome de um evento, quebra a
+  tag; `whatsapp_click` e `form_submit` são as conversões do Google Ads (vêm do GA4): não renomear. O Pixel exige
+  `ad_storage`; a integração da API de Conversões do Meta ficou ligada (Rafael, 28/10/2026), e a política de
+  privacidade ainda não a cita: levar ao jurídico na próxima revisão.
+- `simulador_usado` e `form_submit` mandam a faixa da conta, nunca o valor (as faixas do simulador e do formulário
+  não são iguais: o formulário separa "abaixo-800" e "800-1500").
 - `?limpo` no endereço esconde as marcas PENDENTE e a faixa da prévia, só para julgar o visual.
 - Economia gerada: `oferta.economia_gerada_piso` em `dados.json`, sempre o valor do app (Painel geral → Economia
   entregue) arredondado PARA BAIXO de 50 em 50 mil; nunca o número exato (o repositório é público). Cresce cerca de
@@ -133,6 +140,9 @@ Armadilhas já pagas no site novo:
 - Lighthouse neste Mac: `CHROME_PATH` apontando para o Chromium do Playwright
   (`~/Library/Caches/ms-playwright/chromium-*/chrome-mac-arm64/Google Chrome for Testing.app/...`). Medir o SEO
   numa cópia sem o "não indexar" e com o `robots.txt` aberto; senão dá 69.
+- O Pixel do Meta descarta visita de navegador automático: no Playwright o script carrega e nenhum evento sai. Para
+  conferir, `navigator.webdriver` falso (`addInitScript`) e user agent de celular.
+- O modelo do Pixel na galeria do Tag Manager chama-se "Meta Pixel", de "facebook" (o "facebookarchive" saiu).
 
 ## Como trabalhar aqui
 
