@@ -1,4 +1,5 @@
-"""/politica-de-privacidade/: texto aprovado pelo jurídico em 27/10/2026; mudou o texto, volta para o jurídico. Cita cada campo que o formulário coleta: se o
+"""/politica-de-privacidade/: texto aprovado pelo jurídico em 27/10/2026, versão 2 (recusa/opt-out, faixa da conta,
+API de Conversões da Meta, aviso no pé) aprovada em 28/10/2026; mudou o texto, volta para o jurídico. Cita cada campo que o formulário coleta: se o
 formulário mudar o que coleta, esta página muda junto."""
 import blocos as b
 
